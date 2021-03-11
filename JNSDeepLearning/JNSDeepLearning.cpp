@@ -1,43 +1,46 @@
 ﻿#include <iostream>
 #include <cuda_runtime.h>
 
+#include "Perceptron.h"
+
+using namespace std;
+
+#define DATA_NUM 4
+#define WEIGHT_NUM 3
+
 __global__ void printHelloCUDA()
 {
     printf("Hello CUDA!\n");
 }
 
-__global__ void MatrixAdd(float A[N][N], float B[N][N], float C[N][N])
-{
-    int i = threadIdx.x;
-    int j = threadIdx.y;
-    
-    C[i][j] = A[i][j] + B[i][j];
-}
-
 int main()
 {
-    std::cout << "Hello World!\n";
-    printHelloCUDA << <1, 1 >> > (); //<<<그리드 당 블록 수, 블록당 스레드 수>>>
-    
-    float *A, *B, *C; //디바이스 메모리 - GPU 쪽 메모리 
-    int N = 50;
-    cudaMalloc((void**)&A, N*N*sizeof(float));
-    cudaMalloc((void**)&B, N*N*sizeof(float));
-    cudaMalloc((void**)&C, N*N*sizeof(float));
-    
-    float *a = malloc(N*N*sizeof(float));
-    float *b = malloc(N*N*sizeof(float));
-    float *c = malloc(N*N*sizeof(float));
-    
-    cudaMemcpy(A, a, N*N*sizeof(*A), cudaMemcpyHostToDevice);
-    cudaMemcpy(B, b, N*N*sizeof(*B), cudaMemcpyHostToDevice);
-    
-    dim3 ThreadsPBlock(N, N);
-    MatrixAdd<<<1, ThreadPBlock>>>(A, B, C); //블록도 dim3로 정의할 수 있음, 블록을 묶은 것을 '그리드'라고 부름.
-    
-    cudaMemcpy(c, C, N*N*sizeof(*C), cudaMemcpyHostToDevice);
-    
-    cudaFree(A);
-    cudaFree(B);
-    cudaFree(C);
+    float fe = 0.25; //학습률
+    //float fx[DATA_NUM][WEIGHT_NUM] = { {1, 0, 0}, {1, 0, 1}, {1, 0, 1}, {1, 1, 1} }; //입력 신호
+    float fx[DATA_NUM][WEIGHT_NUM] = { {0, 0, 1}, {0, 0, 1}, {0, 0, 1}, {0, 0, 1} }; //입력 신호
+
+    float ft[DATA_NUM] = {0, 1, 1, 1}; //논리합
+    //float ft[DATA_NUM] = {0, 0, 0곱, 1}; //논리
+    float fw[WEIGHT_NUM] = {0, 0, 0}; //가중치 초기화
+
+    int iEpoch = 10;
+    for (int i = 0; i < iEpoch; i++)
+    {
+        cout << "횟수: " << i << endl;
+
+        for (int j = 0; j < DATA_NUM; j++)
+            Perceptron::Train(fw, fx[j], ft[j], fe, WEIGHT_NUM);
+
+        for (int j = 0; j < WEIGHT_NUM; j++)
+            cout << "가중치: " << j << " | " << fw[j] << endl;
+
+        cout << endl;
+    } 
+
+    for (int i = 0; i < DATA_NUM; i++)
+        cout << Perceptron::Forward(fx[i], fw, WEIGHT_NUM) << " ";
+
+    cout << endl;
+
+    return 0;
 }
