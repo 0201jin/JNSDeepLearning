@@ -17,7 +17,7 @@ __global__ void MatrixAdd(float A[N][N], float B[N][N], float C[N][N])
 int main()
 {
     std::cout << "Hello World!\n";
-    printHelloCUDA << <1, 1 >> > (); //1개 블럭을 생성하고 블럭마다 1개의 쓰레드를 생성한다.
+    printHelloCUDA << <1, 1 >> > (); //<<<그리드 당 블록 수, 블록당 스레드 수>>>
     
     float *A, *B, *C;
     int N = 50;
