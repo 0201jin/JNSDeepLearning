@@ -26,7 +26,7 @@ class Neuron
 {
 public:
   Neuron(size_t _input_size);
-  double Compute(const std::vector<double>& _x) const;
+  double Calculate(const std::vector<double>& _x) const;
   void Train(double _a, const vector<pair<vector<double>, double>>& _train_data);
   
 private:
