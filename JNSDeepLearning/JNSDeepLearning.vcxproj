@@ -145,10 +145,11 @@
     <CudaCompile Include="JNSDeepLearning.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Perceptron.h" />
+    <CudaCompile Include="Activation_Function.h" />
+    <CudaCompile Include="Single_Layer_Perceptron.h" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="Perceptron.cpp" />
+    <CudaCompile Include="Single_Layer_Perceptron.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

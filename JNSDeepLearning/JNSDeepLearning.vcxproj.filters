@@ -12,18 +12,22 @@
     <Filter Include="소스 파일\Perceptron">
       <UniqueIdentifier>{49cb4dd7-1e13-40f9-8688-cf584f928b72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Perceptron\Single_Layer_Perceptron">
+      <UniqueIdentifier>{a71fd1ce-9463-4bca-b615-c707e4dedde6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="JNSDeepLearning.cpp">
       <Filter>소스 파일</Filter>
     </CudaCompile>
-    <CudaCompile Include="Perceptron.cpp">
+    <CudaCompile Include="Activation_Function.h">
       <Filter>소스 파일\Perceptron</Filter>
     </CudaCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Perceptron.h">
-      <Filter>소스 파일\Perceptron</Filter>
-    </ClInclude>
+    <CudaCompile Include="Single_Layer_Perceptron.h">
+      <Filter>소스 파일\Perceptron\Single_Layer_Perceptron</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Single_Layer_Perceptron.cpp">
+      <Filter>소스 파일\Perceptron\Single_Layer_Perceptron</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>
