@@ -20,6 +20,11 @@ float Perceptron::ReLU(float _v)
 	return _v > 0 ? _v : 0;
 }
 
+float Perceptron::Sigmoid(float _v)
+{
+	return 1 / (1 + exp(-_v));
+}
+
 float Perceptron::Forward(float* _x, float* _w, int _len)
 {
 	float u = Dot(_x, _w, _len);
