@@ -34,11 +34,11 @@ int main()
         for (int j = 0; j < WEIGHT_NUM; j++)
             cout << "가중치: " << j << " | " << fw[j] << endl;
 
+        for (int i = 0; i < DATA_NUM; i++)
+            cout << Perceptron::Forward(fx[i], fw, WEIGHT_NUM) << " ";
+        
         cout << endl;
     } 
-
-    for (int i = 0; i < DATA_NUM; i++)
-        cout << Perceptron::Forward(fx[i], fw, WEIGHT_NUM) << " ";
 
     cout << endl;
 
