@@ -15,10 +15,16 @@ float Perceptron::Step(float _v)
 	return _v > 0 ? 1 : 0;
 }
 
+float Perceptron::ReLU(float _v)
+{
+	return _v > 0 ? _v : 0;
+}
+
 float Perceptron::Forward(float* _x, float* _w, int _len)
 {
 	float u = Dot(_x, _w, _len);
-	return Step(u);
+	//return Step(u);
+	return ReLU(u);
 }
 
 float Perceptron::Train(float* _w, float* _x, float _t, float _e, int _len)
