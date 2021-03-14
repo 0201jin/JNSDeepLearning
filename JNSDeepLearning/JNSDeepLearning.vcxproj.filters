@@ -20,14 +20,16 @@
     <CudaCompile Include="JNSDeepLearning.cpp">
       <Filter>소스 파일</Filter>
     </CudaCompile>
-    <CudaCompile Include="Activation_Function.h">
-      <Filter>소스 파일\Perceptron</Filter>
-    </CudaCompile>
-    <CudaCompile Include="Single_Layer_Perceptron.h">
-      <Filter>소스 파일\Perceptron\Single_Layer_Perceptron</Filter>
-    </CudaCompile>
     <CudaCompile Include="Single_Layer_Perceptron.cpp">
       <Filter>소스 파일\Perceptron\Single_Layer_Perceptron</Filter>
     </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Single_Layer_Perceptron.h">
+      <Filter>소스 파일\Perceptron\Single_Layer_Perceptron</Filter>
+    </ClInclude>
+    <ClInclude Include="Activation_Function.h">
+      <Filter>소스 파일\Perceptron</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

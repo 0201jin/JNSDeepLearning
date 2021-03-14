@@ -145,8 +145,8 @@
     <CudaCompile Include="JNSDeepLearning.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="Activation_Function.h" />
-    <CudaCompile Include="Single_Layer_Perceptron.h" />
+    <ClInclude Include="Activation_Function.h" />
+    <ClInclude Include="Single_Layer_Perceptron.h" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="Single_Layer_Perceptron.cpp" />
