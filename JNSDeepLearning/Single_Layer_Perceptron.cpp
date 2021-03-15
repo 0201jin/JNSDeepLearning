@@ -3,7 +3,7 @@
 __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	double* _vWeight, double* _TrainDataFirst, double* _TrainDataSecond)
 {
-	//first´Â 2°³¾¿ ¿Ã¶ó°¡¾ßÇÔ.
+	//firstëŠ” 2ê°œì”© ì˜¬ë¼ê°€ì•¼í•¨.
 	//(second IDX = 0)  == (first IDX = 0 ~ 1)
 	//(second IDX = 1)  == (first IDX = 2 ~ 3)
 	int i = threadIdx.x; // _input_size
@@ -12,11 +12,26 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	int index = (_input_size * j);
 
 	double t = (_TrainDataSecond[j]);
+	
+	__shared__ double wx;
+	wx += (_vWeight)[i] * (_TrainDataFirst[index + i]);
+	
+	if(i != 0)
+	{
+		double o = wx + (*_dBias) > 0 ? wx + (*_dBias) : 0;
+		
+		(_vWeight)[0] += _a * (t - o) * (_TrainDataFirst[index + 0]);
+		(_vWeight)[1] += _a * (t - o) * (_TrainDataFirst[index + 1]);
+		
+		(*_dBias) += _a * (t - o);
+		
+		wx = 0;
+	}
 
-	double wx = 0.0;
+	/*double wx = 0.0;
 	for (size_t k = 0; k < _input_size; ++k)
 	{
-		wx += (_vWeight)[k] * (_TrainDataFirst[index + k]); //k°¡ ºÙÀ½
+		wx += (_vWeight)[k] * (_TrainDataFirst[index + k]); //kê°€ ë¶™ìŒ
 		printf("1 %d %d %d\n", i, j, k);
 	}
 
@@ -24,11 +39,11 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 
 	for (size_t k = 0; k < _input_size; ++k)
 	{
-		(_vWeight)[k] += _a * (t - o) * (_TrainDataFirst[index + k]); //k°¡ ºÙÀ½
+		(_vWeight)[k] += _a * (t - o) * (_TrainDataFirst[index + k]); //kê°€ ë¶™ìŒ
 		printf("2 %d %d %d\n", i, j, k);
 	}
 
-	(*_dBias) += _a * (t - o);
+	(*_dBias) += _a * (t - o);*/
 
 	//printf("%d %d\n", i, j);
 }
