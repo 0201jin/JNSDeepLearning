@@ -18,18 +18,16 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	*WX += (_vWeight)[i] * (_TrainDataFirst[index + i]);
 
 	//double o(ReLU) 계산 __device__ 함수로 처리하는 방법 찾아보기
-	printf("%f\n", *WX);
+	
 	if(i != 0)
 	{
-		printf("%f %f %f\n", *WX, (_vWeight)[i], _TrainDataFirst[index + i]);
-		double o = *WX + (*_dBias) > 0 ? *WX + (*_dBias) : 0;
+		double o = wx[index] + _dBias[0] > 0 ? wx[index] + _dBias[0] : 0;
+		printf("%f\n", _a);
+		_vWeight[0] += _a * (t - o) * (_TrainDataFirst[index + 0]);
+		_vWeight[1] += _a * (t - o) * (_TrainDataFirst[index + 1]);
 		
-		(_vWeight)[0] += _a * (t - o) * (_TrainDataFirst[index + 0]);
-		(_vWeight)[1] += _a * (t - o) * (_TrainDataFirst[index + 1]);
-		
-		(*_dBias) += _a * (t - o);
-		
-		*WX = 0;
+		_dBias[0] += _a * (t - o);
+		printf("%f %f %f\n", _dBias[0], (_vWeight)[i], _TrainDataFirst[index + i]);
 	}
 }
 
@@ -122,7 +120,14 @@ void Neuron::Train(int _train_num, double _a, vector<pair<vector<double>, double
 	//dim3 threads(1, _train_data.size());
 	Trainning << <_train_num, threads >> > (m_input_size, _a, dBias, vWeight, dTrainFirst, dTrainSecond);
 
-	cudaFree(vWeight);
+	cudaMemcpy(&m_dBias, dBias, sizeof(double), cudaMemcpyDeviceToHost);
+
+	cout << " Bidas: " << m_dBias << endl;
+
+	/*cudaFree(vWeight);
+	cudaFree(dTrainFirst);
+	cudaFree(dTrainSecond);
+	cudaFree(dBias);*/
 }
 
 void Neuron::Test()
