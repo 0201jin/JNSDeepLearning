@@ -15,6 +15,7 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	
 	__shared__ double wx;
 	wx += (_vWeight)[i] * (_TrainDataFirst[index + i]);
+	//double o(ReLU) 계산 __device__ 함수로 처리하는 방법 찾아보기
 	
 	if(i != 0)
 	{
