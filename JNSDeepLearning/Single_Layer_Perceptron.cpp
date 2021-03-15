@@ -13,40 +13,24 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 
 	double t = (_TrainDataSecond[j]);
 	
-	__shared__ double wx;
-	wx += (_vWeight)[i] * (_TrainDataFirst[index + i]);
+	__shared__ double wx[6];
+	double* WX = &wx[index];
+	*WX += (_vWeight)[i] * (_TrainDataFirst[index + i]);
+
 	//double o(ReLU) 계산 __device__ 함수로 처리하는 방법 찾아보기
-	
+	printf("%f\n", *WX);
 	if(i != 0)
 	{
-		double o = wx + (*_dBias) > 0 ? wx + (*_dBias) : 0;
+		printf("%f %f %f\n", *WX, (_vWeight)[i], _TrainDataFirst[index + i]);
+		double o = *WX + (*_dBias) > 0 ? *WX + (*_dBias) : 0;
 		
 		(_vWeight)[0] += _a * (t - o) * (_TrainDataFirst[index + 0]);
 		(_vWeight)[1] += _a * (t - o) * (_TrainDataFirst[index + 1]);
 		
 		(*_dBias) += _a * (t - o);
 		
-		wx = 0;
+		*WX = 0;
 	}
-
-	/*double wx = 0.0;
-	for (size_t k = 0; k < _input_size; ++k)
-	{
-		wx += (_vWeight)[k] * (_TrainDataFirst[index + k]); //k가 붙음
-		printf("1 %d %d %d\n", i, j, k);
-	}
-
-	double o = wx + (*_dBias) > 0 ? wx + (*_dBias) : 0;
-
-	for (size_t k = 0; k < _input_size; ++k)
-	{
-		(_vWeight)[k] += _a * (t - o) * (_TrainDataFirst[index + k]); //k가 붙음
-		printf("2 %d %d %d\n", i, j, k);
-	}
-
-	(*_dBias) += _a * (t - o);*/
-
-	//printf("%d %d\n", i, j);
 }
 
 __global__ void printHelloCUDA()
@@ -134,8 +118,8 @@ void Neuron::Train(int _train_num, double _a, vector<pair<vector<double>, double
 	cudaMalloc((void**)&dBias, sizeof(double));
 	cudaMemcpy(dBias, &m_dBias, sizeof(double), cudaMemcpyHostToDevice);
 
-	//dim3 threads(m_input_size, _train_data.size());
-	dim3 threads(1, _train_data.size());
+	dim3 threads(m_input_size, _train_data.size());
+	//dim3 threads(1, _train_data.size());
 	Trainning << <_train_num, threads >> > (m_input_size, _a, dBias, vWeight, dTrainFirst, dTrainSecond);
 
 	cudaFree(vWeight);
