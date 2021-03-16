@@ -14,7 +14,7 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	int i = threadIdx.x; // _input_size
 	int j = threadIdx.y; // _train_data.size()
 
-	int index = (_input_size * j);
+	int index = (2 * j);
 
 	double t = (_TrainDataSecond[j]);
 
