@@ -11,8 +11,9 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	//first는 2개씩 올라가야함.
 	//(second IDX = 0)  == (first IDX = 0 ~ 1)
 	//(second IDX = 1)  == (first IDX = 2 ~ 3)
-	int i = threadIdx.x; // _input_size
-	int j = threadIdx.y; // _train_data.size()
+	//int i = threadIdx.x; // _input_size
+	//int j = threadIdx.y; // _train_data.size()
+	int j = threadIdx.x; // _train_data.size()
 
 	int index = (2 * j);
 
@@ -123,7 +124,8 @@ void Neuron::Train(int _train_num, double _a, vector<pair<vector<double>, double
 
 	dim3 threads(m_input_size, _train_data.size());
 	//dim3 threads(1, _train_data.size());
-	Trainning << <_train_num, threads >> > (m_input_size, _a, dBias, vWeight, dTrainFirst, dTrainSecond);
+	//Trainning << <_train_num, threads >> > (m_input_size, _a, dBias, vWeight, dTrainFirst, dTrainSecond);
+	Trainning << <_train_num, _train_data.size()>> > (m_input_size, _a, dBias, vWeight, dTrainFirst, dTrainSecond);
 
 	cudaMemcpy(&m_dBias, dBias, sizeof(double), cudaMemcpyDeviceToHost);
 
