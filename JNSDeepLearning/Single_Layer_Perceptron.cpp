@@ -1,5 +1,10 @@
 #include "Single_Layer_Perceptron.h"
 
+__device__ double ReLU_Device(int _x)
+{
+	return _x > 0 ? _x : 0;
+}
+
 __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	double* _vWeight, double* _TrainDataFirst, double* _TrainDataSecond)
 {
@@ -12,23 +17,23 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	int index = (_input_size * j);
 
 	double t = (_TrainDataSecond[j]);
-	
-	__shared__ double wx[6];
-	double* WX = &wx[index];
-	*WX += (_vWeight)[i] * (_TrainDataFirst[index + i]);
 
-	//double o(ReLU) 계산 __device__ 함수로 처리하는 방법 찾아보기
-	
-	if(i != 0)
+	double wx = 0.0;
+	for (size_t k = 0; k < _input_size; ++k)
 	{
-		double o = wx[index] + _dBias[0] > 0 ? wx[index] + _dBias[0] : 0;
-		printf("%f\n", _a);
-		_vWeight[0] += _a * (t - o) * (_TrainDataFirst[index + 0]);
-		_vWeight[1] += _a * (t - o) * (_TrainDataFirst[index + 1]);
-		
-		_dBias[0] += _a * (t - o);
-		printf("%f %f %f\n", _dBias[0], (_vWeight)[i], _TrainDataFirst[index + i]);
+		wx += _vWeight[k] * (_TrainDataFirst[index + k]);
 	}
+
+	double o = ReLU_Device(wx + _dBias[0]);
+
+	for (size_t k = 0; k < _input_size; ++k)
+	{
+		_vWeight[k] += _a * (t - o) * (_TrainDataFirst[index + k]);
+	}
+
+	_dBias[0] += _a * (t - o);
+	
+	printf("%f %f %f", _dBias[0], _vWeight[0], _vWeight[1]);
 }
 
 __global__ void printHelloCUDA()
