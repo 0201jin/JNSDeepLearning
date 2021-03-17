@@ -13,7 +13,7 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	//(second IDX = 1)  == (first IDX = 2 ~ 3)
 	//int i = threadIdx.x; // _input_size
 	//int j = threadIdx.y; // _train_data.size()
-	/*int j = threadIdx.x; // _train_data.size()
+	int j = threadIdx.x; // _train_data.size()
 
 	int index = (2 * j);
 
@@ -35,20 +35,7 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	}
 
 	 __syncthreads();
-	_dBias[0] += _a * (t - o);*/
-	
-	for (size_t i = 0; i < 6; ++i)
-	{
-		double o = Calculate(_TrainDataFirst[i * 2 + (i % 2)]);
-		double t = _TrainDataSecond[i];
-
-		for (size_t j = 0; j < _input_size; ++j)
-		{
-			_vWeight[j] += _a * (t - o) * _TrainDataFirst[i * 2 + j];
-		}
-
-		_dBias += _a * (t - o);
-	}
+	_dBias[0] += _a * (t - o);
 	
 	printf("%f %f %f", _dBias[0], _vWeight[0], _vWeight[1]);
 }
