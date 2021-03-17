@@ -20,6 +20,7 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	double t = (_TrainDataSecond[j]);
 
 	double wx = 0.0;
+	__syncthreads();
 	for (size_t k = 0; k < _input_size; ++k)
 	{
 		wx += _vWeight[k] * (_TrainDataFirst[index + k]);
@@ -27,6 +28,7 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 
 	double o = ReLU_Device(wx + _dBias[0]);
 
+	__syncthreads();
 	for (size_t k = 0; k < _input_size; ++k)
 	{
 		_vWeight[k] += _a * (t - o) * (_TrainDataFirst[index + k]);
