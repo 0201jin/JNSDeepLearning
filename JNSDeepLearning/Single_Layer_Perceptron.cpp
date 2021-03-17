@@ -141,7 +141,7 @@ void Neuron::Train(int _train_num, double _a, vector<pair<vector<double>, double
 	dim3 threads(m_input_size, _train_data.size());
 	//dim3 threads(1, _train_data.size());
 	//Trainning << <_train_num, threads >> > (m_input_size, _a, dBias, vWeight, dTrainFirst, dTrainSecond);
-	Trainning << <_train_num, _train_data.size()>> > (m_input_size, _a, dBias, vWeight, dTrainFirst, dTrainSecond);
+	Trainning << <_train_num, 1>> > (m_input_size, _a, dBias, vWeight, dTrainFirst, dTrainSecond);
 
 	cudaMemcpy(&m_dBias, dBias, sizeof(double), cudaMemcpyDeviceToHost);
 
