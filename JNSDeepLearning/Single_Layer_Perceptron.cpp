@@ -8,19 +8,13 @@ __device__ double ReLU_Device(int _x)
 __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 	double* _vWeight, double* _TrainDataFirst, double* _TrainDataSecond)
 {
-	//first는 2개씩 올라가야함.
-	//(second IDX = 0)  == (first IDX = 0 ~ 1)
-	//(second IDX = 1)  == (first IDX = 2 ~ 3)
-	//int i = threadIdx.x; // _input_size
-	//int j = threadIdx.y; // _train_data.size()
-	int j = threadIdx.x; // _train_data.size()
+	int j = blockIdx.y;
 
 	int index = (2 * j);
 
 	double t = (_TrainDataSecond[j]);
 
 	double wx = 0.0;
-	__syncthreads();
 	for (size_t k = 0; k < _input_size; ++k)
 	{
 		wx += _vWeight[k] * (_TrainDataFirst[index + k]);
@@ -28,24 +22,25 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 
 	double o = ReLU_Device(wx + _dBias[0]);
 
-	__syncthreads();
 	for (size_t k = 0; k < _input_size; ++k)
 	{
 		_vWeight[k] += _a * (t - o) * (_TrainDataFirst[index + k]);
 	}
 
-	 __syncthreads();
 	_dBias[0] += _a * (t - o);
-	
-	printf("%f %f %f", _dBias[0], _vWeight[0], _vWeight[1]);
+
+	printf("%d %f %f %f %f\n", index, _dBias[0], _TrainDataFirst[index], _TrainDataFirst[index + 1], t);
 }
 
 __global__ void printHelloCUDA()
 {
-	int j = threadIdx.x;
+	int i = threadIdx.x;
+	int j = threadIdx.y;
 
-	for (int i = 0; i < 100; i++)
-		printf("Hello CUDA! %d\n", i + (j * 100));
+	int k = blockIdx.x;
+	int l = blockIdx.y;
+
+	printf("%d %d %d %d\n", k, l, i, j);
 }
 
 Neuron::Neuron()
@@ -125,19 +120,20 @@ void Neuron::Train(int _train_num, double _a, vector<pair<vector<double>, double
 	cudaMalloc((void**)&dBias, sizeof(double));
 	cudaMemcpy(dBias, &m_dBias, sizeof(double), cudaMemcpyHostToDevice);
 
-	dim3 threads(m_input_size, _train_data.size());
+	dim3 threads(150, _train_data.size());
 	//dim3 threads(1, _train_data.size());
 	//Trainning << <_train_num, threads >> > (m_input_size, _a, dBias, vWeight, dTrainFirst, dTrainSecond);
-	Trainning << <_train_num, 1>> > (m_input_size, _a, dBias, vWeight, dTrainFirst, dTrainSecond);
+	Trainning << <threads, 1 >> > (m_input_size, _a, dBias, vWeight, dTrainFirst, dTrainSecond);
 
 	cudaMemcpy(&m_dBias, dBias, sizeof(double), cudaMemcpyDeviceToHost);
+	cudaMemcpy(m_vWeight, vWeight, sizeof(double) * 2, cudaMemcpyDeviceToHost);
 
-	cout << " Bidas: " << m_dBias << endl;
+	//cout << " Bidas: " << m_dBias << endl;
 
-	/*cudaFree(vWeight);
+	cudaFree(vWeight);
 	cudaFree(dTrainFirst);
 	cudaFree(dTrainSecond);
-	cudaFree(dBias);*/
+	cudaFree(dBias);
 }
 
 void Neuron::Test()
