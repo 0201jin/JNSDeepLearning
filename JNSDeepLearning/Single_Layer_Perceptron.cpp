@@ -32,6 +32,7 @@ __global__ void Trainning(size_t _input_size, double _a, double* _dBias,
 		_vWeight[k] += _a * (t - o) * (_TrainDataFirst[index + k]);
 	}
 
+	 __syncthreads();
 	_dBias[0] += _a * (t - o);
 	
 	printf("%f %f %f", _dBias[0], _vWeight[0], _vWeight[1]);
