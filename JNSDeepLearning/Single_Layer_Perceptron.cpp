@@ -5,7 +5,7 @@ __device__ double Cuda_ReLU(double _x)
 	return _x > 0 ? _x : 0;
 }
 
-__global__ void Cuda_Calculate(double* d_Bias, double* d_Weight, double* Train_First, double* o)
+__global__ void CUDA_Calculate(double* d_Bias, double* d_Weight, double* Train_First, double* o)
 {
 	int x = threadIdx.x;
 	
@@ -19,8 +19,11 @@ __global__ void Cuda_Calculate(double* d_Bias, double* d_Weight, double* Train_F
 		o[0] = Cuda_ReLU(wx + d_Bias[0]);
 }
 
-__global__ void Cuda_CalWeight(double* dWeight, double a, double t, double o, double* TrainData)
+__global__ void CUDA_CalWeight(double* dWeight, double a, double t, double o, double* TrainData)
 {
+	int x = threadIdx.x;
+	
+	dWeight[x] += a * (t - o) * TrainData[x];
 }
 
 Neuron::Neuron()
