@@ -24,7 +24,7 @@ int main()
 	//		{vector<double>({8, 5}).data(), 3}
 	//	});
 
-	Plus_Neuron.Train(1, 0.1f,
+	Plus_Neuron.Train(500, 0.1f,
 		{
 			//트레이닝셋(지도학습)
 			{{0, 0}, 0},
@@ -37,7 +37,7 @@ int main()
 		});
 
 	std::cout.setf(ios::fixed);
-	std::cout.precision(5);
+	std::cout.precision(10);
 	std::cout << "0 - 0 = " << Plus_Neuron.Calculate({ 0, 0 }) << endl;
 	std::cout << "1 - 0 = " << Plus_Neuron.Calculate({ 1, 0 }) << endl;
 	std::cout << "2 - 1 = " << Plus_Neuron.Calculate({ 2, 1 }) << endl;
