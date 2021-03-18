@@ -1,5 +1,28 @@
 #include "Single_Layer_Perceptron.h"
 
+__device__ double Cuda_ReLU(double _x)
+{
+	return _x > 0 ? _x : 0;
+}
+
+__global__ void Cuda_Calculate(double* d_Bias, double* d_Weight, double* Train_First, double* o)
+{
+	int x = threadIdx.x;
+	
+	__shared__ double wx = 0.0;
+
+	wx += d_Weight[x] * Train_First[x];
+
+	__syncthreads();
+	
+	if(x == 0)
+		o[0] = Cuda_ReLU(wx + d_Bias[0]);
+}
+
+__global__ void Cuda_CalWeight(double* dWeight, double a, double t, double o, double* TrainData)
+{
+}
+
 Neuron::Neuron()
 {
 }
