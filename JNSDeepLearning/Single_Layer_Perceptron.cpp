@@ -19,7 +19,7 @@ __global__ void CUDA_Calculate(double* d_Bias, double* d_Weight, double* Train_F
 		o[0] = Cuda_ReLU(wx + d_Bias[0]);
 }
 
-__global__ void CUDA_CalWeight(double* dWeight, double a, double t, double o, double* TrainData)
+__global__ void CUDA_CalWeight(double* dWeight, double* TrainData, double a, double t, double o)
 {
 	int x = threadIdx.x;
 	
@@ -74,16 +74,31 @@ void Neuron::Train(int _train_num, double _a, vector<pair<vector<double>, double
 	if (input_size != m_input_size)
 		cout << "input_size != Weights_.size()" << endl;
 
+	double* vWeight;
+	cudaMalloc((void**)&vWeight, sizeof(double) * m_input_size);
+	cudaMemcpy(vWeight, m_vWeight, sizeof(double) * m_input_size, cudaMemcpyHostToDevice);
+
+	double* dBias;
+	cudaMalloc((void**)&dBias, sizeof(double));
+	cudaMemcpy(dBias, &m_dBias, sizeof(double), cudaMemcpyHostToDevice);
+	
 	for (size_t i = 0; i < _train_data.size(); ++i)
 	{
-		double o = Calculate(_train_data[i].first);
 		double t = _train_data[i].second;
-
-		for (size_t j = 0; j < input_size; ++j)
-		{
-			m_vWeight[j] += _a * (t - o) * _train_data[i].first[j];
-		}
-
+		
+		double o = 0;
+		double* po = 0;
+		cudaMalloc((void**)&po, sizeof(double));
+		cudaMemcpy(po, &o, sizeof(double), cudaMemcpyHostToDevice);
+		
+		double* pTrainData = _train_data[i].first.data();
+		
+		CUDA_Calculate<<<1, m_input_size>>>(dBias, vWeight, pTrainData, po);
+		
+		cudaMemcpy(&o, po, sizeof(double), cudaMemcpyDeviceToHost);
+		
+		CUDA_CalWeight<<<1, m_input_size>>>(vWeight, pTrainData, _a, t, o);
+		
 		m_dBias += _a * (t - o);
 	}
 }
