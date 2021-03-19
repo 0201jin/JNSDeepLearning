@@ -74,28 +74,28 @@ double Neuron::Calculate(const vector<double>& _x)
 
 void Neuron::Train(int _train_num, double _a, vector<pair<vector<double>, double>> _train_data)
 {
-	/*size_t input_size = _train_data[0].first.size();
+	size_t input_size = _train_data[0].first.size();
 
 	if (input_size != m_input_size)
 		cout << "input_size != Weights_.size()" << endl;
 
 	for (int j = 0; j < _train_num; j++)
-	for (size_t i = 0; i < _train_data.size(); ++i)
 	{
-		double o = Calculate(_train_data[i].first);
-		double t = _train_data[i].second;
-
-		for (size_t j = 0; j < input_size; ++j)
+		for (size_t i = 0; i < _train_data.size(); ++i)
 		{
-			m_vWeight[j] += _a * (t - o) * _train_data[i].first[j];
+			double o = Calculate(_train_data[i].first);
+			double t = _train_data[i].second;
+
+			for (size_t j = 0; j < input_size; ++j)
+			{
+				m_vWeight[j] += _a * (t - o) * _train_data[i].first[j];
+			}
+
+			m_dBias += _a * (t - o);
 		}
+	}
 
-		m_dBias += _a * (t - o);
-
-		printf("%f\n", m_dBias);
-	}*/
-
-	size_t input_size = _train_data[0].first.size();
+	/*size_t input_size = _train_data[0].first.size();
 
 	if (input_size != m_input_size)
 		cout << "input_size != Weights_.size()" << endl;
@@ -138,7 +138,7 @@ void Neuron::Train(int _train_num, double _a, vector<pair<vector<double>, double
 			cudaFree(vWeight);
 			cudaFree(dBias);
 		}
-	}
+	}*/
 }
 
 void Neuron::Test()
