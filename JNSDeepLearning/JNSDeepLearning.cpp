@@ -2,48 +2,61 @@
 #include <cuda_runtime.h>
 
 #include "Single_Layer_Perceptron.h"
+#include "Multi_Layer_Perceptron/Multi_Layer_Perceptron.h"
 
 using namespace std;
 
 #define DATA_NUM 4
 #define WEIGHT_NUM 3
 
-int main()
+void Single_Neuron_Run()
 {
-	Neuron Plus_Neuron(2);
+	Single_Neuron Plus_Neuron(2);
 
-	//Plus_Neuron.Train(1000, 0.1f,
-	//	{
-	//		//트레이닝셋(지도학습)
-	//		{vector<double>({0, 0}).data(), 0},
-	//		{vector<double>({1, 0}).data(), 1},
-	//		{vector<double>({2, 1}).data(), 1},
-	//		{vector<double>({3, 1}).data(), 2},
-	//		{vector<double>({2, 2}).data(), 0},
-	//		{vector<double>({3, 2}).data(), 1},
-	//		{vector<double>({8, 5}).data(), 3}
-	//	});
-
-	Plus_Neuron.Train(500, 0.1f,
+	Plus_Neuron.Train(100000, 0.1f,
 		{
 			//트레이닝셋(지도학습)
 			{{0, 0}, 0},
 			{{1, 0}, 1},
-			{{2, 1}, 1},
-			{{3, 1}, 2},
-			{{2, 2}, 0},
-			{{3, 2}, 1},
-			{{8, 5}, 3}
+			{{2, 1}, 3},
+			{{3, 1}, 4},
+			{{2, 2}, 4},
+			{{3, 2}, 5},
+			{{8, 5}, 13}
 		});
 
-	std::cout.setf(ios::fixed);
-	std::cout.precision(10);
-	std::cout << "0 - 0 = " << Plus_Neuron.Calculate({ 0, 0 }) << endl;
-	std::cout << "1 - 0 = " << Plus_Neuron.Calculate({ 1, 0 }) << endl;
-	std::cout << "2 - 1 = " << Plus_Neuron.Calculate({ 2, 1 }) << endl;
-	std::cout << "3 - 1 = " << Plus_Neuron.Calculate({ 3, 1 }) << endl;
-	std::cout << "4 - 2 = " << Plus_Neuron.Calculate({ 4, 2 }) << endl;
-	std::cout << "50 - 5 = " << Plus_Neuron.Calculate({ 50, 5 }) << endl;
+	cout.setf(ios::fixed);
+	cout.precision(10);
+	cout << "0 + 0 = " << Plus_Neuron.Calculate({ 0, 0 }) << endl;
+	cout << "1 + 0 = " << Plus_Neuron.Calculate({ 1, 0 }) << endl;
+	cout << "2 + 1 = " << Plus_Neuron.Calculate({ 2, 1 }) << endl;
+	cout << "3 + 1 = " << Plus_Neuron.Calculate({ 3, 1 }) << endl;
+	cout << "4 + 2 = " << Plus_Neuron.Calculate({ 4, 2 }) << endl;
+	cout << "50 + 5 = " << Plus_Neuron.Calculate({ 50, 5 }) << endl;
+	cout << "50 + 5 = " << Plus_Neuron.Calculate({ 150, 5 }) << endl;
+}
+
+void Muli_Nueron_Run()
+{
+	ML_Network net({ 2, 4, 1 });
+
+	net.Train_Network(100000, 0.2,
+		{
+			{ { 0, 0 }, { 0 } },
+			{ { 1, 0 }, { 1 } },
+			{ { 0, 1 }, { 1 } },
+			{ { 1, 1 }, { 0 } },
+		});
+
+	cout << "0 xor 0 = " << net.Calculate({ 0, 0 })[0] << '\n';
+	cout << "1 xor 0 = " << net.Calculate({ 1, 0 })[0] << '\n';
+	cout << "0 xor 1 = " << net.Calculate({ 0, 1 })[0] << '\n';
+	cout << "1 xor 1 = " << net.Calculate({ 1, 1 })[0] << '\n';
+}
+
+int main()
+{
+	Muli_Nueron_Run();
 
 	return 0;
 }

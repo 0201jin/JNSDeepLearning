@@ -15,6 +15,9 @@
     <Filter Include="소스 파일\Perceptron\Single_Layer_Perceptron">
       <UniqueIdentifier>{a71fd1ce-9463-4bca-b615-c707e4dedde6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Perceptron\Multi_Layer_Perceptron">
+      <UniqueIdentifier>{9143d6e7-67d0-4b70-9372-d7be83e317c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="JNSDeepLearning.cpp">
@@ -23,6 +26,9 @@
     <CudaCompile Include="Single_Layer_Perceptron.cpp">
       <Filter>소스 파일\Perceptron\Single_Layer_Perceptron</Filter>
     </CudaCompile>
+    <CudaCompile Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.cpp">
+      <Filter>소스 파일\Perceptron\Multi_Layer_Perceptron</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Single_Layer_Perceptron.h">
@@ -30,6 +36,9 @@
     </ClInclude>
     <ClInclude Include="Activation_Function.h">
       <Filter>소스 파일\Perceptron</Filter>
+    </ClInclude>
+    <ClInclude Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.h">
+      <Filter>소스 파일\Perceptron\Multi_Layer_Perceptron</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

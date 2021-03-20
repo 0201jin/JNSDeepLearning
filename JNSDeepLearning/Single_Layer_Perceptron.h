@@ -13,14 +13,14 @@ using namespace Activation_Function;
 using namespace std;
 
 
-class Neuron
+class Single_Neuron
 {
 public:
-	Neuron();
-	Neuron(size_t _input_size);
-	double Calculate(const std::vector<double>& _x);
-	//void Train(int _train_num, double _a, const vector<pair<double*, double>> _train_data);
+	Single_Neuron();
+	Single_Neuron(size_t _input_size);
+	double Calculate(const vector<double>& _x);
 	void Train(int _train_num, double _a, vector<pair<vector<double>, double>> _train_data);
+	void CUDA_Train(int _train_num, double _a, vector<pair<vector<double>, double>> _train_data);
 	void Test();
 
 private:
