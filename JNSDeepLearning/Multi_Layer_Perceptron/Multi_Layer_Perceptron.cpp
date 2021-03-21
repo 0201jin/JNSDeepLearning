@@ -8,7 +8,7 @@ ML_Neuron::ML_Neuron(int _input_size)
 	Reset();
 }
 
-double ML_Neuron::Calculate(const std::vector<double>& _x) const
+double ML_Neuron::Calculate_Sigmoid(const std::vector<double>& _x) const
 {
 	double wx = 0.0;
 
@@ -23,7 +23,37 @@ double ML_Neuron::Calculate(const std::vector<double>& _x) const
 	return Sigmoid(m_LastV);
 }
 
-void ML_Neuron::Train_Neuron(double _a, double _e, const vector<double>& _Train_Data)
+double ML_Neuron::Calculate_ELU(const std::vector<double>& _x) const
+{
+	double wx = 0.0;
+
+	for (int i = 0; i < m_input_size; ++i)
+	{
+		wx += m_vWeight[i] * _x[i];
+	}
+
+	m_LastV = wx + m_dBias;
+	m_LastX = _x;
+
+	return ELU(m_LastV);
+}
+
+double ML_Neuron::Calculate_ReLU(const std::vector<double>& _x) const
+{
+	double wx = 0.0;
+
+	for (int i = 0; i < m_input_size; ++i)
+	{
+		wx += m_vWeight[i] * _x[i];
+	}
+
+	m_LastV = wx + m_dBias;
+	m_LastX = _x;
+
+	return ReLU(m_LastV);
+}
+
+void ML_Neuron::Train_Neuron_Sigmoid(double _a, double _e, const vector<double>& _Train_Data)
 {
 	for (int i = 0; i < m_input_size; ++i)
 	{
@@ -32,6 +62,33 @@ void ML_Neuron::Train_Neuron(double _a, double _e, const vector<double>& _Train_
 
 	m_dBias += _a * Sigmoid_Derivative(m_LastV) * _e;
 	m_LastD = Sigmoid_Derivative(m_LastV) * _e;
+}
+
+void ML_Neuron::Train_Neuron_ReLU(double _a, double _e, const vector<double>& _Train_Data)
+{
+	for (int i = 0; i < m_input_size; ++i)
+	{
+		m_vWeight[i] += _a * ReLU_Derivative(m_LastV) * _e * _Train_Data[i];
+	}
+
+	m_dBias += _a * ReLU_Derivative(m_LastV) * _e;
+	m_LastD = ReLU_Derivative(m_LastV) * _e;
+}
+
+void ML_Neuron::Train_Neuron_ELU(double _a, double _e, const vector<double>& _Train_Data)
+{
+	for (int i = 0; i < m_input_size; ++i)
+	{
+		m_vWeight[i] += _a * ELU_Derivative(m_LastV) * _e * _Train_Data[i];
+	}
+
+	m_dBias += _a * ELU_Derivative(m_LastV) * _e;
+	m_LastD = ELU_Derivative(m_LastV) * _e;
+}
+
+void ML_Neuron::Train_Neuron(double _a, double _e, const vector<double>& _Train_Data)
+{
+	Train_Neuron_ELU(_a, _e, _Train_Data);
 }
 
 void ML_Neuron::Reset()
@@ -76,10 +133,16 @@ vector<double> ML_Network::Calculate(const vector<double>& _vx)
 	{
 		vResult.clear();
 
-		for (int j = 0; j < m_vLayers[i].size(); ++j)
-		{
-			vResult.push_back(m_vLayers[i][j].Calculate(v_x_next_layer));
-		}
+		if (i != m_vLayers.size() - 1)
+			for (int j = 0; j < m_vLayers[i].size(); ++j)
+			{
+				vResult.push_back(m_vLayers[i][j].Calculate_ELU(v_x_next_layer));
+			}
+		else
+			for (int j = 0; j < m_vLayers[i].size(); ++j)
+			{
+				vResult.push_back(m_vLayers[i][j].Calculate_Sigmoid(v_x_next_layer));
+			}
 
 		v_x_next_layer = vResult;
 	}
@@ -93,6 +156,7 @@ void ML_Network::Train_Network(int _TrainNum, double _a, const vector<pair<vecto
 	{
 		for (int j = 0; j < _Train_Data.size(); ++j)
 		{
+			//출력
 			//cout << i << " " << j << endl;
 			vector<double> o = Calculate(_Train_Data[j].first);
 			vector<double> e;
@@ -101,17 +165,18 @@ void ML_Network::Train_Network(int _TrainNum, double _a, const vector<pair<vecto
 			{
 				e.push_back(_Train_Data[j].second[k] - o[k]);
 			}
-			
+
 			vector<double> vLastD;
 			for (int k = 0; k < m_vLayers[m_vLayers.size() - 1].size(); ++k)
 			{
-				m_vLayers[m_vLayers.size() - 1][k].Train_Neuron(_a, e[k], m_vLayers[m_vLayers.size() - 1][k].GetLastX());
+				m_vLayers[m_vLayers.size() - 1][k].Train_Neuron_Sigmoid(_a, e[k], m_vLayers[m_vLayers.size() - 1][k].GetLastX());
 				vLastD.push_back(m_vLayers[m_vLayers.size() - 1][k].GetLastD());
 			}
 
 			if (m_vLayers.size() == 1)
 				continue;
 
+			//은닉
 			for (int k = m_vLayers.size() - 2; k >= 0; --k)
 			{
 				vector<double> new_vLastD;

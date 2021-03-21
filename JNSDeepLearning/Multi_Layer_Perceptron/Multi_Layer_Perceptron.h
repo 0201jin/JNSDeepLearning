@@ -15,7 +15,13 @@ class ML_Neuron
 {
 public:
 	ML_Neuron(int _input_size);
-	double Calculate(const std::vector<double>& _x) const;
+	double Calculate_Sigmoid(const std::vector<double>& _x) const;
+	double Calculate_ELU(const std::vector<double>& _x) const;
+	double Calculate_ReLU(const std::vector<double>& _x) const;
+
+	void Train_Neuron_Sigmoid(double _a, double _e, const vector<double>& _Train_Data);
+	void Train_Neuron_ReLU(double _a, double _e, const vector<double>& _Train_Data);
+	void Train_Neuron_ELU(double _a, double _e, const vector<double>& _Train_Data);
 	void Train_Neuron(double _a, double _e, const vector<double>& _Train_Data);
 
 	int GetInputSize() const

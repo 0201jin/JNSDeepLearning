@@ -40,7 +40,7 @@ void Muli_Nueron_Run()
 {
 	ML_Network net({ 2, 4, 1 });
 
-	net.Train_Network(100000, 0.2,
+	net.Train_Network(10000, 0.1,
 		{
 			{ { 0, 0 }, { 0 } },
 			{ { 1, 0 }, { 1 } },

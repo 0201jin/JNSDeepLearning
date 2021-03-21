@@ -10,9 +10,9 @@ namespace Activation_Function
 		return 1 / (1 + exp(-_x));
 	}
 
-	static double Sigmoid_Derivative(double x)
+	static double Sigmoid_Derivative(double _x)
 	{
-		double y = Sigmoid(x);
+		double y = Sigmoid(_x);
 		return y * (1 - y);
 	}
 
@@ -28,7 +28,16 @@ namespace Activation_Function
 
 	static double ReLU_Derivative(double _x)
 	{
-		double y = ReLU(_x);
-		return 0;
+		return _x > 0 ? 1 : 0;
+	}
+
+	static double ELU(double _x, double _a = 1)
+	{
+		return  _x > 0 ? _x : _a * (exp(_x) - 1);
+	}
+
+	static double ELU_Derivative(double _x, double _a = 1)
+	{
+		return _x > 0 ? 1 : ELU(_x, _a) + _a;
 	}
 };
