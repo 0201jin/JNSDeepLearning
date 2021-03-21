@@ -38,20 +38,23 @@ void Single_Neuron_Run()
 
 void Muli_Nueron_Run()
 {
-	ML_Network net({ 2, 4, 1 });
+	ML_Network net({ 2, 4, 4, 4, 1 });
 
 	net.Train_Network(10000, 0.1,
 		{
-			{ { 0, 0 }, { 0 } },
 			{ { 1, 0 }, { 1 } },
-			{ { 0, 1 }, { 1 } },
-			{ { 1, 1 }, { 0 } },
+			{ { 1, 1 }, { 1 } },			
+			{ { 0, 1 }, { 0 } },
+			{ { 1, 0 }, { 0 } },
 		});
 
-	cout << "0 xor 0 = " << net.Calculate({ 0, 0 })[0] << '\n';
-	cout << "1 xor 0 = " << net.Calculate({ 1, 0 })[0] << '\n';
-	cout << "0 xor 1 = " << net.Calculate({ 0, 1 })[0] << '\n';
-	cout << "1 xor 1 = " << net.Calculate({ 1, 1 })[0] << '\n';
+	printf("0 == 1 = %f\n", net.Calculate({ 0, 1 })[0]);
+	printf("%d\n", 'A');
+	/*printf("0 xor 0 = %f %f\n", net.Calculate({ 0, 0 })[0], net.Calculate({ 0, 0 })[1]);
+	printf("1 xor 0 = %f %f\n", net.Calculate({ 1, 0 })[0], net.Calculate({ 1, 0 })[1]);
+	printf("0 xor 1 = %f %f\n", net.Calculate({ 0, 1 })[0], net.Calculate({ 0, 1 })[1]);
+	printf("1 xor 1 = %f %f\n", net.Calculate({ 1, 1 })[0], net.Calculate({ 1, 1 })[1]);
+	printf("2 xor 1 = %f %f\n", net.Calculate({ 2, 1 })[0], net.Calculate({ 2, 1 })[1]);*/
 }
 
 int main()

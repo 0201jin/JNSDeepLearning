@@ -157,7 +157,6 @@ void ML_Network::Train_Network(int _TrainNum, double _a, const vector<pair<vecto
 		for (int j = 0; j < _Train_Data.size(); ++j)
 		{
 			//출력
-			//cout << i << " " << j << endl;
 			vector<double> o = Calculate(_Train_Data[j].first);
 			vector<double> e;
 
