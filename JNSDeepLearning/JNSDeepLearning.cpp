@@ -3,6 +3,7 @@
 
 #include "Single_Layer_Perceptron.h"
 #include "Multi_Layer_Perceptron/Multi_Layer_Perceptron.h"
+#include "LSTM/LSTM_Layer/LSTM_Layer.h"
 
 using namespace std;
 
@@ -57,9 +58,16 @@ void Muli_Nueron_Run()
 	printf("2 xor 1 = %f %f\n", net.Calculate({ 2, 1 })[0], net.Calculate({ 2, 1 })[1]);*/
 }
 
+void LSTM_Run()
+{
+	LSTM_Network net;
+
+	printf("%f", net.Calculate({ 1, 1 })[0]);
+}
+
 int main()
 {
-	Muli_Nueron_Run();
+	LSTM_Run();
 
 	return 0;
 }
