@@ -1,5 +1,12 @@
 #include "LSTM_Layer.h"
 
+__global__ void CUDA_LSTM_CalGate(double* _XWeight, double* _HWeight, double _H, double _Bias, double _Input, double* Result)
+{
+	int x = threadIdx.x;
+
+	Result[x] = _XWeight[x] * _Input + _HWeight[x] * _H + _Bias;
+}
+
 LSTM_Layer::LSTM_Layer()
 {
 	random_device rd;
