@@ -1,10 +1,15 @@
 #include "LSTM_Layer.h"
 
-__global__ void CUDA_LSTM_CalGate(double* _XWeight, double* _HWeight, double _H, double _Bias, double _Input, double* Result)
+__global__ void CUDA_LSTM_CalGate(double* _XWeight, double* _HWeight, double* _Bias, double _H, double _Input, double* Result)
 {
 	int x = threadIdx.x;
 
-	Result[x] = _XWeight[x] * _Input + _HWeight[x] * _H + _Bias;
+	Result[x] = _XWeight[x] * _Input + _HWeight[x] * _H + _Bias[x];
+}
+
+__global__ void CUDA_LSTM_BackPropagation(double* _XWeight, double* _HWeight, double* _Bias, double _H, double* _Gate)
+{
+	
 }
 
 LSTM_Layer::LSTM_Layer()
@@ -17,6 +22,7 @@ LSTM_Layer::LSTM_Layer()
 	{
 		m_dXWeight[i] = dist(random);
 		m_dHWeight[i] = dist(random);
+		m_dBias[i] = -1;
 	}
 }
 
@@ -28,30 +34,39 @@ vector<double> LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<doub
 
 	if (_InputData.size() <= Count)
 	{
-		dOutput.push_back(_H);
+		dOutput.clear();
+		Count = 0;
+
+		double v = m_VWeight * _H + m_VBias;
+		dOutput.push_back(v);
 
 		return dOutput;
 	}
 
-	double g, i, o, f, c, h;
+	//double g, i, o, f, c, h;
+	double c, h;
+	double* Gate = (double*)malloc(sizeof(double) * 4);
 
 	/*
 	* Tanh는 ReLU로 바꿔서 사용할 수 있음
 	*/
 
-	//입력 게이트
-	i = Sigmoid(m_dXWeight[0] * _InputData[Count] + m_dHWeight[0] * _H + m_dBias[0]);
-	g = Tanh(m_dXWeight[1] * _InputData[Count] + m_dHWeight[1] * _H + m_dBias[1]);
+	double* pGate, *pXWeight, *pHWeight, *pBias = 0;
+	cudaMalloc((void**)&pGate, sizeof(double) * 4);
+	cudaMalloc((void**)&pXWeight, sizeof(double) * 4);
+	cudaMalloc((void**)&pHWeight, sizeof(double) * 4);
+	cudaMalloc((void**)&pBias, sizeof(double) * 4);
 
-	//삭제 게이트
-	f = Sigmoid(m_dXWeight[2] * _InputData[Count] + m_dHWeight[2] * _H + m_dBias[2]);
+	cudaMemcpy(pXWeight, m_dXWeight, sizeof(double) * 4, cudaMemcpyHostToDevice);
+	cudaMemcpy(pHWeight, m_dHWeight, sizeof(double) * 4, cudaMemcpyHostToDevice);
+	cudaMemcpy(pBias, m_dBias, sizeof(double) * 4, cudaMemcpyHostToDevice);
 
-	//셀
-	c = f * _C + i * g;
+	CUDA_LSTM_CalGate<<<1, 4>>>(pXWeight, pHWeight, pBias, _H, _InputData[Count], pGate);
 
-	//출력
-	o = Sigmoid(m_dXWeight[3] * _InputData[Count] + m_dHWeight[3] * _H + m_dBias[3]);
-	h = o * Tanh(c);
+	cudaMemcpy(Gate, pGate, sizeof(double) * 4, cudaMemcpyDeviceToHost);
+
+	c = Gate[2] * _C + Gate[0] * Gate[1];
+	h = Gate[3] * Tanh(c);
 
 	Count++;
 
@@ -60,11 +75,41 @@ vector<double> LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<doub
 	return dOutput;
 }
 
+void LSTM_Layer::Train_M2O(double _e, double _a, const vector<vector<double>>& _TrainData)
+{
+	double* Gate = (double*)malloc(sizeof(double) * 4);
+
+	double* pGate, * pXWeight, * pHWeight, * pBias = 0;
+	cudaMalloc((void**)&pGate, sizeof(double) * 4);
+	cudaMalloc((void**)&pXWeight, sizeof(double) * 4);
+	cudaMalloc((void**)&pHWeight, sizeof(double) * 4);
+	cudaMalloc((void**)&pBias, sizeof(double) * 4);
+
+	cudaMemcpy(pXWeight, m_dXWeight, sizeof(double) * 4, cudaMemcpyHostToDevice);
+	cudaMemcpy(pHWeight, m_dHWeight, sizeof(double) * 4, cudaMemcpyHostToDevice);
+	cudaMemcpy(pBias, m_dBias, sizeof(double) * 4, cudaMemcpyHostToDevice);
+
+	//역전파 함수 실행 위치
+
+	cudaMemcpy(Gate, pGate, sizeof(double) * 4, cudaMemcpyDeviceToHost);
+	cudaMemcpy(pXWeight, m_dXWeight, sizeof(double) * 4, cudaMemcpyDeviceToHost);
+	cudaMemcpy(pHWeight, m_dHWeight, sizeof(double) * 4, cudaMemcpyDeviceToHost);
+	cudaMemcpy(pBias, m_dBias, sizeof(double) * 4, cudaMemcpyDeviceToHost);
+}
+
 LSTM_Network::LSTM_Network()
 {
 }
 
-vector<double> LSTM_Network::Calculate(const vector<double>& _InputData)
+vector<double> LSTM_Network::Calculate_M2O(const vector<double>& _InputData)
 {
 	return m_Layer.Calculate_M2O(0, 0, _InputData);
+}
+
+void LSTM_Network::Train_M2O(const vector<vector<double>>& _TrainData)
+{
+	for (int i = 0; i < _TrainData.size(); ++i)
+	{
+		double e = _TrainData[i][0] - m_Layer.Calculate_M2O(0, 0, _TrainData[i])[0];
+	}
 }

@@ -35,6 +35,12 @@
     <CudaCompile Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.cpp">
       <Filter>소스 파일\Perceptron\Multi_Layer_Perceptron</Filter>
     </CudaCompile>
+    <CudaCompile Include="LSTM\LSTM_Layer\LSTM_Layer.cpp">
+      <Filter>소스 파일\LSTM\LSTM_Layer</Filter>
+    </CudaCompile>
+    <CudaCompile Include="LSTM\LSTM_Layer\LSTM_Layer.h">
+      <Filter>소스 파일\LSTM\LSTM_Layer</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Single_Layer_Perceptron.h">
@@ -46,13 +52,5 @@
     <ClInclude Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.h">
       <Filter>소스 파일\Perceptron\Multi_Layer_Perceptron</Filter>
     </ClInclude>
-    <ClInclude Include="LSTM\LSTM_Layer\LSTM_Layer.h">
-      <Filter>소스 파일\LSTM\LSTM_Layer</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="LSTM\LSTM_Layer\LSTM_Layer.cpp">
-      <Filter>소스 파일\LSTM\LSTM_Layer</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

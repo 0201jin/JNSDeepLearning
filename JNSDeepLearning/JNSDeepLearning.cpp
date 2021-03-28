@@ -44,7 +44,7 @@ void Muli_Nueron_Run()
 	net.Train_Network(10000, 0.1,
 		{
 			{ { 1, 0 }, { 1 } },
-			{ { 1, 1 }, { 1 } },			
+			{ { 1, 1 }, { 1 } },
 			{ { 0, 1 }, { 0 } },
 			{ { 1, 0 }, { 0 } },
 		});
@@ -62,12 +62,13 @@ void LSTM_Run()
 {
 	LSTM_Network net;
 
-	printf("%f", net.Calculate({ 1, 1 })[0]);
+	printf("%f", net.Calculate_M2O({ 1, 1 })[0]);
 }
 
 int main()
 {
-	LSTM_Run();
+	for (int i = 0; i < 2; ++i)
+		LSTM_Run();
 
 	return 0;
 }
