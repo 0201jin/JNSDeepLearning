@@ -62,7 +62,7 @@ void LSTM_Run()
 {
 	LSTM_Network net;
 
-	printf("%f", net.Calculate_M2O({ 1, 1 })[0]);
+	printf("%f", net.Calculate_M2O({ 1, 1 }));
 }
 
 int main()
