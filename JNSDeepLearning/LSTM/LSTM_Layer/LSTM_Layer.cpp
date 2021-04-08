@@ -78,7 +78,7 @@ double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _In
 void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector<double>& _InputData)
 {
 	//시작 C,H는 어떻게 할지
-	
+	//시작 CH는 Mem_CH[0]임
 	
 }
 
