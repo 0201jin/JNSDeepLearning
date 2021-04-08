@@ -21,6 +21,11 @@ LSTM_Layer::LSTM_Layer()
 	}
 }
 
+void LSTM_Layer::ClearLayer()
+{
+	Mem_CH.clear();
+}
+
 //Many2One
 double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _InputData)
 {
@@ -41,7 +46,7 @@ double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _In
 	}
 
 	/*
-	* Tanh´Â ReLU·Î ¹Ù²ã¼­ »ç¿ëÇÒ ¼ö ÀÖÀ½
+	* TanhëŠ” ReLUë¡œ ë°”ê¿”ì„œ ì‚¬ìš©í•  ìˆ˜ ìˆìŒ
 	*/
 
 	double* pGate, * pXWeight, * pHWeight, * pBias = 0;
@@ -61,7 +66,7 @@ double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _In
 	c = Gate[2] * _C + Gate[0] * Gate[1];
 	h = Gate[3] * Tanh(c);
 
-	Mem_CH.push_back(pair<double, double>(c, h));
+	Mem_CH.push_back(pair<double, double>(c, h)); //C,H ë°ì´í„°ë¥¼ ì €ì¥
 
 	Count++;
 
@@ -72,14 +77,16 @@ double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _In
 
 void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector<double>& _InputData)
 {
-	//½ÃÀÛ C,H´Â ¾î¶»°Ô ÇÒÁö 
+	//ì‹œì‘ C,HëŠ” ì–´ë–»ê²Œ í• ì§€
+	
+	
 }
 
 void LSTM_Layer::Train_M2O(double _e, double _a, const vector<double>& _TrainData)
 {
 	BackWardPass_M2O(c, h, _e, _TrainData);
 
-	Mem_CH.clear();
+	ClearLayer();
 }
 
 LSTM_Network::LSTM_Network()
@@ -88,6 +95,7 @@ LSTM_Network::LSTM_Network()
 
 double LSTM_Network::Calculate_M2O(const vector<double>& _InputData)
 {
+	m_Layer.ClearLayer();
 	return m_Layer.Calculate_M2O(0, 0, _InputData);
 }
 
@@ -95,7 +103,7 @@ void LSTM_Network::Train_M2O(const vector<pair<vector<double>, double>>& _TrainD
 {
 	for (int i = 0; i < _TrainData.size(); ++i)
 	{
-		double e = _TrainData[i].second - m_Layer.Calculate_M2O(0, 0, _TrainData[i].first);
+		double e = _TrainData[i].second - Calculate_M2O(_TrainData[i].first);
 
 		m_Layer.Train_M2O(e, 0.1, _TrainData[i].first);
 	}
