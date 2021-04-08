@@ -23,6 +23,7 @@ LSTM_Layer::LSTM_Layer()
 
 void LSTM_Layer::ClearLayer()
 {
+	Mem_Gate.clear();
 	Mem_CH.clear();
 }
 
@@ -33,7 +34,7 @@ double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _In
 	static int Count = 0;
 
 	//double g, i, o, f, c, h;
-	static double* Gate = (double*)malloc(sizeof(double) * 4);
+	double* Gate = (double*)malloc(sizeof(double) * 4);
 
 	if (_InputData.size() <= Count)
 	{
@@ -66,6 +67,7 @@ double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _In
 	c = Gate[2] * _C + Gate[0] * Gate[1];
 	h = Gate[3] * Tanh(c);
 
+	Mem_Gate.push_back(vector<double>({ Gate[0], Gate[1], Gate[2], Gate[3] })); //Gate 데이터를 저장
 	Mem_CH.push_back(pair<double, double>(c, h)); //C,H 데이터를 저장
 
 	Count++;
@@ -79,12 +81,14 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 {
 	//시작 C,H는 어떻게 할지
 	//시작 CH는 Mem_CH[0]임
-	
+	static int Count = _InputData.size() - 1;
+
+	m_VWeight += _dV * Mem_CH[Count].second;
 }
 
 void LSTM_Layer::Train_M2O(double _e, double _a, const vector<double>& _TrainData)
 {
-	BackWardPass_M2O(c, h, _e, _TrainData);
+	BackWardPass_M2O(Mem_CH[0].first, Mem_CH[0].second, _e, _TrainData);
 
 	ClearLayer();
 }

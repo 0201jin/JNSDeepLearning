@@ -62,13 +62,19 @@ void LSTM_Run()
 {
 	LSTM_Network net;
 
+	for (int i = 0; i < 1000; ++i)
+		net.Train_M2O(
+			{
+				{{1, 1}, 1 }
+			}
+	);
+
 	printf("%f", net.Calculate_M2O({ 1, 1 }));
 }
 
 int main()
 {
-	for (int i = 0; i < 2; ++i)
-		LSTM_Run();
+	LSTM_Run();
 
 	return 0;
 }

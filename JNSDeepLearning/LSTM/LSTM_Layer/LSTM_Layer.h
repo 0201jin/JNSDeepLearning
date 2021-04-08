@@ -34,6 +34,7 @@ private:
 	double c, h;
 
 	vector<pair<double, double>> Mem_CH;
+	vector<vector<double>> Mem_Gate;
 };
 
 class LSTM_Network
