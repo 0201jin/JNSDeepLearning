@@ -16,6 +16,7 @@ class LSTM_Layer
 public:
 	LSTM_Layer();
 
+	void ClearLayer();
 	double Calculate_M2O(double _C, double _H, const vector<double>& _InputData);
 	void Train_M2O(double _e, double _a, const vector<double>& _TrainData);
 
