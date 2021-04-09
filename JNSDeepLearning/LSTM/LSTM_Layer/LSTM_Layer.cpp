@@ -82,8 +82,14 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 	//시작 C,H는 어떻게 할지
 	//시작 CH는 Mem_CH[0]임
 	static int Count = _InputData.size() - 1;
+	
+	if(Count < 0)
+		return;
 
 	m_VWeight += _dV * Mem_CH[Count].second;
+	
+	Count--;
+	//_C,_H를 계산후 재귀함수의 매개변수로 전달
 }
 
 void LSTM_Layer::Train_M2O(double _e, double _a, const vector<double>& _TrainData)
