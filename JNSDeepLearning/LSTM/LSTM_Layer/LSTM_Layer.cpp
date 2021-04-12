@@ -19,12 +19,17 @@ LSTM_Layer::LSTM_Layer()
 		m_dHWeight[i] = dist(random);
 		m_dBias[i] = -1;
 	}
+
+	ClearLayer();
 }
 
 void LSTM_Layer::ClearLayer()
 {
 	Mem_Gate.clear();
 	Mem_CH.clear();
+
+	Mem_Gate.push_back(vector<double>({ 0, 0, 0, 0 }));
+	Mem_CH.push_back(pair<double, double>(0, 0));
 }
 
 //Many2One
@@ -81,15 +86,29 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 {
 	//시작 C,H는 어떻게 할지
 	//시작 CH는 Mem_CH[0]임
-	static int Count = _InputData.size() - 1;
+	static int Count = _InputData.size();
 	
-	if(Count < 0)
+	if(Count < 1)
 		return;
 
 	m_VWeight += _dV * Mem_CH[Count].second;
-	
+	m_VBias += _dV;
+
+	double ddh = _H + m_VWeight * _dV;
+	double ddo = ddh * Tanh(Mem_CH[Count].first);
+	double ddc = _C + ddh * Mem_Gate[Count][2] * Tanh_Derivative(Mem_CH[Count].first);
+	double ddc_ = ddc * Mem_Gate[Count][1];
+	double ddi = ddc * ddc_;
+	double ddf = ddc * Mem_CH[Count].first;
+
+	double ddf_ = Sigmoid_Derivative(Mem_Gate[Count][3]) * ddf;
+	double ddi_ = Sigmoid_Derivative(Mem_Gate[Count][1]) * ddi;
+	double ddo_ = Sigmoid_Derivative(Mem_Gate[Count][2]) * ddo;
+
 	Count--;
+
 	//_C,_H를 계산후 재귀함수의 매개변수로 전달
+	BackWardPass_M2O(_C, _H, _dV, _InputData);
 }
 
 void LSTM_Layer::Train_M2O(double _e, double _a, const vector<double>& _TrainData)
