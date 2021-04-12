@@ -106,6 +106,7 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 	double ddo_ = Sigmoid_Derivative(Mem_Gate[Count][2]) * ddo;
 
 	Count--;
+	//깃허브 테스트를 위해서 넣은 주석
 
 	//_C,_H를 계산후 재귀함수의 매개변수로 전달
 	BackWardPass_M2O(_C, _H, _dV, _InputData);
