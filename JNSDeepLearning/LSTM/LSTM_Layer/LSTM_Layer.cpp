@@ -97,19 +97,36 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 	double ddh = _H + m_VWeight * _dV;
 	double ddo = ddh * Tanh(Mem_CH[Count].first);
 	double ddc = _C + ddh * Mem_Gate[Count][2] * Tanh_Derivative(Mem_CH[Count].first);
-	double ddc_ = ddc * Mem_Gate[Count][1];
+	double ddc_ = (ddc * Mem_Gate[Count][1]);
 	double ddi = ddc * ddc_;
 	double ddf = ddc * Mem_CH[Count].first;
 
-	double ddf_ = Sigmoid_Derivative(Mem_Gate[Count][3]) * ddf;
-	double ddi_ = Sigmoid_Derivative(Mem_Gate[Count][1]) * ddi;
-	double ddo_ = Sigmoid_Derivative(Mem_Gate[Count][2]) * ddo;
+	m_dXWeight[0] += ddc_ * _InputData[Count - 1];
+	m_dHWeight[0] += ddc_ * Mem_CH[Count - 1].second;
+	m_dBias[0] += ddc_;
 
+	double ddf_ = Sigmoid_Derivative(Mem_Gate[Count][3]) * ddf;
+	m_dXWeight[3] += ddf * _InputData[Count-1];
+	m_dHWeight[3] += ddf * Mem_CH[Count - 1].second;
+	m_dBias[3] += ddf;
+
+	double ddi_ = Sigmoid_Derivative(Mem_Gate[Count][1]) * ddi;
+	m_dXWeight[1] += ddi * _InputData[Count - 1];
+	m_dHWeight[1] += ddi * Mem_CH[Count - 1].second;
+	m_dBias[1] += ddi;
+
+	double ddo_ = Sigmoid_Derivative(Mem_Gate[Count][2]) * ddo;
+	m_dXWeight[2] += ddo * _InputData[Count - 1];
+	m_dHWeight[2] += ddo * Mem_CH[Count - 1].second;
+	m_dBias[2] += ddo;
+
+	double dh_prev; //= 게이트의 Weight와 d게이트를 곱하고 나온 수를 모두 더함.
+	double dc_prev = ddc * Mem_Gate[Count][3];
+	
 	Count--;
-	//깃허브 테스트를 위해서 넣은 주석
 
 	//_C,_H를 계산후 재귀함수의 매개변수로 전달
-	BackWardPass_M2O(_C, _H, _dV, _InputData);
+	BackWardPass_M2O(dc_prev, dh_prev, _dV, _InputData);
 }
 
 void LSTM_Layer::Train_M2O(double _e, double _a, const vector<double>& _TrainData)
