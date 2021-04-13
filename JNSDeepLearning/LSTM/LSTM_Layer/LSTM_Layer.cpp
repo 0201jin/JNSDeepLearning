@@ -121,6 +121,7 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 	m_dBias[2] += ddo;
 
 	double dh_prev; //= 게이트의 Weight와 d게이트를 곱하고 나온 수를 모두 더함.
+	//(XWf * df + HWf * df) + (XWi * di + HWi * di) ...
 	double dc_prev = ddc * Mem_Gate[Count][3];
 	
 	Count--;
