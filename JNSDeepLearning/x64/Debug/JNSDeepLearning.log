@@ -4,6 +4,5 @@
 C:/Users/0201j/Desktop/작업/DeepLearning/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM_Layer/LSTM_Layer.cpp(1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
 C:/Users/0201j/Desktop/작업/DeepLearning/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM_Layer/LSTM_Layer.cpp(1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
   LSTM_Layer.cpp
-C:/Users/0201j/Desktop/작업/DeepLearning/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM_Layer/LSTM_Layer.cpp(87): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-     C:\Users\0201j\Desktop\작업\DeepLearning\JNSDeepLearning\x64\Debug\JNSDeepLearning.lib 라이브러리 및 C:\Users\0201j\Desktop\작업\DeepLearning\JNSDeepLearning\x64\Debug\JNSDeepLearning.exp 개체를 생성하고 있습니다.
+C:/Users/0201j/Desktop/작업/DeepLearning/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM_Layer/LSTM_Layer.cpp(102): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   JNSDeepLearning.vcxproj -> C:\Users\0201j\Desktop\작업\DeepLearning\JNSDeepLearning\x64\Debug\JNSDeepLearning.exe

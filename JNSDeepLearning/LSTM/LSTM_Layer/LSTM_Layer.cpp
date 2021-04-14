@@ -69,6 +69,11 @@ double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _In
 
 	cudaMemcpy(Gate, pGate, sizeof(double) * 4, cudaMemcpyDeviceToHost);
 
+	Gate[0] = Tanh(Gate[0]);
+	Gate[1] = Sigmoid(Gate[1]);
+	Gate[2] = Sigmoid(Gate[2]);
+	Gate[3] = Sigmoid(Gate[3]);
+
 	c = Gate[2] * _C + Gate[0] * Gate[1];
 	h = Gate[3] * Tanh(c);
 
@@ -86,48 +91,60 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 {
 	//시작 C,H는 어떻게 할지
 	//시작 CH는 Mem_CH[0]임
-	static int Count = _InputData.size();
+	/*static int Count = _InputData.size();
 	
-	if(Count < 1)
+	if (Count < 1)
+	{
+
 		return;
+	}*/
 
-	m_VWeight += _dV * Mem_CH[Count].second;
-	m_VBias += _dV;
+	for (int Count = _InputData.size(); Count > 0;)
+	{
+		m_VWeight += _dV * Mem_CH[Count].second;
+		m_VBias += _dV;
 
-	double ddh = _H + m_VWeight * _dV;
-	double ddo = ddh * Tanh(Mem_CH[Count].first);
-	double ddc = _C + ddh * Mem_Gate[Count][2] * Tanh_Derivative(Mem_CH[Count].first);
-	double ddc_ = (ddc * Mem_Gate[Count][1]);
-	double ddi = ddc * ddc_;
-	double ddf = ddc * Mem_CH[Count].first;
+		double ddh = _H + m_VWeight * _dV;
+		double ddo = ddh * Tanh(Mem_CH[Count].first);
+		double ddc = _C + ddh * Mem_Gate[Count][2] * Tanh_Derivative(Mem_CH[Count].first);
+		double ddc_ = (ddc * Mem_Gate[Count][1]) * Tanh_Derivative(Mem_Gate[Count][0]);
+		double ddi = ddc * ddc_;
+		double ddf = ddc * Mem_CH[Count-1].first;
 
-	m_dXWeight[0] += ddc_ * _InputData[Count - 1];
-	m_dHWeight[0] += ddc_ * Mem_CH[Count - 1].second;
-	m_dBias[0] += ddc_;
+		//Weight까지 계산하는 중 문제가 있음.
 
-	double ddf_ = Sigmoid_Derivative(Mem_Gate[Count][3]) * ddf;
-	m_dXWeight[3] += ddf * _InputData[Count-1];
-	m_dHWeight[3] += ddf * Mem_CH[Count - 1].second;
-	m_dBias[3] += ddf;
+		m_dXWeight[0] += ddc_ * _InputData[Count - 1];
+		m_dHWeight[0] += ddc_ * Mem_CH[Count].second;
+		m_dBias[0] += ddc_;
 
-	double ddi_ = Sigmoid_Derivative(Mem_Gate[Count][1]) * ddi;
-	m_dXWeight[1] += ddi * _InputData[Count - 1];
-	m_dHWeight[1] += ddi * Mem_CH[Count - 1].second;
-	m_dBias[1] += ddi;
+		//다시
+		double ddf_ = Sigmoid_Derivative(Mem_Gate[Count][3]) * ddf;
+		m_dXWeight[3] += ddf_ * _InputData[Count - 1];
+		m_dHWeight[3] += ddf_ * Mem_CH[Count].second;
+		m_dBias[3] += ddf_;
 
-	double ddo_ = Sigmoid_Derivative(Mem_Gate[Count][2]) * ddo;
-	m_dXWeight[2] += ddo * _InputData[Count - 1];
-	m_dHWeight[2] += ddo * Mem_CH[Count - 1].second;
-	m_dBias[2] += ddo;
+		//다시
+		double ddi_ = Sigmoid_Derivative(Mem_Gate[Count][1]) * ddi;
+		m_dXWeight[1] += ddi_ * _InputData[Count - 1];
+		m_dHWeight[1] += ddi_ * Mem_CH[Count].second;
+		m_dBias[1] += ddi_;
 
-	double dh_prev = m_dHWeight[0] * ddc + m_dHWeight[1] * ddi + m_dHWeight[2] * ddo + m_dHWeight[3] * ddf; //= 게이트의 Weight와 d게이트를 곱하고 나온 수를 모두 더함.
-	//(XWf * df + HWf * df) + (XWi * di + HWi * di) ...
-	double dc_prev = ddc * Mem_Gate[Count][3];
-	
-	Count--;
+		//Wo 계산식 다시
+		double ddo_ = Sigmoid_Derivative(Mem_Gate[Count][2]) * ddo;
+		m_dXWeight[2] += ddo_ * _InputData[Count - 1];
+		m_dHWeight[2] += ddo_ * Mem_CH[Count].second;
+		m_dBias[2] += ddo_;
+
+	    _H = m_dHWeight[0] * ddc_ + m_dHWeight[1] * ddi_ + m_dHWeight[2] * ddo_ + m_dHWeight[3] * ddf_;
+		_C = ddc * Mem_Gate[Count][3];
+
+		--Count;
+
+		printf("%f \n", _dV);
+	}
 
 	//_C,_H를 계산후 재귀함수의 매개변수로 전달
-	BackWardPass_M2O(dc_prev, dh_prev, _dV, _InputData);
+	//BackWardPass_M2O(dc_prev, dh_prev, _dV, _InputData);
 }
 
 void LSTM_Layer::Train_M2O(double _e, double _a, const vector<double>& _TrainData)
@@ -153,6 +170,6 @@ void LSTM_Network::Train_M2O(const vector<pair<vector<double>, double>>& _TrainD
 	{
 		double e = _TrainData[i].second - Calculate_M2O(_TrainData[i].first);
 
-		m_Layer.Train_M2O(e, 0.1, _TrainData[i].first);
+		m_Layer.Train_M2O(e, 0.001, _TrainData[i].first);
 	}
 }
