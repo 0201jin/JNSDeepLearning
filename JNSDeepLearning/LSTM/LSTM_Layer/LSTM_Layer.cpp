@@ -69,13 +69,13 @@ double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _In
 
 	cudaMemcpy(Gate, pGate, sizeof(double) * 4, cudaMemcpyDeviceToHost);
 
-	Gate[0] = Tanh(Gate[0]);
-	Gate[1] = Sigmoid(Gate[1]);
-	Gate[2] = Sigmoid(Gate[2]);
-	Gate[3] = Sigmoid(Gate[3]);
+	Gate[0] = Tanh(Gate[0]);  //f
+	Gate[1] = Sigmoid(Gate[1]); //i
+	Gate[2] = Sigmoid(Gate[2]); //o
+	Gate[3] = Sigmoid(Gate[3]); //f
 
-	c = Gate[2] * _C + Gate[0] * Gate[1];
-	h = Gate[3] * Tanh(c);
+	c = Gate[3] * _C + Gate[1] * Gate[0];
+	h = Gate[2] * Tanh(c);
 
 	Mem_Gate.push_back(vector<double>({ Gate[0], Gate[1], Gate[2], Gate[3] })); //Gate 데이터를 저장
 	Mem_CH.push_back(pair<double, double>(c, h)); //C,H 데이터를 저장
