@@ -108,7 +108,7 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 		double ddo = ddh * Tanh(Mem_CH[Count].first);
 		double ddc = _C + ddh * Mem_Gate[Count][2] * Tanh_Derivative(Mem_CH[Count].first);
 		double ddc_ = (ddc * Mem_Gate[Count][1]) * Tanh_Derivative(Mem_Gate[Count][0]);
-		double ddi = ddc * ddc_;
+		double ddi = ddc * Mem_Gate[Count][0];
 		double ddf = ddc * Mem_CH[Count-1].first;
 
 		//Weight까지 계산하는 중 문제가 있음.
