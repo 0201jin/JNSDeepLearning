@@ -135,7 +135,7 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 		m_dHWeight[2] += ddo_ * Mem_CH[Count].second;
 		m_dBias[2] += ddo_;
 
-	    _H = m_dHWeight[0] * ddc_ + m_dHWeight[1] * ddi_ + m_dHWeight[2] * ddo_ + m_dHWeight[3] * ddf_;
+	    	_H = m_dHWeight[0] * ddc_ + m_dHWeight[1] * ddi_ + m_dHWeight[2] * ddo_ + m_dHWeight[3] * ddf_;
 		_C = ddc * Mem_Gate[Count][3];
 
 		--Count;
