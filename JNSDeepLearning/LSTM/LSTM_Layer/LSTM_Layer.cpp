@@ -38,7 +38,7 @@ double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _In
 	static double dOutput;
 	static int Count = 0;
 
-	//double g, i, o, f, c, h;
+	//double c_, i, o, f, c, h;
 	double* Gate = (double*)malloc(sizeof(double) * 4);
 
 	if (_InputData.size() <= Count)
@@ -69,7 +69,7 @@ double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _In
 
 	cudaMemcpy(Gate, pGate, sizeof(double) * 4, cudaMemcpyDeviceToHost);
 
-	Gate[0] = Tanh(Gate[0]);  //f
+	Gate[0] = Tanh(Gate[0]);  //c
 	Gate[1] = Sigmoid(Gate[1]); //i
 	Gate[2] = Sigmoid(Gate[2]); //o
 	Gate[3] = Sigmoid(Gate[3]); //f
