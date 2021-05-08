@@ -62,7 +62,7 @@ void LSTM_Run()
 {
 	LSTM_Network net;
 
-	for (int i = 0; i < 2000; ++i)
+	for (int i = 0; i < 1000; ++i)
 		net.Train_M2O(
 			{
 				{{1, 1}, 1 }
@@ -74,7 +74,7 @@ void LSTM_Run()
 
 int main()
 {
-	LSTM_Run();
+	Muli_Nueron_Run();
 
 	return 0;
 }

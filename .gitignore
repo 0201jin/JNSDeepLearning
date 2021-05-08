@@ -43,3 +43,5 @@
 *.opendb
 
 .vs/
+.suo
+.db
