@@ -74,7 +74,7 @@ void LSTM_Run()
 
 int main()
 {
-	LSTM_Run();
+	Muli_Nueron_Run();
 
 	return 0;
 }

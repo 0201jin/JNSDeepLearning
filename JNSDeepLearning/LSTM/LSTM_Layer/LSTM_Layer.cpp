@@ -69,7 +69,7 @@ double LSTM_Layer::Calculate_M2O(double _C, double _H, const vector<double>& _In
 
 	cudaMemcpy(Gate, pGate, sizeof(double) * 4, cudaMemcpyDeviceToHost);
 
-	Gate[0] = Tanh(Gate[0]);  //c
+	Gate[0] = Tanh(Gate[0]);  //c_
 	Gate[1] = Sigmoid(Gate[1]); //i
 	Gate[2] = Sigmoid(Gate[2]); //o
 	Gate[3] = Sigmoid(Gate[3]); //f
@@ -92,7 +92,7 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 	//시작 C,H는 어떻게 할지
 	//시작 CH는 Mem_CH[0]임
 	/*static int Count = _InputData.size();
-	
+
 	if (Count < 1)
 	{
 
@@ -109,7 +109,7 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 		double ddc = _C + ddh * Mem_Gate[Count][2] * Tanh_Derivative(Mem_CH[Count].first);
 		double ddc_ = (ddc * Mem_Gate[Count][1]) * Tanh_Derivative(Mem_Gate[Count][0]);
 		double ddi = ddc * Mem_Gate[Count][0];
-		double ddf = ddc * Mem_CH[Count-1].first;
+		double ddf = ddc * Mem_CH[Count - 1].first;
 
 		//Weight까지 계산하는 중 문제가 있음.
 
@@ -117,30 +117,27 @@ void LSTM_Layer::BackWardPass_M2O(double _C, double _H, double _dV, const vector
 		m_dHWeight[0] += ddc_ * Mem_CH[Count].second;
 		m_dBias[0] += ddc_;
 
-		//다시
 		double ddf_ = Sigmoid_Derivative(Mem_Gate[Count][3]) * ddf;
 		m_dXWeight[3] += ddf_ * _InputData[Count - 1];
 		m_dHWeight[3] += ddf_ * Mem_CH[Count].second;
 		m_dBias[3] += ddf_;
 
-		//다시
 		double ddi_ = Sigmoid_Derivative(Mem_Gate[Count][1]) * ddi;
 		m_dXWeight[1] += ddi_ * _InputData[Count - 1];
 		m_dHWeight[1] += ddi_ * Mem_CH[Count].second;
 		m_dBias[1] += ddi_;
 
-		//Wo 계산식 다시
 		double ddo_ = Sigmoid_Derivative(Mem_Gate[Count][2]) * ddo;
 		m_dXWeight[2] += ddo_ * _InputData[Count - 1];
 		m_dHWeight[2] += ddo_ * Mem_CH[Count].second;
 		m_dBias[2] += ddo_;
 
-	    	_H = m_dHWeight[0] * ddc_ + m_dHWeight[1] * ddi_ + m_dHWeight[2] * ddo_ + m_dHWeight[3] * ddf_;
+		_H = m_dHWeight[0] * ddc_ + m_dHWeight[1] * ddi_ + m_dHWeight[2] * ddo_ + m_dHWeight[3] * ddf_;
 		_C = ddc * Mem_Gate[Count][3];
 
 		--Count;
 
-		printf("%f \n", _dV);
+		//printf("%f \n", _dV);
 	}
 
 	//_C,_H를 계산후 재귀함수의 매개변수로 전달

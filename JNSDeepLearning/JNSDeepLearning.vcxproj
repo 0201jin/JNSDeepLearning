@@ -148,6 +148,7 @@
     <ClInclude Include="Activation_Function.h" />
     <CudaCompile Include="LSTM\LSTM_Layer\LSTM_Layer.h" />
     <ClInclude Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.h" />
+    <ClInclude Include="RNN\RNN.h" />
     <ClInclude Include="Single_Layer_Perceptron.h" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="LSTM\LSTM_Layer\LSTM_Layer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="RNN.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

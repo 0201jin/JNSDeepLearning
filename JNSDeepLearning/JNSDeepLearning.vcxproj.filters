@@ -24,6 +24,9 @@
     <Filter Include="소스 파일\LSTM\LSTM_Layer">
       <UniqueIdentifier>{9ff86676-2de9-4833-a7ff-866018da7a6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\RNN">
+      <UniqueIdentifier>{e34d20a0-213c-450b-80a3-e8a9e9996b06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="JNSDeepLearning.cpp">
@@ -52,5 +55,13 @@
     <ClInclude Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.h">
       <Filter>소스 파일\Perceptron\Multi_Layer_Perceptron</Filter>
     </ClInclude>
+    <ClInclude Include="RNN\RNN.h">
+      <Filter>소스 파일\RNN</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="RNN.cpp">
+      <Filter>소스 파일\RNN</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
