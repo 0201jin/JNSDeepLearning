@@ -43,5 +43,6 @@
 *.opendb
 
 .vs/
-.suo
-.db
+*.suo
+*.db
+*.ipch
