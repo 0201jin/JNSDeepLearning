@@ -4,6 +4,7 @@
 #include "Single_Layer_Perceptron.h"
 #include "Multi_Layer_Perceptron/Multi_Layer_Perceptron.h"
 #include "LSTM/LSTM_Layer/LSTM_Layer.h"
+#include "RNN/RNN.h"
 
 using namespace std;
 
@@ -72,9 +73,21 @@ void LSTM_Run()
 	printf("%f", net.Calculate_M2O({ 1, 1 }));
 }
 
+void RNN_Run()
+{
+	RNN_Network net;
+
+	for (int i = 0; i < 1000; ++i)
+	{
+		net.Train_M2O({ {2 } }, { 4 });
+	}
+
+	printf("%f", net.Calculate_M2O({ 2 }));
+}
+
 int main()
 {
-	Muli_Nueron_Run();
+	RNN_Run();
 
 	return 0;
 }
