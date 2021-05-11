@@ -45,7 +45,10 @@ void RNN_Layer::Train_M2O(const vector<double> _InputData, const double _Answer)
 	//https://blog.naver.com/staystays/222279290417
 	//https://blog.naver.com/infoefficien/221209484540
 
-	float fE = pow(_Answer - Calculate_M2O(_InputData), 2);
+	//YWeight, YBias의 값을 수정하는 작업
+	double E = pow(_Answer - Calculate_M2O(_InputData), 2);
+	m_dYBias += 0;
+	m_dYWeight += 0; //dE/dW = 2wx^2 + 2xb - 2xt
 
 	for (vector<double>::const_iterator iter = _InputData.begin(); iter != _InputData.end(); ++iter)
 	{
