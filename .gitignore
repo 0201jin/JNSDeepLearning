@@ -42,7 +42,7 @@
 
 *.opendb
 
-.vs/
+.vs/*
 *.suo
 *.db
 *.ipch
