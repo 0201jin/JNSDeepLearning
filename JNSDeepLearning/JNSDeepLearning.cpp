@@ -77,12 +77,12 @@ void RNN_Run()
 {
 	RNN_Network net;
 
-	for (int i = 0; i < 1000; ++i)
+	for (int i = 0; i < 10000; ++i)
 	{
-		net.Train_M2O({ {2 } }, { 4 });
+		net.Train_M2O({ { 2 }, { 3 } }, { 4, 6 });
 	}
 
-	printf("%f", net.Calculate_M2O({ 2 }));
+	printf("%f", net.Calculate_M2O({ 3 }));
 }
 
 int main()

@@ -159,7 +159,7 @@
     <CudaCompile Include="LSTM\LSTM_Layer\LSTM_Layer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RNN.cpp" />
+    <ClCompile Include="RNN\RNN.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

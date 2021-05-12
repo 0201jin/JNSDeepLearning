@@ -60,7 +60,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RNN.cpp">
+    <ClCompile Include="RNN\RNN.cpp">
       <Filter>소스 파일\RNN</Filter>
     </ClCompile>
   </ItemGroup>
