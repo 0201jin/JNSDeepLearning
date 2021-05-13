@@ -79,10 +79,10 @@ void RNN_Run()
 
 	for (int i = 0; i < 10000; ++i)
 	{
-		net.Train_M2O({ { 2 }, { 3 } }, { 4, 6 });
+		net.Train_M2O({ { 2 } }, { 4 });
 	}
 
-	printf("%f", net.Calculate_M2O({ 3 }));
+	printf("%f", net.Calculate_M2O({ 2 }));
 }
 
 int main()

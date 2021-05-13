@@ -55,9 +55,9 @@ void RNN_Layer::Train_M2O(const vector<double> _InputData, const double _Answer)
 	//https://blog.naver.com/infoefficien/221209484540
 	
 	double rate = 0.0025;
-	double dE = (2 * (Y - _Answer));
 
 	double Y = Calculate_M2O(_InputData);
+	double dE = (2 * (Y - _Answer));
 
 	double LastBias = m_dYBias;
 	double LastWeight = m_dYWeight;
