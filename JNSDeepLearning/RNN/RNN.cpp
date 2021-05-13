@@ -53,8 +53,9 @@ void RNN_Layer::Train_M2O(const vector<double> _InputData, const double _Answer)
 	//https://blog.naver.com/sooftware/221750172371
 	//https://blog.naver.com/staystays/222279290417
 	//https://blog.naver.com/infoefficien/221209484540
+	
+	double rate = 0.0025;
 
-	//YWeight, YBias의 값을 수정하는 작업
 	double Y = Calculate_M2O(_InputData);
 	double E = pow(_Answer - Y, 2);
 	
@@ -63,10 +64,11 @@ void RNN_Layer::Train_M2O(const vector<double> _InputData, const double _Answer)
 
 	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
-		m_dYWeight -= (2 * _InputData[i] * (Y - _Answer)) * 0.0025;
-		m_dYBias -= (2 * (Y - _Answer)) * 0.0025;
+		m_dYWeight -= (2 * _InputData[i] * (Y - _Answer)) * rate;
+		m_dYBias -= (2 * (Y - _Answer)) * rate;
 
-		m_dXWeight -= (2 * (Y - _Answer) * LastWeight * Tanh_Derivative(Y) * _InputData[i]) * 0.0025;
-		m_dHWeight -= (2 * (Y - _Answer) * LastWeight * Tanh_Derivative(Y) * m_vH[i]) * 0.0025;
+		m_dXWeight -= (2 * (Y - _Answer) * LastWeight * Tanh_Derivative(Y) * _InputData[i]) * rate;
+		m_dHWeight -= (2 * (Y - _Answer) * LastWeight * Tanh_Derivative(Y) * m_vH[i]) * rate;
+		m_dHBias -= (2 * (Y - _Answer) * LastWeight * Tanh_Derivative(Y)) * rate;
 	}
 }
