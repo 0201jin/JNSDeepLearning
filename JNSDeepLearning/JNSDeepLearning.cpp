@@ -38,7 +38,7 @@ void Single_Neuron_Run()
 	cout << "50 + 5 = " << Plus_Neuron.Calculate({ 150, 5 }) << endl;
 }
 
-void Muli_Nueron_Run()
+void Multi_Nueron_Run()
 {
 	ML_Network net({ 2, 4, 4, 4, 1 });
 
@@ -79,10 +79,10 @@ void RNN_Run()
 
 	for (int i = 0; i < 10000; ++i)
 	{
-		net.Train_M2O({ { 2 } }, { 4 });
+		net.Train_M2O({ { 1, 2, 3, 4 } }, { 5 });
 	}
 
-	printf("%f", net.Calculate_M2O({ 2 }));
+	printf("%f", net.Calculate_M2O({ 5, 6, 7, 8 }));
 }
 
 int main()

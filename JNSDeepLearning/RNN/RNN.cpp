@@ -23,9 +23,9 @@ RNN_Layer::RNN_Layer()
 	mt19937 random(rd());
 	uniform_real_distribution<double> dist(-1, 1);
 
-	m_dXWeight = 0;
-	m_dHWeight = 0;
-	m_dYWeight = 0;
+	m_dXWeight = dist(random);
+	m_dHWeight = dist(random);
+	m_dYWeight = dist(random);
 	m_dHBias = 0;
 	m_dYBias = 0;
 }
@@ -59,18 +59,21 @@ void RNN_Layer::Train_M2O(const vector<double> _InputData, const double _Answer)
 	double rate = 0.0025;
 
 	double Y = Calculate_M2O(_InputData);
-	double dE = (2 * (Y - _Answer));
 
 	double LastBias = m_dYBias;
 	double LastWeight = m_dYWeight;
+
+	double dE = 2 * (Y - _Answer);
+	double dTanh = Tanh_Derivative(Y);
+	double dH = dE * LastWeight * dTanh;
 
 	m_dYWeight -= (m_vH[m_vH.size() - 1] * dE) * rate;
 	m_dYBias -= dE * rate;
 	
 	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
-		m_dXWeight -= (dE * LastWeight * Tanh_Derivative(Y) * _InputData[i]) * rate;
-		m_dHWeight -= (dE * LastWeight * Tanh_Derivative(Y) * m_vH[i - 1]) * rate;
-		m_dHBias -= (dE * LastWeight * Tanh_Derivative(Y)) * rate;
+		m_dXWeight -= (dH * _InputData[i]) * rate;
+		m_dHWeight -= (dH * m_vH[i]) * rate;
+		m_dHBias -= (dH) * rate;
 	}
 }
