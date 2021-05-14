@@ -62,11 +62,11 @@ void RNN_Layer::Train_M2O(const vector<double> _InputData, const double _Answer)
 	double LastBias = m_dYBias;
 	double LastWeight = m_dYWeight;
 
+	m_dYWeight -= (m_vH[m_vH.size() - 1] * dE) * rate;
+	m_dYBias -= dE * rate;
+	
 	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
-		m_dYWeight -= (_InputData[i] * dE) * rate;
-		m_dYBias -= dE * rate;
-
 		m_dXWeight -= (dE * LastWeight * Tanh_Derivative(Y) * _InputData[i]) * rate;
 		m_dHWeight -= (dE * LastWeight * Tanh_Derivative(Y) * m_vH[i]) * rate;
 		m_dHBias -= (dE * LastWeight * Tanh_Derivative(Y)) * rate;
