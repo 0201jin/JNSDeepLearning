@@ -36,6 +36,8 @@ double RNN_Layer::Calculate_M2O(const vector<double> _InputData)
 
 	double dH = 0;
 
+	m_vH.push_back(0);
+	
 	for (vector<double>::const_iterator iter = _InputData.begin(); iter != _InputData.end(); ++iter)
 	{
 		dH = Tanh(m_dHWeight * dH + m_dXWeight * (*iter) + m_dHBias);
@@ -68,7 +70,7 @@ void RNN_Layer::Train_M2O(const vector<double> _InputData, const double _Answer)
 	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
 		m_dXWeight -= (dE * LastWeight * Tanh_Derivative(Y) * _InputData[i]) * rate;
-		m_dHWeight -= (dE * LastWeight * Tanh_Derivative(Y) * m_vH[i]) * rate;
+		m_dHWeight -= (dE * LastWeight * Tanh_Derivative(Y) * m_vH[i - 1]) * rate;
 		m_dHBias -= (dE * LastWeight * Tanh_Derivative(Y)) * rate;
 	}
 }
