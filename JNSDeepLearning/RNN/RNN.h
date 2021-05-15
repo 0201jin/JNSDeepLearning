@@ -16,6 +16,8 @@ class RNN_Layer
 public:
 	RNN_Layer();
 
+	void printY();
+
 	double Calculate_M2O(const vector<double> _InputData);
 	void Train_M2O(const vector<double> _InputData, const double _Answer);
 
@@ -25,12 +27,15 @@ protected:
 	double m_dLastH;
 
 	vector<double> m_vH;
+	vector<double> m_vY;
 };
 
 class RNN_Network
 {
 public:
 	RNN_Network();
+
+	void printY() { m_Layer.printY(); }
 
 	double Calculate_M2O(const vector<double> _InputData);
 	void Train_M2O(const vector<vector<double>> _InputData, const vector<double> _Answer);
