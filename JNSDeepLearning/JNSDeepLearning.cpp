@@ -82,8 +82,7 @@ void RNN_Run()
 		net.Train_M2O({ {0.1, 0.2, 0.3}, {0.4, 0.5, 0.6}, {0.7, 0.8} }, { 0.4, 0.7, 0.9 });
 	}
 
-	printf("%f\n", net.Calculate_M2O({ 0.2, 0.3, 0.4, 0.5 }));
-	//net.printY();
+	printf("%f\n", net.Calculate_M2O({ 0.2, 0.3, 0.4 }));
 }
 
 int main()
