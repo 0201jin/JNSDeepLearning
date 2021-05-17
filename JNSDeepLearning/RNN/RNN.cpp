@@ -84,6 +84,15 @@ void RNN_Layer::Train_M2O(const vector<double> _InputData, const double _Answer)
 	}
 }
 
+vector<double> RNN_Network::Calculate_O2M(const double _InputData)
+{
+	return vector<double>();
+}
+	
+void RNN_Network::Train_O2M(const double _InputData, const vector<double> _Answer)
+{
+}
+
 RNN_Network::RNN_Network()
 {
 }
@@ -103,5 +112,18 @@ void RNN_Network::Train_M2O(const vector<vector<double>> _InputData, const vecto
 	for (int i = 0; i < _InputData.size(); ++i)
 	{
 		m_Layer.Train_M2O(_InputData[i], _Answer[i]);
+	}
+}
+
+vector<double> RNN_Network::Calculate_O2M(const double _InputData)
+{
+	return m_Layer.Calculate_O2M(_InputData);
+}
+
+void RNN_Network::Train_O2M(const vector<double> _InputData, const vector<vector<double>> _Answer)
+{
+	for(int i = 0; i < _InputData.size(); ++i)
+	{
+		m_Layer.Train_O2M(_InputData[i], _Answer[i]);
 	}
 }
