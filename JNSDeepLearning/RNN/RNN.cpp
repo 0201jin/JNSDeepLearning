@@ -84,12 +84,27 @@ void RNN_Layer::Train_M2O(const vector<double> _InputData, const double _Answer)
 	}
 }
 
-vector<double> RNN_Network::Calculate_O2M(const double _InputData)
+vector<double> RNN_Layer::Calculate_O2M(const double _InputData)
 {
-	return vector<double>();
+	m_vH.clear();
+	m_vY.clear();
+
+	double H = 0;
+
+	m_vH.push_back(0);
+
+	for (vector<double>::const_iterator iter = _InputData.begin(); iter != _InputData.end(); ++iter)
+	{
+		H = Tanh(m_dHWeight * H + m_dXWeight * (*iter) + m_dHBias);
+
+		m_vH.push_back(H);
+		m_vY.push_back(H * m_dYWeight + m_dYBias);
+	}
+
+	return m_vY;
 }
 	
-void RNN_Network::Train_O2M(const double _InputData, const vector<double> _Answer)
+void RNN_Layer::Train_O2M(const double _InputData, const vector<double> _Answer)
 {
 }
 
