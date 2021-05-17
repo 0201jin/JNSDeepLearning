@@ -85,9 +85,22 @@ void RNN_Run()
 	printf("%f\n", net.Calculate_M2O({ 0.2, 0.3, 0.4 }));
 }
 
+void RNN_O2M_Run()
+{
+	RNN_Network net;
+
+	for (int i = 0; i < 1; ++i)
+	{
+		net.Train_O2M({ 0.1, 0.2, 0.3 }, { {0.2, 0.3, 0.4}, {0.3, 0.4, 0.5}, {0.4, 0.5, 0.6} });
+	}
+
+	net.Calculate_O2M(0.1);
+	net.printY();
+}
+
 int main()
 {
-	RNN_Run();
+	RNN_O2M_Run();
 
 	return 0;
 }

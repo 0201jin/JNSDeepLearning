@@ -89,13 +89,13 @@ vector<double> RNN_Layer::Calculate_O2M(const double _InputData)
 	m_vH.clear();
 	m_vY.clear();
 
-	double H = 0;
+	double H = m_dXWeight * _InputData;
 
 	m_vH.push_back(0);
 
-	for (vector<double>::const_iterator iter = _InputData.begin(); iter != _InputData.end(); ++iter)
+	for (int i = 0; i < 3; ++i)
 	{
-		H = Tanh(m_dHWeight * H + m_dXWeight * (*iter) + m_dHBias);
+		H = Tanh(m_dHWeight * H + m_dHBias);
 
 		m_vH.push_back(H);
 		m_vY.push_back(H * m_dYWeight + m_dYBias);
@@ -103,9 +103,35 @@ vector<double> RNN_Layer::Calculate_O2M(const double _InputData)
 
 	return m_vY;
 }
-	
+
 void RNN_Layer::Train_O2M(const double _InputData, const vector<double> _Answer)
 {
+	vector<double> y = Calculate_O2M(_InputData);
+
+	double LastWy = m_dYWeight;
+	double Prevdh = 2 * (y[2] - _Answer[2]) * LastWy;
+
+	for (int i = y.size() - 1; i >= 0; --i)
+	{
+		double dy = 2 * (y[i] - _Answer[i]);
+		double dh = dy * LastWy;
+
+		m_dYWeight -= m_vH[i+1] * dy * LEARN_RATE;
+		m_dYBias -= dy * LEARN_RATE;
+
+		double dtanh = Prevdh * Tanh_Derivative(m_vH[i + 1]);
+
+		m_dHWeight -= dtanh * m_vH[i] * LEARN_RATE;
+
+		if (i == 0)
+			m_dXWeight -= dtanh * _InputData * LEARN_RATE;
+
+		m_dHBias -= dtanh * LEARN_RATE;
+
+		Prevdh = dtanh;
+
+		cout << dy << endl;
+	}
 }
 
 RNN_Network::RNN_Network()
@@ -137,7 +163,7 @@ vector<double> RNN_Network::Calculate_O2M(const double _InputData)
 
 void RNN_Network::Train_O2M(const vector<double> _InputData, const vector<vector<double>> _Answer)
 {
-	for(int i = 0; i < _InputData.size(); ++i)
+	for (int i = 0; i < _InputData.size(); ++i)
 	{
 		m_Layer.Train_O2M(_InputData[i], _Answer[i]);
 	}
