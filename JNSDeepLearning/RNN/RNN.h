@@ -21,6 +21,9 @@ public:
 
 	double Calculate_M2O(const vector<double> _InputData);
 	void Train_M2O(const vector<double> _InputData, const double _Answer);
+	
+	vector<double> Calculate_O2M(const double _InputData);
+	void Train_O2M(const double _InputData, const vector<double> _Answer);
 
 protected:
 	double m_dXWeight, m_dHWeight, m_dYWeight;
@@ -40,6 +43,9 @@ public:
 
 	double Calculate_M2O(const vector<double> _InputData);
 	void Train_M2O(const vector<vector<double>> _InputData, const vector<double> _Answer);
+	
+	double Calculate_O2M(const double _InputData);
+	void Train_O2M(const vector<double> _InputData, const vector<vector<double>> _Answer);
 
 private:
 	RNN_Layer m_Layer;
