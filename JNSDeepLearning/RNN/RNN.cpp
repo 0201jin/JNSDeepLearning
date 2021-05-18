@@ -108,9 +108,19 @@ void RNN_Layer::Train_O2M(const double _InputData, const vector<double> _Answer)
 {
 	vector<double> y = Calculate_O2M(_InputData);
 	
+	double LastWy = m_dYWeight;
+	
 	for(int i = y.size() - 1; i >= 0; --i)
 	{
+		double dy = 2 (y[i] - _Answer[i]);
+		double dh = dy * LasyWy;
 		
+		m_dYWeight -= m_vH[i] * dy * LEARN_RATE;
+		m_dYBias -= dy * LEARN_RATE;
+		
+		
+		
+		double dtanh = 0;
 	}
 }
 
