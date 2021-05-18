@@ -107,30 +107,10 @@ vector<double> RNN_Layer::Calculate_O2M(const double _InputData)
 void RNN_Layer::Train_O2M(const double _InputData, const vector<double> _Answer)
 {
 	vector<double> y = Calculate_O2M(_InputData);
-
-	double LastWy = m_dYWeight;
-	double Prevdh = 2 * (y[2] - _Answer[2]) * LastWy;
-
-	for (int i = y.size() - 1; i >= 0; --i)
+	
+	for(int i = y.size() - 1; i >= 0; --i)
 	{
-		double dy = 2 * (y[i] - _Answer[i]);
-		double dh = dy * LastWy;
-
-		m_dYWeight -= m_vH[i+1] * dy * LEARN_RATE;
-		m_dYBias -= dy * LEARN_RATE;
-
-		double dtanh = Prevdh * Tanh_Derivative(m_vH[i + 1]);
-
-		m_dHWeight -= dtanh * m_vH[i] * LEARN_RATE;
-
-		if (i == 0)
-			m_dXWeight -= dtanh * _InputData * LEARN_RATE;
-
-		m_dHBias -= dtanh * LEARN_RATE;
-
-		Prevdh = dtanh;
-
-		cout << dy << endl;
+		
 	}
 }
 
