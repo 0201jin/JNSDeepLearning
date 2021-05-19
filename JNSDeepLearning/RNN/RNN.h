@@ -25,6 +25,9 @@ public:
 	vector<double> Calculate_O2M(const double _InputData);
 	void Train_O2M(const double _InputData, const vector<double> _Answer);
 
+	vector<double> Calculate_M2M(const vector<double> _InputData);
+	void Train_M2M(const vector<double> _InputData, const vector<double> _Answer);
+
 protected:
 	double m_dXWeight, m_dHWeight, m_dYWeight;
 	double m_dHBias, m_dYBias;
@@ -46,6 +49,9 @@ public:
 	
 	vector<double> Calculate_O2M(const double _InputData);
 	void Train_O2M(const vector<double> _InputData, const vector<vector<double>> _Answer);
+
+	vector<double> Calculate_M2M(const vector<double> _InputData);
+	void Train_M2M(const vector<vector<double>> _InputData, const vector<vector<double>> _Answer);
 
 private:
 	RNN_Layer m_Layer;

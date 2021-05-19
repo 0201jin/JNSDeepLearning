@@ -98,6 +98,20 @@ void RNN_O2M_Run()
 	net.printY();
 }
 
+void RNN_M2M_Run()
+{
+	RNN_Network net;
+
+	for (int i = 0; i < 10000; ++i)
+	{
+		net.Train_M2M({ {0.1, 0.2, 0.3}, {0.2, 0.3, 0.4}, {0.3, 0.4, 0.5} }, 
+			{ {0.4, 0.5, 0.6}, {0.5, 0.6, 0.7}, {0.6, 0.7, 0.8} });
+	}
+
+	net.Calculate_M2M({0.2, 0.3, 0.4});
+	net.printY();
+}
+
 int main()
 {
 	RNN_O2M_Run();
