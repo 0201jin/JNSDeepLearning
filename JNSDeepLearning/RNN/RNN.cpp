@@ -1,6 +1,6 @@
 #include "RNN.h"
 
-#define LEARN_RATE 0.001
+#define LEARN_RATE 0.01
 
 RNN_Layer::RNN_Layer()
 {
@@ -89,16 +89,19 @@ vector<double> RNN_Layer::Calculate_O2M(const double _InputData)
 	m_vH.clear();
 	m_vY.clear();
 
-	double H = m_dXWeight * _InputData;
+	double H = 0;
+	double O = m_dXWeight * _InputData;
 
 	m_vH.push_back(0);
 
 	for (int i = 0; i < 3; ++i)
 	{
-		H = Tanh(m_dHWeight * H + m_dHBias);
+		H = Tanh(m_dHWeight * H + O + m_dHBias);
 
 		m_vH.push_back(H);
 		m_vY.push_back(H * m_dYWeight + m_dYBias);
+
+		O = 0;
 	}
 
 	return m_vY;
@@ -107,20 +110,30 @@ vector<double> RNN_Layer::Calculate_O2M(const double _InputData)
 void RNN_Layer::Train_O2M(const double _InputData, const vector<double> _Answer)
 {
 	vector<double> y = Calculate_O2M(_InputData);
-	
-	double LastWy = m_dYWeight;
-	
-	for(int i = y.size() - 1; i >= 0; --i)
+
+	double Prev_dh = 0;
+
+	for (int i = y.size() - 1; i >= 0; --i)
 	{
-		double dy = 2 (y[i] - _Answer[i]);
-		double dh = dy * LasyWy;
-		
-		m_dYWeight -= m_vH[i] * dy * LEARN_RATE;
+		double LastWy = m_dYWeight;
+		double LastWh = m_dHWeight;
+
+		double dy = 2 * (y[i] - _Answer[i]);
+		double dh = dy * LastWy;
+
+		m_dYWeight -= m_vH[i + 1] * dy * LEARN_RATE;
 		m_dYBias -= dy * LEARN_RATE;
-		
-		
-		
-		double dtanh = 0;
+
+		double dtanh = Tanh_Derivative(m_vH[i + 1]) * (dh + Prev_dh);
+
+		m_dHWeight -= dtanh * m_vH[i] * LEARN_RATE;
+
+		if (i == 0)
+			m_dXWeight -= dtanh * _InputData * LEARN_RATE;
+
+		m_dHBias -= dtanh * LEARN_RATE;
+
+		Prev_dh = dtanh * LastWh;
 	}
 }
 
