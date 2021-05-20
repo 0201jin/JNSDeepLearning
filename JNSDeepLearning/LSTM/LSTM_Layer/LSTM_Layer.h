@@ -17,11 +17,6 @@ public:
 	LSTM_Layer();
 
 	void ClearLayer();
-	double Calculate_M2O(double _C, double _H, const vector<double>& _InputData);
-	void Train_M2O(double _e, double _a, const vector<double>& _TrainData);
-
-private:
-	void BackWardPass_M2O(double _C, double _H, double _dV, const vector<double>& _InputData);
 
 private:
 	double m_dXWeight[4] = { 0, 0, 0, 0 };
@@ -41,9 +36,6 @@ class LSTM_Network
 {
 public:
 	LSTM_Network();
-
-	double Calculate_M2O(const vector<double>& _InputData);
-	void Train_M2O(const vector<pair<vector<double>, double>>& _TrainData);
 
 private:
 	LSTM_Layer m_Layer;
