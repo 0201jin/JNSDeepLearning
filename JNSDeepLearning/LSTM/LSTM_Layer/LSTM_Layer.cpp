@@ -1,9 +1,17 @@
 #include "LSTM_Layer.h"
 
+#define LEARN_RATE 0.0025
+
 LSTM_Layer::LSTM_Layer()
 {
-	m_dXWeight.Init(); 
-	m_dHWeight.Init();
+	random_device rd;
+	mt19937 random(rd());
+	uniform_real_distribution<double> dist(-1, 1);
+
+	m_XWeight.Init();
+	m_HWeight.Init();
+	m_YWeight = dist(random);
+	m_YBias = -1;
 
 	ClearLayer();
 }
@@ -14,30 +22,33 @@ void LSTM_Layer::ClearLayer()
 	Mem_CH.clear();
 	m_vY.clear();
 
-	Mem_Gate.push_back(Gate());
-	Mem_CH.push_back(pair<double, double>(0, 0));
+	Mem_CH.push_back(CH());
 }
 
 vector<double> LSTM_Layer::Calculate_M2M(vector<double> _InputData)
 {
 	//wh * h + wx * x + b
 
+	ClearLayer();
+
 	for (int i = 0; i < _InputData.size(); ++i)
 	{
 		Gate gate;
 
-		gate.f = Sigmoid(m_dHWeight.f * Mem_CH[i].second + m_dXWeight.f * _InputData[i] + m_dBias.f);
-		gate.i = Sigmoid(m_dHWeight.i * Mem_CH[i].second + m_dXWeight.i * _InputData[i] + m_dBias.i);
-		gate.o = Sigmoid(m_dHWeight.o * Mem_CH[i].second + m_dXWeight.o * _InputData[i] + m_dBias.o);
-		gate.c = Tanh(m_dHWeight.c * Mem_CH[i].second + m_dXWeight.c * _InputData[i] + m_dBias.c);
+		gate.f = Sigmoid(m_XWeight.f * _InputData[i] + m_HWeight.f * Mem_CH[i].H + m_HBias.f);
+		gate.i = Sigmoid(m_XWeight.i * _InputData[i] + m_HWeight.i * Mem_CH[i].H + m_HBias.i);
+		gate.c_ = Sigmoid(m_XWeight.c_ * _InputData[i] + m_HWeight.c_ * Mem_CH[i].H + m_HBias.c_);
+		gate.g = Tanh(m_XWeight.g * _InputData[i] + m_HWeight.g * Mem_CH[i].H + m_HBias.g);
 
-		double C = Mem_CH[i].first * gate.f + (gate.c * gate.i);
-		double H = gate.o * Tanh(C);
+		CH ch;
+		ch.C = Mem_CH[i].C * gate.f + gate.i * gate.g;
+		ch.H = gate.c_ * Tanh(ch.C);
 
+		double Y = ch.H * m_YWeight + m_YBias;
+
+		Mem_CH.push_back(ch);
 		Mem_Gate.push_back(gate);
-		Mem_CH.push_back(pair<double, double>(C, H));
-
-		m_vY.push_back(H);
+		m_vY.push_back(Y);
 	}
 
 	return m_vY;
@@ -47,13 +58,28 @@ void LSTM_Layer::Train_M2M(vector<double> _InputData, vector<double> _TrainData)
 {
 	vector<double> Y = Calculate_M2M(_InputData);
 
-	for (int i = 0; i < _InputData.size(); ++i)
+	CH prev_dCH;
+
+	for (int i = Y.size() - 1; i >= 0; --i)
 	{
 		double dy = 2 * (Y[i] - _TrainData[i]);
-		double dh = dy;
+		double dh = dy * m_YWeight + prev_dCH.H;
+		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
+
+		m_YWeight -= dy * Mem_CH[i + 1].H * LEARN_RATE;
+		m_YBias -= dy * LEARN_RATE;
+
+		Gate gate;
+
+		gate.f = Mem_CH[i].C * dc * Sigmoid_Derivative(Mem_Gate[i].f);
+		gate.i = Mem_Gate[i].g * dc * Sigmoid_Derivative(Mem_Gate[i].i);
+		gate.g = Mem_Gate[i].i * dc * Sigmoid_Derivative(Mem_Gate[i].g);
+		gate.c_ = Tanh(Mem_CH[i + 1].C) * dh * Tanh_Derivative(Mem_Gate[i].c_);
+
+		prev_dCH.C = Mem_Gate[i].f * dc;
+		prev_dCH.H = 0;
 	}
 }
-
 
 LSTM_Network::LSTM_Network()
 {

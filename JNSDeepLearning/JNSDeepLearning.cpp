@@ -63,14 +63,13 @@ void LSTM_Run()
 {
 	LSTM_Network net;
 
-	for (int i = 0; i < 1000; ++i)
-		net.Train_M2O(
-			{
-				{{1, 1}, 1 }
-			}
-	);
+	for (int i = 0; i < 1; ++i)
+	{
+		net.Train_M2M({ { 0.1, 0.2, 0.3 }, {0.2, 0.3, 0.4} }, { {0.4, 0.5, 0.6}, {0.5, 0.6, 0.7} });
+	}
 
-	printf("%f", net.Calculate_M2O({ 1, 1 }));
+	net.Calculate_M2M({0.2, 0.3, 0.4});
+	net.printY();
 }
 
 void RNN_Run()
@@ -104,17 +103,17 @@ void RNN_M2M_Run()
 
 	for (int i = 0; i < 10000; ++i)
 	{
-		net.Train_M2M({ {0.1, 0.2, 0.3}, {0.2, 0.3, 0.4}, {0.3, 0.4, 0.5} }, 
+		net.Train_M2M({ {0.1, 0.2, 0.3}, {0.2, 0.3, 0.4}, {0.3, 0.4, 0.5} },
 			{ {0.4, 0.5, 0.6}, {0.5, 0.6, 0.7}, {0.6, 0.7, 0.8} });
 	}
 
-	net.Calculate_M2M({0.2, 0.3, 0.4});
+	net.Calculate_M2M({ 0.2, 0.3, 0.4 });
 	net.printY();
 }
 
 int main()
 {
-	RNN_O2M_Run();
+	LSTM_Run();
 
 	return 0;
 }
