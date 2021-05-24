@@ -1,6 +1,6 @@
 #include "LSTM_Layer.h"
 
-#define LEARN_RATE 0.0025
+#define LEARN_RATE 0.025
 
 LSTM_Layer::LSTM_Layer()
 {
@@ -80,19 +80,19 @@ void LSTM_Layer::Train_M2M(vector<double> _InputData, vector<double> _TrainData)
 		m_XWeight.i -= gate.i * _InputData[i] * LEARN_RATE;
 		m_XWeight.g -= gate.g * _InputData[i] * LEARN_RATE;
 		m_XWeight.c_ -= gate.c_ * _InputData[i] * LEARN_RATE;
-	
+
 		m_HWeight.f -= gate.f * Mem_CH[i].H * LEARN_RATE;
 		m_HWeight.i -= gate.i * Mem_CH[i].H * LEARN_RATE;
 		m_HWeight.g -= gate.g * Mem_CH[i].H * LEARN_RATE;
 		m_HWeight.c_ -= gate.c_ * Mem_CH[i].H * LEARN_RATE;
-		
+
 		m_HBias.f -= gate.f * LEARN_RATE;
 		m_HBias.i -= gate.i * LEARN_RATE;
 		m_HBias.g -= gate.g * LEARN_RATE;
 		m_HBias.c_ -= gate.c_ * LEARN_RATE;
-		
+
 		prev_dCH.C = Mem_Gate[i].f * dc;
-		prev_dCH.H = (gate.f + gate.i + gaet.g + gaet.c_) * (m_HWeight.f + m_HWeight.i + m_HWeight.g + m_HWeight.c_);
+		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_);
 	}
 }
 
