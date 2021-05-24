@@ -76,8 +76,23 @@ void LSTM_Layer::Train_M2M(vector<double> _InputData, vector<double> _TrainData)
 		gate.g = Mem_Gate[i].i * dc * Sigmoid_Derivative(Mem_Gate[i].g);
 		gate.c_ = Tanh(Mem_CH[i + 1].C) * dh * Tanh_Derivative(Mem_Gate[i].c_);
 
+		m_XWeight.f -= gate.f * _InputData[i] * LEARN_RATE;
+		m_XWeight.i -= gate.i * _InputData[i] * LEARN_RATE;
+		m_XWeight.g -= gate.g * _InputData[i] * LEARN_RATE;
+		m_XWeight.c_ -= gate.c_ * _InputData[i] * LEARN_RATE;
+	
+		m_HWeight.f -= gate.f * Mem_CH[i].H * LEARN_RATE;
+		m_HWeight.i -= gate.i * Mem_CH[i].H * LEARN_RATE;
+		m_HWeight.g -= gate.g * Mem_CH[i].H * LEARN_RATE;
+		m_HWeight.c_ -= gate.c_ * Mem_CH[i].H * LEARN_RATE;
+		
+		m_HBias.f -= gate.f * LEARN_RATE;
+		m_HBias.i -= gate.i * LEARN_RATE;
+		m_HBias.g -= gate.g * LEARN_RATE;
+		m_HBias.c_ -= gate.c_ * LEARN_RATE;
+		
 		prev_dCH.C = Mem_Gate[i].f * dc;
-		prev_dCH.H = 0;
+		prev_dCH.H = (gate.f + gate.i + gaet.g + gaet.c_) * (m_HWeight.f + m_HWeight.i + m_HWeight.g + m_HWeight.c_);
 	}
 }
 
