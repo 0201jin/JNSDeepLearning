@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="Activation_Function.h" />
     <CudaCompile Include="LSTM\LSTM_Layer\LSTM_Layer.h" />
+    <ClInclude Include="LSTM\LSTM_Layer\DeepLSTM\DeepLSTM.h" />
     <ClInclude Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.h" />
     <ClInclude Include="RNN\RNN.h" />
     <ClInclude Include="Single_Layer_Perceptron.h" />
@@ -159,6 +160,7 @@
     <CudaCompile Include="LSTM\LSTM_Layer\LSTM_Layer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LSTM\LSTM_Layer\DeepLSTM\DeepLSTM.cpp" />
     <ClCompile Include="RNN\RNN.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

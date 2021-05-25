@@ -27,11 +27,11 @@
     <Filter Include="소스 파일\RNN">
       <UniqueIdentifier>{e34d20a0-213c-450b-80a3-e8a9e9996b06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\LSTM\LSTM_Layer\DeepLSTM">
+      <UniqueIdentifier>{c0f5eaca-d486-4e68-a028-ca6411e30f40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="JNSDeepLearning.cpp">
-      <Filter>소스 파일</Filter>
-    </CudaCompile>
     <CudaCompile Include="Single_Layer_Perceptron.cpp">
       <Filter>소스 파일\Perceptron\Single_Layer_Perceptron</Filter>
     </CudaCompile>
@@ -43,6 +43,9 @@
     </CudaCompile>
     <CudaCompile Include="LSTM\LSTM_Layer\LSTM_Layer.h">
       <Filter>소스 파일\LSTM\LSTM_Layer</Filter>
+    </CudaCompile>
+    <CudaCompile Include="JNSDeepLearning.cpp">
+      <Filter>소스 파일</Filter>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,10 +61,16 @@
     <ClInclude Include="RNN\RNN.h">
       <Filter>소스 파일\RNN</Filter>
     </ClInclude>
+    <ClInclude Include="LSTM\LSTM_Layer\DeepLSTM\DeepLSTM.h">
+      <Filter>소스 파일\LSTM\LSTM_Layer\DeepLSTM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RNN\RNN.cpp">
       <Filter>소스 파일\RNN</Filter>
+    </ClCompile>
+    <ClCompile Include="LSTM\LSTM_Layer\DeepLSTM\DeepLSTM.cpp">
+      <Filter>소스 파일\LSTM\LSTM_Layer\DeepLSTM</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

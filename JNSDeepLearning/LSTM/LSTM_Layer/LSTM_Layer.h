@@ -42,12 +42,13 @@ struct CH
 	double H = 0;
 };
 
-class LSTM_Layer
+class LSTM_Neuron
 {
 public:
-	LSTM_Layer();
+	LSTM_Neuron();
 
 	void ClearLayer();
+
 	void printY()
 	{
 		for (vector<double>::iterator iter = m_vY.begin(); iter != m_vY.end(); ++iter)
@@ -70,6 +71,23 @@ private:
 	vector<CH> Mem_CH;
 	vector<Gate> Mem_Gate;
 	vector<double> m_vY;
+};
+
+class LSTM_Layer
+{
+public:
+	LSTM_Layer();
+
+	void printY()
+	{
+		neuron.printY();
+	}
+
+	vector<double> Calculate_M2M(vector<double> _InputData);
+	void Train_M2M(vector<double> _InputData, vector<double> _TrainData);
+
+private:
+	LSTM_Neuron neuron;
 };
 
 class LSTM_Network

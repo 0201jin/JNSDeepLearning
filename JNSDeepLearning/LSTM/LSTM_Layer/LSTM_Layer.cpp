@@ -4,6 +4,39 @@
 
 LSTM_Layer::LSTM_Layer()
 {
+}
+
+vector<double> LSTM_Layer::Calculate_M2M(vector<double> _InputData)
+{
+	//wh * h + wx * x + b
+
+	return neuron.Calculate_M2M(_InputData);
+}
+
+void LSTM_Layer::Train_M2M(vector<double> _InputData, vector<double> _TrainData)
+{
+	neuron.Train_M2M(_InputData, _TrainData);
+}
+
+LSTM_Network::LSTM_Network()
+{
+}
+
+vector<double> LSTM_Network::Calculate_M2M(vector<double> _InputData)
+{
+	return m_Layer.Calculate_M2M(_InputData);
+}
+
+void LSTM_Network::Train_M2M(vector<vector<double>> _InputData, vector<vector<double>> _TrainData)
+{
+	for (int i = 0; i < _InputData.size(); ++i)
+	{
+		m_Layer.Train_M2M(_InputData[i], _TrainData[i]);
+	}
+}
+
+LSTM_Neuron::LSTM_Neuron()
+{
 	random_device rd;
 	mt19937 random(rd());
 	uniform_real_distribution<double> dist(-1, 1);
@@ -16,7 +49,7 @@ LSTM_Layer::LSTM_Layer()
 	ClearLayer();
 }
 
-void LSTM_Layer::ClearLayer()
+void LSTM_Neuron::ClearLayer()
 {
 	Mem_Gate.clear();
 	Mem_CH.clear();
@@ -25,10 +58,8 @@ void LSTM_Layer::ClearLayer()
 	Mem_CH.push_back(CH());
 }
 
-vector<double> LSTM_Layer::Calculate_M2M(vector<double> _InputData)
+vector<double> LSTM_Neuron::Calculate_M2M(vector<double> _InputData)
 {
-	//wh * h + wx * x + b
-
 	ClearLayer();
 
 	for (int i = 0; i < _InputData.size(); ++i)
@@ -54,7 +85,7 @@ vector<double> LSTM_Layer::Calculate_M2M(vector<double> _InputData)
 	return m_vY;
 }
 
-void LSTM_Layer::Train_M2M(vector<double> _InputData, vector<double> _TrainData)
+void LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> _TrainData)
 {
 	vector<double> Y = Calculate_M2M(_InputData);
 
@@ -93,22 +124,5 @@ void LSTM_Layer::Train_M2M(vector<double> _InputData, vector<double> _TrainData)
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_);
-	}
-}
-
-LSTM_Network::LSTM_Network()
-{
-}
-
-vector<double> LSTM_Network::Calculate_M2M(vector<double> _InputData)
-{
-	return m_Layer.Calculate_M2M(_InputData);
-}
-
-void LSTM_Network::Train_M2M(vector<vector<double>> _InputData, vector<vector<double>> _TrainData)
-{
-	for (int i = 0; i < _InputData.size(); ++i)
-	{
-		m_Layer.Train_M2M(_InputData[i], _TrainData[i]);
 	}
 }
