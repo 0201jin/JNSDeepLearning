@@ -50,4 +50,25 @@ namespace Activation_Function
 	{
 		return 1 - pow(Tanh(_x), 2);
 	}
+	
+	static vector<double> Softmax(vector<double> A)
+	{
+		double C = 0;
+		
+		for(int i = 0; i < A.size(); ++i)
+			if(C < A[i])
+				C = A[i];
+		
+		double sum = 0;
+		for(int i = 0; i < A.size(); ++i)
+			sum += exp(A[i] - C);
+		
+		double constant = C + log(sum);
+		
+		vector<double> y;
+		for(int i = 0; i < A.size(); ++i)
+			y.push_back(A[i] - constant);
+		
+		return y;
+	}
 };
