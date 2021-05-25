@@ -76,7 +76,7 @@ namespace Activation_Function
 	{
 		vector<double> dy;
 		
-		for(int i = 0; i < A.size(); ++i)
+		for(int i = 0; i < y.size(); ++i)
 			dy.push_back(y[i] - t[i]);
 		
 		return dy;
