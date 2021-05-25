@@ -71,4 +71,14 @@ namespace Activation_Function
 		
 		return y;
 	}
+	
+	static vector<double> Softmax_Derivative(vector<double> y, vector<double> t)
+	{
+		vector<double> dy;
+		
+		for(int i = 0; i < A.size(); ++i)
+			dy.push_back(y[i] - t[i]);
+		
+		return dy;
+	}
 };
