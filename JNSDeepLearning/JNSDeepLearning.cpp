@@ -5,6 +5,7 @@
 #include "Multi_Layer_Perceptron/Multi_Layer_Perceptron.h"
 #include "LSTM/LSTM_Layer/LSTM_Layer.h"
 #include "RNN/RNN.h"
+#include "LSTM/LSTM_Layer/DeepLSTM/DeepLSTM.h"
 
 using namespace std;
 
@@ -74,6 +75,13 @@ void LSTM_Run()
 	net.printY();
 }
 
+void DeepLSTM_Run()
+{
+	DeepLSTM net(3);
+
+	cout << net.Calculate_M2O({0.1, 0.2, 0.3}) << endl;
+}
+
 void RNN_Run()
 {
 	RNN_Network net;
@@ -115,7 +123,7 @@ void RNN_M2M_Run()
 
 int main()
 {
-	LSTM_Run();
+	DeepLSTM_Run();
 
 	return 0;
 }

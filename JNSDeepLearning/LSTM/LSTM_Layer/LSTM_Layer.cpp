@@ -127,7 +127,7 @@ void LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> _TrainData
 	}
 }
 
-vector<double> Calculate_H(vector<double> _InputData)
+vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
 {
 	ClearLayer();
 
@@ -154,17 +154,14 @@ vector<double> Calculate_H(vector<double> _InputData)
 	return m_vY;
 }
 
-void Train_H(vector<double> _TrainData)
+void LSTM_Neuron::Train_H(vector<double> _InputData, vector<double> _TrainData)
 {
 	CH prev_dCH;
 
-	for (int i = Y.size() - 1; i >= 0; --i)
+	for (int i = _TrainData.size() - 1; i >= 0; --i)
 	{
-		double dh = _TrainData + prev_dCH.H;
+		double dh = _TrainData[i] + prev_dCH.H;
 		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
-
-		m_YWeight -= dy * Mem_CH[i + 1].H * LEARN_RATE;
-		m_YBias -= dy * LEARN_RATE;
 
 		Gate gate;
 
