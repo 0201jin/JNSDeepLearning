@@ -4,6 +4,8 @@
 class DeepLSTM
 {
 public:
+  DeepLSTM(int _NeuronSize);
+  
   double Calculate_M2O(vector<double> _InputData);
   void Train_M2O(vector<double> _InputData, double _TrainData);
   
