@@ -24,4 +24,5 @@ double DeepLSTM::Calculate_M2O(vector<double> _InputData)
 
 void DeepLSTM::Train_M2O(vector<double> _InputData, double _TrainData)
 {
+	//Train Y 후 Train H
 }
