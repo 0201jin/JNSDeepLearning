@@ -18,6 +18,16 @@ void LSTM_Layer::Train_M2M(vector<double> _InputData, vector<double> _TrainData)
 	neuron.Train_M2M(_InputData, _TrainData);
 }
 
+double LSTM_Layer::Calculate_M2O(vector<double> _InputData)
+{
+	return neuron.Calculate_M2O(_InputData);
+}
+
+void LSTM_Layer::Train_M2O(vector<double> _InputData, double _TrainData)
+{
+	neuron.Train_M2O(_InputData, _TrainData);
+}
+
 LSTM_Network::LSTM_Network()
 {
 }
@@ -32,6 +42,19 @@ void LSTM_Network::Train_M2M(vector<vector<double>> _InputData, vector<vector<do
 	for (int i = 0; i < _InputData.size(); ++i)
 	{
 		m_Layer.Train_M2M(_InputData[i], _TrainData[i]);
+	}
+}
+
+double LSTM_Network::Calculate_M2O(vector<double> _InputData)
+{
+	return m_Layer.Calculate_M2O(_InputData);
+}
+
+void LSTM_Network::Train_M2O(vector<vector<double>> _InputData, vector<double> _TrainData)
+{
+	for (int i = 0; i < _InputData.size(); ++i)
+	{
+		m_Layer.Train_M2O(_InputData[i], _TrainData[i]);
 	}
 }
 
@@ -124,6 +147,73 @@ void LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> _TrainData
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_);
+	}
+}
+
+double LSTM_Neuron::Calculate_M2O(vector<double> _InputData)
+{
+	ClearLayer();
+
+	double Y;
+
+	for (int i = 0; i < _InputData.size(); ++i)
+	{
+		Gate gate;
+
+		gate.f = Sigmoid(m_XWeight.f * _InputData[i] + m_HWeight.f * Mem_CH[i].H + m_HBias.f);
+		gate.i = Sigmoid(m_XWeight.i * _InputData[i] + m_HWeight.i * Mem_CH[i].H + m_HBias.i);
+		gate.c_ = Sigmoid(m_XWeight.c_ * _InputData[i] + m_HWeight.c_ * Mem_CH[i].H + m_HBias.c_);
+		gate.g = Tanh(m_XWeight.g * _InputData[i] + m_HWeight.g * Mem_CH[i].H + m_HBias.g);
+
+		CH ch;
+		ch.C = Mem_CH[i].C * gate.f + gate.i * gate.g;
+		ch.H = gate.c_ * Tanh(ch.C);
+
+		Y = ch.H * m_YWeight + m_YBias;
+
+		Mem_CH.push_back(ch);
+		Mem_Gate.push_back(gate);
+	}
+
+	return Y;
+}
+
+void LSTM_Neuron::Train_M2O(vector<double> _InputData, double _TrainData)
+{
+	double Y = Calculate_M2O(_InputData);
+
+	CH prev_dCH;
+
+	double dy = 2 * (Y - _TrainData);
+	double dh = dy * m_YWeight + prev_dCH.H;
+	double dc = Tanh_Derivative(Mem_CH[Mem_CH.size() - 1].C) * dh * Mem_Gate[Mem_CH.size() - 2].c_ + prev_dCH.C;
+
+	m_YWeight -= dy * Mem_CH[Mem_CH.size() - 1].H * LEARN_RATE;
+	m_YBias -= dy * LEARN_RATE;
+
+	for (int i = _InputData.size() - 1; i >= 0; --i)
+	{
+		Gate gate;
+
+		gate.f = Mem_CH[i].C * dc * Sigmoid_Derivative(Mem_Gate[i].f);
+		gate.i = Mem_Gate[i].g * dc * Sigmoid_Derivative(Mem_Gate[i].i);
+		gate.g = Mem_Gate[i].i * dc * Sigmoid_Derivative(Mem_Gate[i].g);
+		gate.c_ = Tanh(Mem_CH[i + 1].C) * dh * Tanh_Derivative(Mem_Gate[i].c_);
+
+		m_XWeight.f -= gate.f * _InputData[i] * LEARN_RATE;
+		m_XWeight.i -= gate.i * _InputData[i] * LEARN_RATE;
+		m_XWeight.g -= gate.g * _InputData[i] * LEARN_RATE;
+		m_XWeight.c_ -= gate.c_ * _InputData[i] * LEARN_RATE;
+
+		m_HWeight.f -= gate.f * Mem_CH[i].H * LEARN_RATE;
+		m_HWeight.i -= gate.i * Mem_CH[i].H * LEARN_RATE;
+		m_HWeight.g -= gate.g * Mem_CH[i].H * LEARN_RATE;
+		m_HWeight.c_ -= gate.c_ * Mem_CH[i].H * LEARN_RATE;
+
+		m_HBias.f -= gate.f * LEARN_RATE;
+		m_HBias.i -= gate.i * LEARN_RATE;
+		m_HBias.g -= gate.g * LEARN_RATE;
+		m_HBias.c_ -= gate.c_ * LEARN_RATE;
 	}
 }
 

@@ -59,7 +59,10 @@ public:
 
 	vector<double> Calculate_M2M(vector<double> _InputData);
 	void Train_M2M(vector<double> _InputData, vector<double> _TrainData);
-	
+
+	double Calculate_M2O(vector<double> _InputData);
+	void Train_M2O(vector<double> _InputData, double _TrainData);
+
 	vector<double> Calculate_H(vector<double> _InputData);
 	void Train_H(vector<double> _InputData, vector<double> _TrainData);
 
@@ -89,6 +92,9 @@ public:
 	vector<double> Calculate_M2M(vector<double> _InputData);
 	void Train_M2M(vector<double> _InputData, vector<double> _TrainData);
 
+	double Calculate_M2O(vector<double> _InputData);
+	void Train_M2O(vector<double> _InputData, double _TrainData);
+
 private:
 	LSTM_Neuron neuron;
 };
@@ -105,6 +111,9 @@ public:
 
 	vector<double> Calculate_M2M(vector<double> _InputData);
 	void Train_M2M(vector<vector<double>> _InputData, vector<vector<double>> _TrainData);
+
+	double Calculate_M2O(vector<double> _InputData);
+	void Train_M2O(vector<vector<double>> _InputData, vector<double> _TrainData);
 
 private:
 	LSTM_Layer m_Layer;

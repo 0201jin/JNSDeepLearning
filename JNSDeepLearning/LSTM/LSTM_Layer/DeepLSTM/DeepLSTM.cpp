@@ -25,5 +25,11 @@ double DeepLSTM::Calculate_M2O(vector<double> _InputData)
 void DeepLSTM::Train_M2O(vector<double> _InputData, double _TrainData)
 {
 	double Y = Calculate_M2O(_InputData);
-	//Train Y 후 Train H
+	
+	m_vNeuron[m_vNeuron.size() - 1].Train_M2O(_InputData, _TrainData);
+
+	for (vector<LSTM_Neuron>::iterator iter = m_vNeuron.end() - 1; iter != m_vNeuron.begin(); ++iter)
+	{
+
+	}
 }
