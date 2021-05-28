@@ -100,6 +100,7 @@ vector<double> LSTM_Neuron::Calculate_M2M(vector<double> _InputData)
 
 		double Y = ch.H * m_YWeight + m_YBias;
 
+		m_vLastH.push_back(ch.H);
 		Mem_CH.push_back(ch);
 		Mem_Gate.push_back(gate);
 		m_vY.push_back(Y);
@@ -176,6 +177,7 @@ double LSTM_Neuron::Calculate_M2O(vector<double> _InputData)
 
 		Y = ch.H * m_YWeight + m_YBias;
 
+		m_vLastH.push_back(ch.H);
 		Mem_CH.push_back(ch);
 		Mem_Gate.push_back(gate);
 	}
@@ -246,6 +248,7 @@ vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
 
 		double Y = ch.H;
 
+		m_vLastH.push_back(ch.H);
 		Mem_CH.push_back(ch);
 		Mem_Gate.push_back(gate);
 		m_vY.push_back(Y);
