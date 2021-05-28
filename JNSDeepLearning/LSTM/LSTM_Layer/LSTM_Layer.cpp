@@ -108,10 +108,11 @@ vector<double> LSTM_Neuron::Calculate_M2M(vector<double> _InputData)
 	return m_vY;
 }
 
-void LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> _TrainData)
+vector<double> LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> _TrainData)
 {
 	vector<double> Y = Calculate_M2M(_InputData);
-
+	vector<double> dH;
+	
 	CH prev_dCH;
 
 	for (int i = Y.size() - 1; i >= 0; --i)
@@ -147,7 +148,11 @@ void LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> _TrainData
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_);
+		
+		dH.push_back(prev_dCH.H);
 	}
+	
+	return dH;
 }
 
 double LSTM_Neuron::Calculate_M2O(vector<double> _InputData)
@@ -178,10 +183,11 @@ double LSTM_Neuron::Calculate_M2O(vector<double> _InputData)
 	return Y;
 }
 
-void LSTM_Neuron::Train_M2O(vector<double> _InputData, double _TrainData)
+vector<double> LSTM_Neuron::Train_M2O(vector<double> _InputData, double _TrainData)
 {
 	double Y = Calculate_M2O(_InputData);
-
+	vector<double> dH;
+	
 	CH prev_dCH;
 
 	double dy = 2 * (Y - _TrainData);
@@ -214,7 +220,11 @@ void LSTM_Neuron::Train_M2O(vector<double> _InputData, double _TrainData)
 		m_HBias.i -= gate.i * LEARN_RATE;
 		m_HBias.g -= gate.g * LEARN_RATE;
 		m_HBias.c_ -= gate.c_ * LEARN_RATE;
+		
+		dH.push_back((gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_));
 	}
+	
+	return dH;
 }
 
 vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
@@ -244,9 +254,10 @@ vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
 	return m_vY;
 }
 
-void LSTM_Neuron::Train_H(vector<double> _InputData, vector<double> _TrainData)
+vector<double> LSTM_Neuron::Train_H(vector<double> _InputData, vector<double> _TrainData)
 {
 	CH prev_dCH;
+	vector<double> dH;
 
 	for (int i = _TrainData.size() - 1; i >= 0; --i)
 	{
@@ -277,5 +288,9 @@ void LSTM_Neuron::Train_H(vector<double> _InputData, vector<double> _TrainData)
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_);
+		
+		dH.push_back(prev_dCH.H);
 	}
+	
+	return dH;
 }
