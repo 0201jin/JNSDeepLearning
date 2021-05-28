@@ -58,13 +58,13 @@ public:
 	}
 
 	vector<double> Calculate_M2M(vector<double> _InputData);
-	void Train_M2M(vector<double> _InputData, vector<double> _TrainData);
+	vector<double> Train_M2M(vector<double> _InputData, vector<double> _TrainData);
 
 	double Calculate_M2O(vector<double> _InputData);
-	void Train_M2O(vector<double> _InputData, double _TrainData);
+	vector<double> Train_M2O(vector<double> _InputData, double _TrainData);
 
 	vector<double> Calculate_H(vector<double> _InputData);
-	void Train_H(vector<double> _InputData, vector<double> _TrainData);
+	vector<double> Train_H(vector<double> _InputData, vector<double> _TrainData);
 
 private:
 	Gate m_XWeight;
