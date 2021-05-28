@@ -65,6 +65,8 @@ public:
 
 	vector<double> Calculate_H(vector<double> _InputData);
 	vector<double> Train_H(vector<double> _InputData, vector<double> _TrainData);
+	
+	vector<CH> GetCH() { return Mem_CH; }
 
 private:
 	Gate m_XWeight;
