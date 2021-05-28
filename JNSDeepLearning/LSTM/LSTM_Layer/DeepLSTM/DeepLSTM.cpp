@@ -32,6 +32,6 @@ void DeepLSTM::Train_M2O(vector<double> _InputData, double _TrainData)
 
 	for (int i = m_vNeuron.size() - 2; i >= 0; --i)
 	{
-		m_vNeuron[i].Train_H(m_vNeuron[i].GetLastInput(), dh);
+		dh = m_vNeuron[i].Train_H(m_vNeuron[i].GetLastInput(), dh);
 	}
 }
