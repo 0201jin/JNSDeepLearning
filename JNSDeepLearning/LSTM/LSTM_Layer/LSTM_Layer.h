@@ -66,7 +66,7 @@ public:
 	vector<double> Calculate_H(vector<double> _InputData);
 	vector<double> Train_H(vector<double> _InputData, vector<double> _TrainData);
 	
-	vector<CH> GetCH() { return Mem_CH; }
+	vector<double> GetCH() { return m_vLastH; }
 
 private:
 	Gate m_XWeight;
@@ -79,6 +79,7 @@ private:
 	vector<CH> Mem_CH;
 	vector<Gate> Mem_Gate;
 	vector<double> m_vY;
+	vector<double> m_vLastH;
 };
 
 class LSTM_Layer
