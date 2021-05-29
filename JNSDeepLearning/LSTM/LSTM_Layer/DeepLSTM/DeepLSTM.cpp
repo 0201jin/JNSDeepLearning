@@ -10,28 +10,27 @@ DeepLSTM::DeepLSTM(int _NeuronSize)
 
 double DeepLSTM::Calculate_M2O(vector<double> _InputData)
 {
-	vector<double> Cal = _InputData;
+	vector<double> Input = _InputData;
 
-	for (vector<LSTM_Neuron>::iterator iter = m_vNeuron.begin(); iter != m_vNeuron.end() - 1; ++iter)
+	for (int i = 0; i < m_vNeuron.size() - 1; ++i)
 	{
-		Cal = (*iter).Calculate_H(Cal);
+		Input = m_vNeuron[i].Calculate_H(Input);
 	}
 
-	vector<double> Y = m_vNeuron[m_vNeuron.size() - 1].Calculate_M2M(Cal);
-
-	return Y[Y.size() - 1];
+	return m_vNeuron[m_vNeuron.size() - 1].Calculate_Y(Input)[_InputData.size() - 1];
 }
 
-void DeepLSTM::Train_M2O(vector<double> _InputData, double _TrainData)
+void DeepLSTM::Train_M2O(vector<vector<double>> _InputData, vector<double> _TrainData)
 {
-	double Y = Calculate_M2O(_InputData);
-	
-	vector<double> dh;
-	
-	dh = m_vNeuron[m_vNeuron.size() - 1].Train_M2O(m_vNeuron[m_vNeuron.size() - 1].GetLastInput(), _TrainData);
-
-	for (int i = m_vNeuron.size() - 2; i >= 0; --i)
+	for (int i = 0; i < _InputData.size(); ++i)
 	{
-		dh = m_vNeuron[i].Train_H(m_vNeuron[i].GetLastInput(), dh);
+		Calculate_M2O(_InputData[i]);
+
+		queue<double> TrainData = m_vNeuron[m_vNeuron.size() - 1].Train_Y(m_vNeuron[m_vNeuron.size() - 1].GetLastInput(), _TrainData[i]);
+
+		for (int j = m_vNeuron.size() - 2; j >= 0; --j)
+		{
+			TrainData = m_vNeuron[j].Train_H(m_vNeuron[j].GetLastInput(), TrainData);
+		}
 	}
 }

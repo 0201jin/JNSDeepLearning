@@ -91,6 +91,11 @@ void DeepLSTM_Run()
 {
 	DeepLSTM net(3);
 
+	for (int i = 0; i < 10000; ++i)
+	{
+		net.Train_M2O({ {0.1, 0.2, 0.3}, {0.2, 0.3, 0.4}, {0.6, 0.7, 0.8} }, { 0.4, 0.5, 0.9 });
+	}
+
 	cout << net.Calculate_M2O({0.1, 0.2, 0.3}) << endl;
 }
 
@@ -135,7 +140,8 @@ void RNN_M2M_Run()
 
 int main()
 {
-	LSTM_M2O_Run();
+	DeepLSTM_Run();
+	//LSTM_M2O_Run();
 
 	return 0;
 }

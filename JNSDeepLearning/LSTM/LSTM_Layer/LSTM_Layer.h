@@ -5,6 +5,7 @@
 #include <map>
 #include <random>
 #include <cuda_runtime.h>
+#include <queue>
 
 #include "../../Activation_Function.h"
 #include "device_launch_parameters.h"
@@ -61,11 +62,14 @@ public:
 	vector<double> Train_M2M(vector<double> _InputData, vector<double> _TrainData);
 
 	double Calculate_M2O(vector<double> _InputData);
-	vector<double> Train_M2O(vector<double> _InputData, double _TrainData);
+	void Train_M2O(vector<double> _InputData, double _TrainData);
 
 	vector<double> Calculate_H(vector<double> _InputData);
-	vector<double> Train_H(vector<double> _InputData, vector<double> _TrainData);
-	
+	vector<double> Calculate_Y(vector<double> _InputData);
+
+	queue<double> Train_Y(vector<double> _InputData, double _TrainData);
+	queue<double> Train_H(vector<double> _InputData, queue<double> _TrainData);
+
 	vector<double> GetLastInput() { return m_vLastInput; }
 
 private:

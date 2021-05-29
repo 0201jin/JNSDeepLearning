@@ -1,6 +1,6 @@
 #include "LSTM_Layer.h"
 
-#define LEARN_RATE 0.025
+#define LEARN_RATE 0.0025
 
 LSTM_Layer::LSTM_Layer()
 {
@@ -85,8 +85,6 @@ vector<double> LSTM_Neuron::Calculate_M2M(vector<double> _InputData)
 {
 	ClearLayer();
 
-	m_vLastInput = _InputData;
-	
 	for (int i = 0; i < _InputData.size(); ++i)
 	{
 		Gate gate;
@@ -114,7 +112,7 @@ vector<double> LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> 
 {
 	vector<double> Y = Calculate_M2M(_InputData);
 	vector<double> dH;
-	
+
 	CH prev_dCH;
 
 	for (int i = Y.size() - 1; i >= 0; --i)
@@ -150,19 +148,31 @@ vector<double> LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> 
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_);
-		
+
 		dH.push_back(prev_dCH.H);
 	}
-	
+
 	return dH;
 }
 
 double LSTM_Neuron::Calculate_M2O(vector<double> _InputData)
 {
+	vector<double> Y = Calculate_Y(_InputData);
+
+	return Y[Y.size() - 1];
+}
+
+void LSTM_Neuron::Train_M2O(vector<double> _InputData, double _TrainData)
+{
+	Train_Y(_InputData, _TrainData);
+}
+
+vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
+{
 	ClearLayer();
 
 	m_vLastInput = _InputData;
-	double Y;
+	vector<double> H;
 
 	for (int i = 0; i < _InputData.size(); ++i)
 	{
@@ -177,24 +187,53 @@ double LSTM_Neuron::Calculate_M2O(vector<double> _InputData)
 		ch.C = Mem_CH[i].C * gate.f + gate.i * gate.g;
 		ch.H = gate.c_ * Tanh(ch.C);
 
-		Y = ch.H * m_YWeight + m_YBias;
+		Mem_CH.push_back(ch);
+		Mem_Gate.push_back(gate);
+		H.push_back(ch.H);
+	}
+
+	return H;
+}
+
+vector<double> LSTM_Neuron::Calculate_Y(vector<double> _InputData)
+{
+	ClearLayer();
+
+	m_vLastInput = _InputData;
+
+	for (int i = 0; i < _InputData.size(); ++i)
+	{
+		Gate gate;
+
+		gate.f = Sigmoid(m_XWeight.f * _InputData[i] + m_HWeight.f * Mem_CH[i].H + m_HBias.f);
+		gate.i = Sigmoid(m_XWeight.i * _InputData[i] + m_HWeight.i * Mem_CH[i].H + m_HBias.i);
+		gate.c_ = Sigmoid(m_XWeight.c_ * _InputData[i] + m_HWeight.c_ * Mem_CH[i].H + m_HBias.c_);
+		gate.g = Tanh(m_XWeight.g * _InputData[i] + m_HWeight.g * Mem_CH[i].H + m_HBias.g);
+
+		CH ch;
+		ch.C = Mem_CH[i].C * gate.f + gate.i * gate.g;
+		ch.H = gate.c_ * Tanh(ch.C);
+
+		double Y = ch.H * m_YWeight + m_YBias;
 
 		Mem_CH.push_back(ch);
 		Mem_Gate.push_back(gate);
+		m_vY.push_back(Y);
 	}
 
-	return Y;
+	return m_vY;
 }
 
-vector<double> LSTM_Neuron::Train_M2O(vector<double> _InputData, double _TrainData)
+queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData)
 {
-	double Y = Calculate_M2O(_InputData);
-	vector<double> dH;
-	
+	double Y = Calculate_Y(_InputData)[_InputData.size() - 1];
+
+	queue<double> dX;
+
 	CH prev_dCH;
 
 	double dy = 2 * (Y - _TrainData);
-	double dh = dy * m_YWeight + prev_dCH.H;
+	double dh = dy * m_YWeight;
 	double dc = Tanh_Derivative(Mem_CH[Mem_CH.size() - 1].C) * dh * Mem_Gate[Mem_CH.size() - 2].c_ + prev_dCH.C;
 
 	m_YWeight -= dy * Mem_CH[Mem_CH.size() - 1].H * LEARN_RATE;
@@ -203,6 +242,9 @@ vector<double> LSTM_Neuron::Train_M2O(vector<double> _InputData, double _TrainDa
 	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
 		Gate gate;
+
+		dh = dh + prev_dCH.H;
+		dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
 
 		gate.f = Mem_CH[i].C * dc * Sigmoid_Derivative(Mem_Gate[i].f);
 		gate.i = Mem_Gate[i].g * dc * Sigmoid_Derivative(Mem_Gate[i].i);
@@ -223,49 +265,31 @@ vector<double> LSTM_Neuron::Train_M2O(vector<double> _InputData, double _TrainDa
 		m_HBias.i -= gate.i * LEARN_RATE;
 		m_HBias.g -= gate.g * LEARN_RATE;
 		m_HBias.c_ -= gate.c_ * LEARN_RATE;
-		
-		dH.push_back((gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_));
-	}
-	
-	return dH;
-}
 
-vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
-{
-	ClearLayer();
-	m_vLastInput = _InputData;
+		//(Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_) * 
+		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (m_HWeight.f + m_HWeight.i + m_HWeight.g + m_HWeight.c_);
+		prev_dCH.C = Mem_Gate[i].f * dc;
 
-	for (int i = 0; i < _InputData.size(); ++i)
-	{
-		Gate gate;
-
-		gate.f = Sigmoid(m_XWeight.f * _InputData[i] + m_HWeight.f * Mem_CH[i].H + m_HBias.f);
-		gate.i = Sigmoid(m_XWeight.i * _InputData[i] + m_HWeight.i * Mem_CH[i].H + m_HBias.i);
-		gate.c_ = Sigmoid(m_XWeight.c_ * _InputData[i] + m_HWeight.c_ * Mem_CH[i].H + m_HBias.c_);
-		gate.g = Tanh(m_XWeight.g * _InputData[i] + m_HWeight.g * Mem_CH[i].H + m_HBias.g);
-
-		CH ch;
-		ch.C = Mem_CH[i].C * gate.f + gate.i * gate.g;
-		ch.H = gate.c_ * Tanh(ch.C);
-
-		double Y = ch.H;
-
-		Mem_CH.push_back(ch);
-		Mem_Gate.push_back(gate);
-		m_vY.push_back(Y);
+		dX.push((gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_) * (m_XWeight.f + m_XWeight.i + m_XWeight.g + m_XWeight.c_));
 	}
 
-	return m_vY;
+	return dX;
 }
 
-vector<double> LSTM_Neuron::Train_H(vector<double> _InputData, vector<double> _TrainData)
+queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _TrainData)
 {
+	vector<double> Y = Calculate_H(_InputData);
+
+	queue<double> dX;
+
 	CH prev_dCH;
-	vector<double> dH;
 
-	for (int i = _TrainData.size() - 1; i >= 0; --i)
+	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
-		double dh = _TrainData[i] + prev_dCH.H;
+		double TrainData = _TrainData.front();
+		_TrainData.pop();
+
+		double dh = (2 * (Y[i] - TrainData)) + prev_dCH.H;
 		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
 
 		Gate gate;
@@ -291,10 +315,11 @@ vector<double> LSTM_Neuron::Train_H(vector<double> _InputData, vector<double> _T
 		m_HBias.c_ -= gate.c_ * LEARN_RATE;
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
-		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_);
-		
-		dH.push_back(prev_dCH.H);
+		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_)  * (m_HWeight.f + m_HWeight.i + m_HWeight.g + m_HWeight.c_);
+		//dX를 반환해야함.
+
+		dX.push((gate.f + gate.i + gate.g + gate.c_) * (m_XWeight.f + m_XWeight.i + m_XWeight.g + m_XWeight.c_));
 	}
-	
-	return dH;
+
+	return dX;
 }
