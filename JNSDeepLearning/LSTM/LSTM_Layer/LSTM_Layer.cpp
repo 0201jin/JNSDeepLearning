@@ -269,7 +269,7 @@ queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData)
 		m_HBias.c_ -= gate.c_ * LEARN_RATE;
 
 		//(Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_) * 
-		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
+		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_)* (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
 		prev_dCH.C = Mem_Gate[i].f * dc;
 
 		dX.push((gate.f + gate.i + gate.g + gate.c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_));
@@ -319,7 +319,7 @@ queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _Tra
 		m_HBias.c_ -= gate.c_ * LEARN_RATE;
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
-		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_)  * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
+		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
 		//dX¸¦ ¹ÝÈ¯ÇØ¾ßÇÔ.
 
 		dX.push((gate.f + gate.i + gate.g + gate.c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_));
