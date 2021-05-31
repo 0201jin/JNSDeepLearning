@@ -242,6 +242,8 @@ queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData)
 	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
 		Gate gate;
+		Gate XWeight = m_XWeight;
+		Gate HWeight = m_HWeight;
 
 		dh = dh + prev_dCH.H;
 		dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
@@ -267,10 +269,10 @@ queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData)
 		m_HBias.c_ -= gate.c_ * LEARN_RATE;
 
 		//(Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_) * 
-		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (m_HWeight.f + m_HWeight.i + m_HWeight.g + m_HWeight.c_);
+		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
 		prev_dCH.C = Mem_Gate[i].f * dc;
 
-		dX.push((gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_) * (m_XWeight.f + m_XWeight.i + m_XWeight.g + m_XWeight.c_));
+		dX.push((gate.f + gate.i + gate.g + gate.c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_));
 	}
 
 	return dX;
@@ -293,6 +295,8 @@ queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _Tra
 		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
 
 		Gate gate;
+		Gate XWeight = m_XWeight;
+		Gate HWeight = m_HWeight;
 
 		gate.f = Mem_CH[i].C * dc * Sigmoid_Derivative(Mem_Gate[i].f);
 		gate.i = Mem_Gate[i].g * dc * Sigmoid_Derivative(Mem_Gate[i].i);
@@ -315,10 +319,10 @@ queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _Tra
 		m_HBias.c_ -= gate.c_ * LEARN_RATE;
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
-		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_)  * (m_HWeight.f + m_HWeight.i + m_HWeight.g + m_HWeight.c_);
-		//dX∏¶ π›»Ø«ÿæﬂ«‘.
+		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_)  * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
+		//dX¬∏¬¶ ¬π√ù√à¬Ø√á√ò¬æ√ü√á√î.
 
-		dX.push((gate.f + gate.i + gate.g + gate.c_) * (m_XWeight.f + m_XWeight.i + m_XWeight.g + m_XWeight.c_));
+		dX.push((gate.f + gate.i + gate.g + gate.c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_));
 	}
 
 	return dX;
