@@ -89,7 +89,7 @@ void LSTM_M2O_Run()
 
 void DeepLSTM_Run()
 {
-	DeepLSTM net(2);
+	DeepLSTM net(3);
 
 	for (int i = 0; i < 100000; ++i)
 	{
@@ -140,8 +140,8 @@ void RNN_M2M_Run()
 
 int main()
 {
-	DeepLSTM_Run();
-	//LSTM_M2O_Run();
+	//DeepLSTM_Run();
+	LSTM_M2O_Run();
 
 	return 0;
 }
