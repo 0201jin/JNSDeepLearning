@@ -291,7 +291,7 @@ queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _Tra
 		double TrainData = _TrainData.front();
 		_TrainData.pop();
 
-		double dh = (2 * (Y[i] - TrainData)) + prev_dCH.H;
+		double dh = TrainData + prev_dCH.H;
 		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
 
 		Gate gate;
