@@ -37,6 +37,12 @@ struct Gate
 	}
 };
 
+static ostream& operator<<(ostream& os, const Gate& Data)
+{
+	os << " f: " << Data.f << " i: " << Data.i << " g: " << Data.g << " c_: " << Data.c_;
+	return os;
+}
+
 struct CH
 {
 	double C = 0;
@@ -71,6 +77,13 @@ public:
 	queue<double> Train_H(vector<double> _InputData, queue<double> _TrainData);
 
 	vector<double> GetLastInput() { return m_vLastInput; }
+
+	void PrintWeight(int i = 0)
+	{
+		cout << i << "X " << m_XWeight << endl;
+		cout << i << "H " << m_HWeight << endl;
+		cout << i << "B " << m_HBias << endl;
+	}
 
 private:
 	Gate m_XWeight;

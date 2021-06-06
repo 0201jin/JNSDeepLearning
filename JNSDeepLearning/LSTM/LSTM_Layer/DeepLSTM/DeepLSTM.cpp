@@ -34,3 +34,11 @@ void DeepLSTM::Train_M2O(vector<vector<double>> _InputData, vector<double> _Trai
 		}
 	}
 }
+
+void DeepLSTM::PrintWeight()
+{
+	for (int i = 0; i < m_vNeuron.size(); ++i)
+	{
+		m_vNeuron[i].PrintWeight(i);
+	}
+}
