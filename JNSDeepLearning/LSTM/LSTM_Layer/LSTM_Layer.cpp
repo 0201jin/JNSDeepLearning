@@ -224,7 +224,7 @@ vector<double> LSTM_Neuron::Calculate_Y(vector<double> _InputData)
 	return m_vY;
 }
 
-queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData)
+queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData, double _Learning_Rate = 0.0025)
 {
 	double Y = Calculate_Y(_InputData)[_InputData.size() - 1];
 
@@ -253,20 +253,20 @@ queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData)
 		gate.g = Mem_Gate[i].i * dc * Tanh_Derivative(Mem_Gate[i].g);
 		gate.c_ = Tanh(Mem_CH[i + 1].C) * dh * Sigmoid_Derivative(Mem_Gate[i].c_);
 
-		m_XWeight.f -= gate.f * _InputData[i] * LEARN_RATE;
-		m_XWeight.i -= gate.i * _InputData[i] * LEARN_RATE;
-		m_XWeight.g -= gate.g * _InputData[i] * LEARN_RATE;
-		m_XWeight.c_ -= gate.c_ * _InputData[i] * LEARN_RATE;
+		m_XWeight.f -= gate.f * _InputData[i] * _Learning_Rate;
+		m_XWeight.i -= gate.i * _InputData[i] * _Learning_Rate;
+		m_XWeight.g -= gate.g * _InputData[i] * _Learning_Rate;
+		m_XWeight.c_ -= gate.c_ * _InputData[i] * _Learning_Rate;
 
-		m_HWeight.f -= gate.f * Mem_CH[i].H * LEARN_RATE;
-		m_HWeight.i -= gate.i * Mem_CH[i].H * LEARN_RATE;
-		m_HWeight.g -= gate.g * Mem_CH[i].H * LEARN_RATE;
-		m_HWeight.c_ -= gate.c_ * Mem_CH[i].H * LEARN_RATE;
+		m_HWeight.f -= gate.f * Mem_CH[i].H * _Learning_Rate;
+		m_HWeight.i -= gate.i * Mem_CH[i].H * _Learning_Rate;
+		m_HWeight.g -= gate.g * Mem_CH[i].H * _Learning_Rate;
+		m_HWeight.c_ -= gate.c_ * Mem_CH[i].H * _Learning_Rate;
 
-		m_HBias.f -= gate.f * LEARN_RATE;
-		m_HBias.i -= gate.i * LEARN_RATE;
-		m_HBias.g -= gate.g * LEARN_RATE;
-		m_HBias.c_ -= gate.c_ * LEARN_RATE;
+		m_HBias.f -= gate.f * _Learning_Rate;
+		m_HBias.i -= gate.i * _Learning_Rate;
+		m_HBias.g -= gate.g * _Learning_Rate;
+		m_HBias.c_ -= gate.c_ * _Learning_Rate;
 
 		//(Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_) * 
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
@@ -278,7 +278,7 @@ queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData)
 	return dX;
 }
 
-queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _TrainData)
+queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate = 0.0025)
 {
 	vector<double> Y = Calculate_H(_InputData);
 
@@ -303,20 +303,20 @@ queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _Tra
 		gate.g = Mem_Gate[i].i * dc * Tanh_Derivative(Mem_Gate[i].g);
 		gate.c_ = Tanh(Mem_CH[i + 1].C) * dh * Sigmoid_Derivative(Mem_Gate[i].c_);
 
-		m_XWeight.f -= gate.f * _InputData[i] * LEARN_RATE;
-		m_XWeight.i -= gate.i * _InputData[i] * LEARN_RATE;
-		m_XWeight.g -= gate.g * _InputData[i] * LEARN_RATE;
-		m_XWeight.c_ -= gate.c_ * _InputData[i] * LEARN_RATE;
+		m_XWeight.f -= gate.f * _InputData[i] * _Learning_Rate;
+		m_XWeight.i -= gate.i * _InputData[i] * _Learning_Rate;
+		m_XWeight.g -= gate.g * _InputData[i] * _Learning_Rate;
+		m_XWeight.c_ -= gate.c_ * _InputData[i] * _Learning_Rate;
 
-		m_HWeight.f -= gate.f * Mem_CH[i].H * LEARN_RATE;
-		m_HWeight.i -= gate.i * Mem_CH[i].H * LEARN_RATE;
-		m_HWeight.g -= gate.g * Mem_CH[i].H * LEARN_RATE;
-		m_HWeight.c_ -= gate.c_ * Mem_CH[i].H * LEARN_RATE;
+		m_HWeight.f -= gate.f * Mem_CH[i].H * _Learning_Rate;
+		m_HWeight.i -= gate.i * Mem_CH[i].H * _Learning_Rate;
+		m_HWeight.g -= gate.g * Mem_CH[i].H * _Learning_Rate;
+		m_HWeight.c_ -= gate.c_ * Mem_CH[i].H * _Learning_Rate;
 
-		m_HBias.f -= gate.f * LEARN_RATE;
-		m_HBias.i -= gate.i * LEARN_RATE;
-		m_HBias.g -= gate.g * LEARN_RATE;
-		m_HBias.c_ -= gate.c_ * LEARN_RATE;
+		m_HBias.f -= gate.f * _Learning_Rate;
+		m_HBias.i -= gate.i * _Learning_Rate;
+		m_HBias.g -= gate.g * _Learning_Rate;
+		m_HBias.c_ -= gate.c_ * _Learning_Rate;
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
