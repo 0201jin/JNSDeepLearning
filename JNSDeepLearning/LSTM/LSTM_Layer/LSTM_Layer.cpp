@@ -224,7 +224,7 @@ vector<double> LSTM_Neuron::Calculate_Y(vector<double> _InputData)
 	return m_vY;
 }
 
-queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData, double _Learning_Rate = 0.0025)
+queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData, double _Learning_Rate)
 {
 	double Y = Calculate_Y(_InputData)[_InputData.size() - 1];
 
@@ -278,7 +278,7 @@ queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData,
 	return dX;
 }
 
-queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate = 0.0025)
+queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate)
 {
 	vector<double> Y = Calculate_H(_InputData);
 
