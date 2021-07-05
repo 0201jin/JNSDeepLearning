@@ -50,6 +50,14 @@ namespace Activation_Function
 	{
 		return 1 - pow(Tanh(_x), 2);
 	}
+
+	static double Gradient_Clipping(double _g, double _threshold)
+	{
+		if (_g >= _threshold)
+			return _threshold / _g * _g;
+		
+		return _g;
+	}
 	
 	static vector<double> Softmax(vector<double> A)
 	{

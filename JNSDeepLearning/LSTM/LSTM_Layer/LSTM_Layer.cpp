@@ -318,6 +318,23 @@ queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _Tra
 		m_HBias.g -= gate.g * _Learning_Rate;
 		m_HBias.c_ -= gate.c_ * _Learning_Rate;
 
+		//double threshold = 0.25;
+
+		//m_XWeight.f = Gradient_Clipping(m_XWeight.f - gate.f * _InputData[i] * _Learning_Rate, threshold);
+		//m_XWeight.i = Gradient_Clipping(m_XWeight.i - gate.i * _InputData[i] * _Learning_Rate, threshold);
+		//m_XWeight.g = Gradient_Clipping(m_XWeight.g - gate.g * _InputData[i] * _Learning_Rate, threshold);
+		//m_XWeight.c_ = Gradient_Clipping(m_XWeight.c_ - gate.c_ * _InputData[i] * _Learning_Rate, threshold);
+
+		//m_HWeight.f = Gradient_Clipping(m_HWeight.f - gate.f * Mem_CH[i].H * _Learning_Rate, threshold);
+		//m_HWeight.i = Gradient_Clipping(m_HWeight.i - gate.i * Mem_CH[i].H * _Learning_Rate, threshold);
+		//m_HWeight.g = Gradient_Clipping(m_HWeight.g - gate.g * Mem_CH[i].H * _Learning_Rate, threshold);
+		//m_HWeight.c_ = Gradient_Clipping(m_HWeight.c_ - gate.c_ * Mem_CH[i].H * _Learning_Rate, threshold);
+
+		//m_HBias.f = Gradient_Clipping(m_HBias.f - gate.f * _Learning_Rate, threshold);
+		//m_HBias.i = Gradient_Clipping(m_HBias.i - gate.i * _Learning_Rate, threshold);
+		//m_HBias.g = Gradient_Clipping(m_HBias.g - gate.g * _Learning_Rate, threshold);
+		//m_HBias.c_ = Gradient_Clipping(m_HBias.c_ - gate.c_ * _Learning_Rate, threshold);
+
 		prev_dCH.C = Mem_Gate[i].f * dc;
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
 
