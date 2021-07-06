@@ -204,7 +204,7 @@ vector<double> LSTM_Neuron::Calculate_Y(vector<double> _InputData)
 	for (int i = 0; i < _InputData.size(); ++i)
 	{
 		Gate gate;
-
+		//Mem_CH가 0으로 변하면서 Mem_Gate도 0으로 변함.
 		gate.f = Sigmoid(m_XWeight.f * _InputData[i] + m_HWeight.f * Mem_CH[i].H + m_HBias.f);
 		gate.i = Sigmoid(m_XWeight.i * _InputData[i] + m_HWeight.i * Mem_CH[i].H + m_HBias.i);
 		gate.c_ = Sigmoid(m_XWeight.c_ * _InputData[i] + m_HWeight.c_ * Mem_CH[i].H + m_HBias.c_);
@@ -344,7 +344,7 @@ queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _Tra
 	return dX;
 }
 
-queue<double> Train_Y_Adam(vector<double> _InputData, double _TrainData, double _Learning_Rate = 0.0025, double* _m, double* _v)
+queue<double> LSTM_Neuron::Train_Y_Adam(vector<double> _InputData, double _TrainData, double _Learning_Rate, double* _m, double* _v)
 {
 	double Y = Calculate_Y(_InputData)[_InputData.size() - 1];
 
@@ -373,20 +373,22 @@ queue<double> Train_Y_Adam(vector<double> _InputData, double _TrainData, double 
 		gate.g = Mem_Gate[i].i * dc * Tanh_Derivative(Mem_Gate[i].g);
 		gate.c_ = Tanh(Mem_CH[i + 1].C) * dh * Sigmoid_Derivative(Mem_Gate[i].c_);
 
-		Adam_Function(&m_XWeight.f, gate.f * _InputData[i], _m, _v);
-		Adam_Function(&m_XWeight.i, gate.i * _InputData[i], _m, _v);
-		Adam_Function(&m_XWeight.g, gate.g * _InputData[i], _m, _v);
-		Adam_Function(&m_XWeight.c_, gate.c_ * _InputData[i], _m, _v);
+		Adam(&m_XWeight.f, gate.f * _InputData[i], _m, _v);
+		Adam(&m_XWeight.i, gate.i * _InputData[i], _m, _v);
+		Adam(&m_XWeight.g, gate.g * _InputData[i], _m, _v);
+		Adam(&m_XWeight.c_, gate.c_ * _InputData[i], _m, _v);
 
-		Adam_Function(&m_HWeight.f, gate.f * Mem_CH[i].H, _m, _v);
-		Adam_Function(&m_HWeight.i, gate.i * Mem_CH[i].H, _m, _v);
-		Adam_Function(&m_HWeight.g, gate.g * Mem_CH[i].H, _m, _v);
-		Adam_Function(&m_HWeight.c_, gate.c_ * Mem_CH[i].H, _m, _v);
+		Adam(&m_HWeight.f, gate.f * Mem_CH[i].H, _m, _v);
+		Adam(&m_HWeight.i, gate.i * Mem_CH[i].H, _m, _v);
+		Adam(&m_HWeight.g, gate.g * Mem_CH[i].H, _m, _v);
+		Adam(&m_HWeight.c_, gate.c_ * Mem_CH[i].H, _m, _v);
 
-		Adam_Function(&m_HBias.f, gate.f, _m, _v);
-		Adam_Function(&m_HBias.i, gate.i, _m, _v);
-		Adam_Function(&m_HBias.g, gate.g, _m, _v);
-		Adam_Function(&m_HBias.c_, gate.c_, _m, _v);
+		Adam(&m_HBias.f, gate.f, _m, _v);
+		Adam(&m_HBias.i, gate.i, _m, _v);
+		Adam(&m_HBias.g, gate.g, _m, _v);
+		Adam(&m_HBias.c_, gate.c_, _m, _v);
+
+		//gate가 0으로 나옴
 
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
 		prev_dCH.C = Mem_Gate[i].f * dc;
@@ -397,7 +399,7 @@ queue<double> Train_Y_Adam(vector<double> _InputData, double _TrainData, double 
 	return dX;
 }
 
-queue<double> Train_H_Adam(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate = 0.0025, double* _m, double* _v)
+queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate, double* _m, double* _v)
 {
 	vector<double> Y = Calculate_H(_InputData);
 
@@ -422,20 +424,20 @@ queue<double> Train_H_Adam(vector<double> _InputData, queue<double> _TrainData, 
 		gate.g = Mem_Gate[i].i * dc * Tanh_Derivative(Mem_Gate[i].g);
 		gate.c_ = Tanh(Mem_CH[i + 1].C) * dh * Sigmoid_Derivative(Mem_Gate[i].c_);
 
-		Adam_Function(&m_XWeight.f, gate.f * _InputData[i], _m, _v);
-		Adam_Function(&m_XWeight.i, gate.i * _InputData[i], _m, _v);
-		Adam_Function(&m_XWeight.g, gate.g * _InputData[i], _m, _v);
-		Adam_Function(&m_XWeight.c_, gate.c_ * _InputData[i], _m, _v);
+		Adam(&m_XWeight.f, gate.f * _InputData[i], _m, _v);
+		Adam(&m_XWeight.i, gate.i * _InputData[i], _m, _v);
+		Adam(&m_XWeight.g, gate.g * _InputData[i], _m, _v);
+		Adam(&m_XWeight.c_, gate.c_ * _InputData[i], _m, _v);
 
-		Adam_Function(&m_HWeight.f, gate.f * Mem_CH[i].H, _m, _v);
-		Adam_Function(&m_HWeight.i, gate.i * Mem_CH[i].H, _m, _v);
-		Adam_Function(&m_HWeight.g, gate.g * Mem_CH[i].H, _m, _v);
-		Adam_Function(&m_HWeight.c_, gate.c_ * Mem_CH[i].H, _m, _v);
+		Adam(&m_HWeight.f, gate.f * Mem_CH[i].H, _m, _v);
+		Adam(&m_HWeight.i, gate.i * Mem_CH[i].H, _m, _v);
+		Adam(&m_HWeight.g, gate.g * Mem_CH[i].H, _m, _v);
+		Adam(&m_HWeight.c_, gate.c_ * Mem_CH[i].H, _m, _v);
 
-		Adam_Function(&m_HBias.f, gate.f, _m, _v);
-		Adam_Function(&m_HBias.i, gate.i, _m, _v);
-		Adam_Function(&m_HBias.g, gate.g, _m, _v);
-		Adam_Function(&m_HBias.c_, gate.c_, _m, _v);
+		Adam(&m_HBias.f, gate.f, _m, _v);
+		Adam(&m_HBias.i, gate.i, _m, _v);
+		Adam(&m_HBias.g, gate.g, _m, _v);
+		Adam(&m_HBias.c_, gate.c_, _m, _v);
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);

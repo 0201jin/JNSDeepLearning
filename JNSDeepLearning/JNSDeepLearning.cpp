@@ -92,7 +92,7 @@ void DeepLSTM_Run()
 	//기울기 폭발 문제
 	DeepLSTM net(3);
 
-	for (int i = 0; i < 100000; ++i)
+	for (int i = 0; i < 1000; ++i)
 	{
 		net.Train_M2O({ 
 			{0.1, 0.2, 0.3}, 

@@ -13,4 +13,5 @@ public:
 
 private:
 	vector<LSTM_Neuron> m_vNeuron;
+	double m, v = 0;
 };
