@@ -343,3 +343,105 @@ queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _Tra
 
 	return dX;
 }
+
+queue<double> Train_Y_Adam(vector<double> _InputData, double _TrainData, double _Learning_Rate = 0.0025, double* _m, double* _v)
+{
+	double Y = Calculate_Y(_InputData)[_InputData.size() - 1];
+
+	queue<double> dX;
+
+	CH prev_dCH;
+
+	double dy = 2 * (Y - _TrainData);
+	double dh = dy * m_YWeight;
+	double dc = Tanh_Derivative(Mem_CH[Mem_CH.size() - 1].C) * dh * Mem_Gate[Mem_CH.size() - 2].c_ + prev_dCH.C;
+
+	m_YWeight -= dy * Mem_CH[Mem_CH.size() - 1].H * LEARN_RATE;
+	m_YBias -= dy * LEARN_RATE;
+
+	for (int i = _InputData.size() - 1; i >= 0; --i)
+	{
+		Gate gate;
+		Gate XWeight = m_XWeight;
+		Gate HWeight = m_HWeight;
+
+		dh = dh + prev_dCH.H;
+		dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
+
+		gate.f = Mem_CH[i].C * dc * Sigmoid_Derivative(Mem_Gate[i].f);
+		gate.i = Mem_Gate[i].g * dc * Sigmoid_Derivative(Mem_Gate[i].i);
+		gate.g = Mem_Gate[i].i * dc * Tanh_Derivative(Mem_Gate[i].g);
+		gate.c_ = Tanh(Mem_CH[i + 1].C) * dh * Sigmoid_Derivative(Mem_Gate[i].c_);
+
+		Adam_Function(&m_XWeight.f, gate.f * _InputData[i], _m, _v);
+		Adam_Function(&m_XWeight.i, gate.i * _InputData[i], _m, _v);
+		Adam_Function(&m_XWeight.g, gate.g * _InputData[i], _m, _v);
+		Adam_Function(&m_XWeight.c_, gate.c_ * _InputData[i], _m, _v);
+
+		Adam_Function(&m_HWeight.f, gate.f * Mem_CH[i].H, _m, _v);
+		Adam_Function(&m_HWeight.i, gate.i * Mem_CH[i].H, _m, _v);
+		Adam_Function(&m_HWeight.g, gate.g * Mem_CH[i].H, _m, _v);
+		Adam_Function(&m_HWeight.c_, gate.c_ * Mem_CH[i].H, _m, _v);
+
+		Adam_Function(&m_HBias.f, gate.f, _m, _v);
+		Adam_Function(&m_HBias.i, gate.i, _m, _v);
+		Adam_Function(&m_HBias.g, gate.g, _m, _v);
+		Adam_Function(&m_HBias.c_, gate.c_, _m, _v);
+
+		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
+		prev_dCH.C = Mem_Gate[i].f * dc;
+
+		dX.push((gate.f + gate.i + gate.g + gate.c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_));
+	}
+
+	return dX;
+}
+
+queue<double> Train_H_Adam(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate = 0.0025, double* _m, double* _v)
+{
+	vector<double> Y = Calculate_H(_InputData);
+
+	queue<double> dX;
+
+	CH prev_dCH;
+
+	for (int i = _InputData.size() - 1; i >= 0; --i)
+	{
+		double TrainData = _TrainData.front();
+		_TrainData.pop();
+
+		double dh = TrainData + prev_dCH.H;
+		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
+
+		Gate gate;
+		Gate XWeight = m_XWeight;
+		Gate HWeight = m_HWeight;
+
+		gate.f = Mem_CH[i].C * dc * Sigmoid_Derivative(Mem_Gate[i].f);
+		gate.i = Mem_Gate[i].g * dc * Sigmoid_Derivative(Mem_Gate[i].i);
+		gate.g = Mem_Gate[i].i * dc * Tanh_Derivative(Mem_Gate[i].g);
+		gate.c_ = Tanh(Mem_CH[i + 1].C) * dh * Sigmoid_Derivative(Mem_Gate[i].c_);
+
+		Adam_Function(&m_XWeight.f, gate.f * _InputData[i], _m, _v);
+		Adam_Function(&m_XWeight.i, gate.i * _InputData[i], _m, _v);
+		Adam_Function(&m_XWeight.g, gate.g * _InputData[i], _m, _v);
+		Adam_Function(&m_XWeight.c_, gate.c_ * _InputData[i], _m, _v);
+
+		Adam_Function(&m_HWeight.f, gate.f * Mem_CH[i].H, _m, _v);
+		Adam_Function(&m_HWeight.i, gate.i * Mem_CH[i].H, _m, _v);
+		Adam_Function(&m_HWeight.g, gate.g * Mem_CH[i].H, _m, _v);
+		Adam_Function(&m_HWeight.c_, gate.c_ * Mem_CH[i].H, _m, _v);
+
+		Adam_Function(&m_HBias.f, gate.f, _m, _v);
+		Adam_Function(&m_HBias.i, gate.i, _m, _v);
+		Adam_Function(&m_HBias.g, gate.g, _m, _v);
+		Adam_Function(&m_HBias.c_, gate.c_, _m, _v);
+
+		prev_dCH.C = Mem_Gate[i].f * dc;
+		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
+
+		dX.push((gate.f + gate.i + gate.g + gate.c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_));
+	}
+
+	return dX;
+}
