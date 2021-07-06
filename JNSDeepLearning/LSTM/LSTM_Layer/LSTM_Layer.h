@@ -11,6 +11,7 @@
 #include "device_launch_parameters.h"
 
 using namespace Activation_Function;
+using namespace Optimize_Function;
 
 struct Gate
 {
