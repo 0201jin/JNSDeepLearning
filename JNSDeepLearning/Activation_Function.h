@@ -90,3 +90,17 @@ namespace Activation_Function
 		return dy;
 	}
 };
+
+namespace Optimize_Function
+{
+	static void Adam(float* _g, float _dg, float* _m, float* _v)
+	{
+		(*_m) = 0.9 * (*_m) + (1 - 0.9) * _dg;
+		(*_v) = 0.999 * (*_v) + (1 - 0.999) * pow(_dg, 2);
+		
+		float m_ = (*_m) / (1 - 0.9);
+		float v_ = (*_v) / (1 - 0.999);
+		
+		(*_g) = (*_g) - 0.001 / sqrt(v_+0.00000001) * (*_m);
+	}
+};
