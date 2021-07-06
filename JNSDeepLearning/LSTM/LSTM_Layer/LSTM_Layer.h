@@ -76,6 +76,9 @@ public:
 
 	queue<double> Train_Y(vector<double> _InputData, double _TrainData, double _Learning_Rate = 0.0025);
 	queue<double> Train_H(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate = 0.0025);
+	
+	queue<double> Train_Y_Adam(vector<double> _InputData, double _TrainData, double _Learning_Rate = 0.0025);
+	queue<double> Train_H_Adam(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate = 0.0025);
 
 	vector<double> GetLastInput() { return m_vLastInput; }
 
