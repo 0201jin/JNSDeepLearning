@@ -204,7 +204,8 @@ vector<double> LSTM_Neuron::Calculate_Y(vector<double> _InputData)
 	for (int i = 0; i < _InputData.size(); ++i)
 	{
 		Gate gate;
-		//Mem_CH°¡ 0À¸·Î º¯ÇÏ¸é¼­ Mem_Gateµµ 0À¸·Î º¯ÇÔ.
+		//Mem_CHê°€ 0ìœ¼ë¡œ ë³€í•˜ë©´ì„œ Mem_Gateë„ 0ìœ¼ë¡œ ë³€í•¨.
+		//m_XWeight, m_HWeight, m_HBiasë¥¼ ì¶œë ¥í•˜ë©´ì„œ ê°’ í™•ì¸í•˜ê¸°.
 		gate.f = Sigmoid(m_XWeight.f * _InputData[i] + m_HWeight.f * Mem_CH[i].H + m_HBias.f);
 		gate.i = Sigmoid(m_XWeight.i * _InputData[i] + m_HWeight.i * Mem_CH[i].H + m_HBias.i);
 		gate.c_ = Sigmoid(m_XWeight.c_ * _InputData[i] + m_HWeight.c_ * Mem_CH[i].H + m_HBias.c_);
@@ -388,7 +389,7 @@ queue<double> LSTM_Neuron::Train_Y_Adam(vector<double> _InputData, double _Train
 		Adam(&m_HBias.g, gate.g, _m, _v);
 		Adam(&m_HBias.c_, gate.c_, _m, _v);
 
-		//gate°¡ 0À¸·Î ³ª¿È
+		//gateê°€ 0ìœ¼ë¡œ ë‚˜ì˜´
 
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
 		prev_dCH.C = Mem_Gate[i].f * dc;
