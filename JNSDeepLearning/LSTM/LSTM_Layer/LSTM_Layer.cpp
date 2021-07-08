@@ -176,6 +176,7 @@ vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
 
 	for (int i = 0; i < _InputData.size(); ++i)
 	{
+		//Weight와 Bias가 정상적으로 조정이 안됨
 		Gate gate;
 
 		gate.f = Sigmoid(m_XWeight.f * _InputData[i] + m_HWeight.f * Mem_CH[i].H + m_HBias.f);
@@ -209,6 +210,7 @@ vector<double> LSTM_Neuron::Calculate_Y(vector<double> _InputData)
 		//Weight와 Bias 모두 특정 값으로 고정
 		
 		//7.8 gate와 Input값 모두 확인해보기
+		//gate 0 0 -1 0
 		gate.f = Sigmoid(m_XWeight.f * _InputData[i] + m_HWeight.f * Mem_CH[i].H + m_HBias.f);
 		gate.i = Sigmoid(m_XWeight.i * _InputData[i] + m_HWeight.i * Mem_CH[i].H + m_HBias.i);
 		gate.c_ = Sigmoid(m_XWeight.c_ * _InputData[i] + m_HWeight.c_ * Mem_CH[i].H + m_HBias.c_);
@@ -219,8 +221,6 @@ vector<double> LSTM_Neuron::Calculate_Y(vector<double> _InputData)
 		ch.H = gate.c_ * Tanh(ch.C);
 
 		double Y = ch.H * m_YWeight + m_YBias;
-
-		cout << "Gate : " << gate << " Input : " << _InputData[i] << endl;
 
 		Mem_CH.push_back(ch);
 		Mem_Gate.push_back(gate);
