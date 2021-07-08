@@ -207,6 +207,8 @@ vector<double> LSTM_Neuron::Calculate_Y(vector<double> _InputData)
 		//Mem_CH가 0으로 변하면서 Mem_Gate도 0으로 변함.
 		//m_XWeight, m_HWeight, m_HBias를 출력하면서 값 확인하기.
 		//Weight와 Bias 모두 특정 값으로 고정
+		
+		//7.8 gate와 Input값 모두 확인해보기
 		gate.f = Sigmoid(m_XWeight.f * _InputData[i] + m_HWeight.f * Mem_CH[i].H + m_HBias.f);
 		gate.i = Sigmoid(m_XWeight.i * _InputData[i] + m_HWeight.i * Mem_CH[i].H + m_HBias.i);
 		gate.c_ = Sigmoid(m_XWeight.c_ * _InputData[i] + m_HWeight.c_ * Mem_CH[i].H + m_HBias.c_);
@@ -218,7 +220,7 @@ vector<double> LSTM_Neuron::Calculate_Y(vector<double> _InputData)
 
 		double Y = ch.H * m_YWeight + m_YBias;
 
-		cout << m_HBias << endl;
+		cout << "Gate : " << gate << " Input : " << _InputData[i] << endl;
 
 		Mem_CH.push_back(ch);
 		Mem_Gate.push_back(gate);
