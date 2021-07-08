@@ -16,6 +16,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - uses: Jimver/cuda-toolkit@v0.2.3
+
     - uses: actions/checkout@v2
 
     - name: Add MSBuild to PATH
