@@ -22,6 +22,8 @@ double DeepLSTM::Calculate_M2O(vector<double> _InputData)
 
 void DeepLSTM::Train_M2O(vector<vector<double>> _InputData, vector<double> _TrainData)
 {
+	static double m, v = 0;
+
 	for (int i = 0; i < _InputData.size(); ++i)
 	{
 		Calculate_M2O(_InputData[i]);

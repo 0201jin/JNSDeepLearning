@@ -164,7 +164,8 @@ double LSTM_Neuron::Calculate_M2O(vector<double> _InputData)
 
 void LSTM_Neuron::Train_M2O(vector<double> _InputData, double _TrainData)
 {
-	Train_Y(_InputData, _TrainData);
+	static double m, v = 0;
+	Train_Y_Adam(_InputData, _TrainData, 0.00025, &m, &v);
 }
 
 vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
