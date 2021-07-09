@@ -173,7 +173,6 @@ vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
 	ClearLayer();
 
 	m_vLastInput = _InputData;
-	vector<double> H;
 
 	for (int i = 0; i < _InputData.size(); ++i)
 	{
@@ -189,12 +188,14 @@ vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
 		ch.C = Mem_CH[i].C * gate.f + gate.i * gate.g;
 		ch.H = gate.c_ * Tanh(ch.C);
 
+		double Y = ch.H * m_YWeight + m_YBias;
+		
 		Mem_CH.push_back(ch);
 		Mem_Gate.push_back(gate);
-		H.push_back(ch.H);
+		m_vY.push_back(Y);
 	}
 
-	return H;
+	return m_vY;
 }
 
 vector<double> LSTM_Neuron::Calculate_Y(vector<double> _InputData)
@@ -413,14 +414,21 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 	queue<double> dX;
 
 	CH prev_dCH;
-
+	
 	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
 		double TrainData = _TrainData.front();
 		_TrainData.pop();
 
-		double dh = TrainData + prev_dCH.H;
+		double dy = 2 * (Y[i] - _TrainData[i]);
+		double dh = dy * m_YWeight + prev_dCH.H;
 		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
+
+		/*m_YWeight -= dy * Mem_CH[i + 1].H * _Learning_Rate;
+		m_YBias -= dy * _Learning_Rate;*/
+		
+		Adam(&m_YWeight, dy * Mem_CH[i + 1].H, _m, _v);
+		Adam(&m_YBias, dy, _m, _v);
 
 		Gate gate;
 		Gate XWeight = m_XWeight;
