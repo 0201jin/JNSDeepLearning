@@ -101,6 +101,6 @@ namespace Optimize_Function
 		float m_ = (*_m) / (1 - 0.9);
 		float v_ = (*_v) / (1 - 0.999);
 		
-		(*_g) -= 0.001 / sqrt(v_+0.00000001) * (*_m);
+		(*_g) -= 0.0025 / sqrt(v_+0.00000001) * m_;
 	}
 };

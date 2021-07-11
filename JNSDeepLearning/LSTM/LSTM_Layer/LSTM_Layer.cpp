@@ -364,8 +364,8 @@ queue<double> LSTM_Neuron::Train_Y_Adam(vector<double> _InputData, double _Train
 	double dh = dy * m_YWeight;
 	double dc = Tanh_Derivative(Mem_CH[Mem_CH.size() - 1].C) * dh * Mem_Gate[Mem_CH.size() - 2].c_ + prev_dCH.C;
 
-	m_YWeight -= dy * Mem_CH[Mem_CH.size() - 1].H * LEARN_RATE;
-	m_YBias -= dy * LEARN_RATE;
+	Adam(&m_YWeight, dy * Mem_CH[Mem_CH.size() - 1].H, _m, _v);
+	Adam(&m_YBias, dy, _m, _v);
 
 	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
@@ -420,12 +420,9 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 		double TrainData = _TrainData.front();
 		_TrainData.pop();
 
-		double dy = 2 * (Y[i] - _TrainData[i]);
+		double dy = 2 * (Y[i] - TrainData);
 		double dh = dy * m_YWeight + prev_dCH.H;
 		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
-
-		/*m_YWeight -= dy * Mem_CH[i + 1].H * _Learning_Rate;
-		m_YBias -= dy * _Learning_Rate;*/
 		
 		Adam(&m_YWeight, dy * Mem_CH[i + 1].H, _m, _v);
 		Adam(&m_YBias, dy, _m, _v);
