@@ -64,7 +64,7 @@ void LSTM_Run()
 {
 	LSTM_Network net;
 
-	for (int i = 0; i < 100000; ++i)
+	for (int i = 0; i < 200000; ++i)
 	{
 		net.Train_M2M(
 			{ {0.2, 0.3, 0.4}, {0.5, 0.1, 0.3}, {0.2, 0.1, 0.2}, {0.1, 0.1, 0.1} },
