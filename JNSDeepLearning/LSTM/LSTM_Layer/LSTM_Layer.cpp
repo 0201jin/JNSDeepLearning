@@ -93,7 +93,7 @@ vector<double> LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> 
 	static double m, v = 0;
 
 	queue<double> aa;
-	for (int i = _TrainData.size() - 1; i != -1; --i)
+	for (int i = 0; i < _TrainData.size(); ++i)
 	{
 		aa.push(_TrainData[i]);
 	}

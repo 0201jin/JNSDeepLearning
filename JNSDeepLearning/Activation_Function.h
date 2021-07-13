@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <queue>
+#include <deque>
 
 using namespace std;
 
@@ -110,12 +111,20 @@ namespace Action_Function
 {
 	template<typename T>
 	static queue<T> Queue_Reverse_Function(queue<T> _queue)
-	{
+	{	
 		queue<T> Q;
-		
-		for(int i = _queue.size() - 1; i <= 0; --i)
+		vector<T> V;
+
+		for(int i = _queue.size() - 1; i >= 0; --i)
 		{
-			Q.push(_queue[i]);
+			V.push_back(_queue.front());
+			_queue.pop();
+			//Q.push(_queue.emplace);
+		}
+
+		for (int i = V.size() - 1; i >= 0; --i)
+		{
+			Q.push(V[i]);
 		}
 		
 		return Q;

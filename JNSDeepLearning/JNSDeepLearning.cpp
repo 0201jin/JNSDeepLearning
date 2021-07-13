@@ -90,7 +90,7 @@ void LSTM_M2O_Run()
 void DeepLSTM_Run()
 {
 	//기울기 폭발 문제
-	DeepLSTM net(4);
+	DeepLSTM net(2);
 
 	for (int i = 0; i < 100000; ++i)
 	{
@@ -98,7 +98,7 @@ void DeepLSTM_Run()
 			{0.3, 0.4, 0.5},
 			{0.1, 0.2, 0.3},
 			{0.2, 0.3, 0.4} },
-			{ 0.6, 0.4, 0.5});
+			{ 0.6, 0.4, 0.5 });
 	}
 
 	cout << net.Calculate_M2O({0.1, 0.2, 0.3}) << endl;
@@ -146,9 +146,9 @@ void RNN_M2M_Run()
 
 int main()
 {
-	//DeepLSTM_Run();
+	DeepLSTM_Run();
 	//LSTM_M2O_Run();
-	LSTM_Run();
+	//LSTM_Run();
 	
 	return 0;
 }
