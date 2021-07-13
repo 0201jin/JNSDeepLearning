@@ -401,6 +401,7 @@ queue<double> LSTM_Neuron::Train_Y_Adam(vector<double> _InputData, double _Train
 
 queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate, double* _m, double* _v)
 {
+	_TrainData = Queue_Reverse_Function(_TrainData);
 	vector<double> Y = Calculate_H(_InputData);
 
 	queue<double> dX;
