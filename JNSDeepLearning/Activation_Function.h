@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -102,5 +103,21 @@ namespace Optimize_Function
 		float v_ = (*_v) / (1 - 0.999);
 		
 		(*_g) -= 0.0025 / sqrt(v_+0.00000001) * m_;
+	}
+};
+
+namespace Action_Function
+{
+	template<typename T>
+	static queue<T> Queue_Reverse_Function(queue<T> _queue)
+	{
+		queue<T> Q;
+		
+		for(int i = _queue.size() - 1; i <= 0; --i)
+		{
+			Q.push(_queue[i]);
+		}
+		
+		return Q;
 	}
 };
