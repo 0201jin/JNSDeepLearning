@@ -119,13 +119,10 @@ namespace Action_Function
 		{
 			V.push_back(_queue.front());
 			_queue.pop();
-			//Q.push(_queue.emplace);
 		}
 
 		for (int i = V.size() - 1; i >= 0; --i)
-		{
 			Q.push(V[i]);
-		}
 		
 		return Q;
 	}

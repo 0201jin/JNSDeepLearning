@@ -94,57 +94,13 @@ vector<double> LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> 
 
 	queue<double> aa;
 	for (int i = 0; i < _TrainData.size(); ++i)
-	{
 		aa.push(_TrainData[i]);
-	}
+
+	aa = Queue_Reverse_Function(aa);
 	//값을 거꾸로 넣어야함.
 	Train_H_Adam(_InputData, aa, 0.00025, &m, &v);
 
 	return vector<double>();
-
-	/*vector<double> Y = Calculate_M2M(_InputData);
-	vector<double> dH;
-
-	CH prev_dCH;
-
-	for (int i = Y.size() - 1; i >= 0; --i)
-	{
-		double dy = 2 * (Y[i] - _TrainData[i]);
-		double dh = dy * m_YWeight + prev_dCH.H;
-		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
-
-		m_YWeight -= dy * Mem_CH[i + 1].H * LEARN_RATE;
-		m_YBias -= dy * LEARN_RATE;
-
-		Gate gate;
-
-		gate.f = Mem_CH[i].C * dc * Sigmoid_Derivative(Mem_Gate[i].f);
-		gate.i = Mem_Gate[i].g * dc * Sigmoid_Derivative(Mem_Gate[i].i);
-		gate.g = Mem_Gate[i].i * dc * Sigmoid_Derivative(Mem_Gate[i].g);
-		gate.c_ = Tanh(Mem_CH[i + 1].C) * dh * Tanh_Derivative(Mem_Gate[i].c_);
-
-		m_XWeight.f -= gate.f * _InputData[i] * LEARN_RATE;
-		m_XWeight.i -= gate.i * _InputData[i] * LEARN_RATE;
-		m_XWeight.g -= gate.g * _InputData[i] * LEARN_RATE;
-		m_XWeight.c_ -= gate.c_ * _InputData[i] * LEARN_RATE;
-
-		m_HWeight.f -= gate.f * Mem_CH[i].H * LEARN_RATE;
-		m_HWeight.i -= gate.i * Mem_CH[i].H * LEARN_RATE;
-		m_HWeight.g -= gate.g * Mem_CH[i].H * LEARN_RATE;
-		m_HWeight.c_ -= gate.c_ * Mem_CH[i].H * LEARN_RATE;
-
-		m_HBias.f -= gate.f * LEARN_RATE;
-		m_HBias.i -= gate.i * LEARN_RATE;
-		m_HBias.g -= gate.g * LEARN_RATE;
-		m_HBias.c_ -= gate.c_ * LEARN_RATE;
-
-		prev_dCH.C = Mem_Gate[i].f * dc;
-		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_);
-
-		dH.push_back(prev_dCH.H);
-	}
-
-	return dH;*/
 }
 
 double LSTM_Neuron::Calculate_M2O(vector<double> _InputData)
@@ -402,7 +358,6 @@ queue<double> LSTM_Neuron::Train_Y_Adam(vector<double> _InputData, double _Train
 
 queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate, double* _m, double* _v)
 {
-	_TrainData = Queue_Reverse_Function(_TrainData);
 	vector<double> Y = Calculate_H(_InputData);
 
 	queue<double> dX;
