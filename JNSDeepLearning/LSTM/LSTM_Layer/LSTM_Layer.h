@@ -12,6 +12,7 @@
 
 using namespace Activation_Function;
 using namespace Optimize_Function;
+using namespace Action_Function;
 
 struct Gate
 {
