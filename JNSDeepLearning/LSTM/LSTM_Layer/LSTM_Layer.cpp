@@ -280,6 +280,7 @@ queue<double> LSTM_Neuron::Train_Y(vector<double> _InputData, double _TrainData,
 
 queue<double> LSTM_Neuron::Train_H(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate)
 {
+	_TrainData = Queue_Reverse_Function(_TrainData);
 	vector<double> Y = Calculate_H(_InputData);
 
 	queue<double> dX;
