@@ -10,6 +10,7 @@ DeepLSTM::DeepLSTM(int _NeuronSize)
 
 double DeepLSTM::Calculate_M2O(vector<double> _InputData)
 {
+	//LSTMµµ LSTM_M2Oµµ ¥Ÿ ¿ﬂµ . ¿Ã∞Õ∏∏ æ»µ 
 	vector<double> Input = _InputData;
 
 	for (int i = 0; i < m_vNeuron.size() - 1; ++i)
