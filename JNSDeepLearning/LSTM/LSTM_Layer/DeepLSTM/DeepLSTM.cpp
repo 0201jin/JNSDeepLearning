@@ -29,7 +29,7 @@ void DeepLSTM::Train_M2O(vector<vector<double>> _InputData, vector<double> _Trai
 		Calculate_M2O(_InputData[i]);
 
 		queue<double> TrainData = m_vNeuron[m_vNeuron.size() - 1].Train_Y_Adam(m_vNeuron[m_vNeuron.size() - 1].GetLastInput(), _TrainData[i], 0.00025, &m, &v);
-		TrainData = Queue_Reverse_Function(TrainData);
+		//TrainData = Queue_Reverse_Function(TrainData);
 		for (int j = m_vNeuron.size() - 2; j >= 0; --j)
 		{
 			TrainData = m_vNeuron[j].Train_H_Adam(m_vNeuron[j].GetLastInput(), TrainData, 0.00025, &m, &v);
