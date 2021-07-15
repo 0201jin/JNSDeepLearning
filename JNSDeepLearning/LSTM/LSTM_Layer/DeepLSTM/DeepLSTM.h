@@ -13,4 +13,6 @@ public:
 
 private:
 	vector<LSTM_Neuron> m_vNeuron;
+	vector<double> m_m;
+	vector<double> m_v;
 };
