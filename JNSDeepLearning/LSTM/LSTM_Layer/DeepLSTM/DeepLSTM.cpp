@@ -10,7 +10,7 @@ DeepLSTM::DeepLSTM(int _NeuronSize)
 
 double DeepLSTM::Calculate_M2O(vector<double> _InputData)
 {
-	//LSTM�� LSTM_M2O�� �� �ߵ�. �̰͸� �ȵ�
+	//LSTMµµ LSTM_M2Oµµ ´Ù ÀßµÊ. ÀÌ°Í¸¸ ¾ÈµÊ
 	vector<double> Input = _InputData;
 
 	for (int i = 0; i < m_vNeuron.size() - 1; ++i)
@@ -23,10 +23,10 @@ double DeepLSTM::Calculate_M2O(vector<double> _InputData)
 
 void DeepLSTM::Train_M2O(vector<vector<double>> _InputData, vector<double> _TrainData)
 {
-	static double m, v = 0;
-
 	for (int i = 0; i < _InputData.size(); ++i)
 	{
+		double m, v = 0;
+		
 		Calculate_M2O(_InputData[i]);
 
 		queue<double> TrainData = m_vNeuron[m_vNeuron.size() - 1].Train_Y_Adam(m_vNeuron[m_vNeuron.size() - 1].GetLastInput(), _TrainData[i], 0.00025, &m, &v);
