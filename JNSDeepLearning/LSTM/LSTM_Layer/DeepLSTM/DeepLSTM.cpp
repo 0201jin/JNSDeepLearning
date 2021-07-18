@@ -8,11 +8,12 @@ DeepLSTM::DeepLSTM(int _NeuronSize)
 		m_m.push_back(0);
 		m_v.push_back(0);
 	}
+
+	m_OutputNeuron = LSTM_Neuron();
 }
 
 double DeepLSTM::Calculate_M2O(vector<double> _InputData)
 {
-	//LSTMµµ LSTM_M2Oµµ ´Ù ÀßµÊ. ÀÌ°Í¸¸ ¾ÈµÊ
 	vector<double> Input = _InputData;
 
 	for (int i = 0; i < m_vNeuron.size() - 1; ++i)
@@ -20,7 +21,11 @@ double DeepLSTM::Calculate_M2O(vector<double> _InputData)
 		Input = m_vNeuron[i].Calculate_H(Input);
 	}
 
-	return m_vNeuron[m_vNeuron.size() - 1].Calculate_Y(Input)[_InputData.size() - 1];
+	Input = m_vNeuron[m_vNeuron.size() - 1].Calculate_H(Input);
+
+	Input = m_OutputNeuron.Calculate_O(Input);
+
+	return Input[_InputData.size() - 1];
 }
 
 void DeepLSTM::Train_M2O(vector<vector<double>> _InputData, vector<double> _TrainData)
@@ -32,6 +37,44 @@ void DeepLSTM::Train_M2O(vector<vector<double>> _InputData, vector<double> _Trai
 		queue<double> TrainData = m_vNeuron[m_vNeuron.size() - 1].Train_Y_Adam(m_vNeuron[m_vNeuron.size() - 1].GetLastInput(), _TrainData[i], 0.00025, &m_m[m_vNeuron.size() - 1], &m_v[m_vNeuron.size() - 1]);
 		//TrainData = Queue_Reverse_Function(TrainData);
 		for (int j = m_vNeuron.size() - 2; j >= 0; --j)
+		{
+			TrainData = m_vNeuron[j].Train_H_Adam(m_vNeuron[j].GetLastInput(), TrainData, 0.00025, &m_m[j], &m_v[j]);
+		}
+	}
+}
+
+vector<double> DeepLSTM::Calculate_M2M(vector<double> _InputData)
+{
+	vector<double> Input = _InputData;
+
+	for (int i = 0; i < m_vNeuron.size(); ++i)
+	{
+		Input = m_vNeuron[i].Calculate_H(Input);
+	}
+
+	Input = m_OutputNeuron.Calculate_O(Input);
+
+	return Input;
+}
+
+void DeepLSTM::Train_M2M(vector<vector<double>> _InputData, vector<vector<double>> _TrainData)
+{
+	for (int i = 0; i < _InputData.size(); ++i)
+	{
+		Calculate_M2M(_InputData[i]);
+
+		queue<double> TrainData;
+
+		for (int j = 0; j < _TrainData[i].size(); ++j)
+		{
+			TrainData.push(_TrainData[i][j]);
+		}
+
+		TrainData = Queue_Reverse_Function(TrainData);
+
+		TrainData = m_OutputNeuron.Train_O_Adam(_InputData[i], TrainData, &om, &ov);
+		
+		for (int j = m_vNeuron.size() - 1; j >= 0; --j)
 		{
 			TrainData = m_vNeuron[j].Train_H_Adam(m_vNeuron[j].GetLastInput(), TrainData, 0.00025, &m_m[j], &m_v[j]);
 		}

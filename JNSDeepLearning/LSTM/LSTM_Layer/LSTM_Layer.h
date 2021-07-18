@@ -73,13 +73,12 @@ public:
 	void Train_M2O(vector<double> _InputData, double _TrainData);
 
 	vector<double> Calculate_H(vector<double> _InputData);
-	vector<double> Calculate_Y(vector<double> _InputData);
-
-	queue<double> Train_Y(vector<double> _InputData, double _TrainData, double _Learning_Rate = 0.0025);
-	queue<double> Train_H(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate = 0.0025);
+	vector<double> Calculate_O(vector<double> _InputData);
 
 	queue<double> Train_Y_Adam(vector<double> _InputData, double _TrainData, double _Learning_Rate, double* _m, double* _v);
 	queue<double> Train_H_Adam(vector<double> _InputData, queue<double> _TrainData, double _Learning_Rate, double* _m, double* _v);
+	queue<double> Train_O_Adam(vector<double> _InputData, queue<double> _TrainData, double* _m, double* _v);
+	queue<double> Train_O_Adam(vector<double> _InputData, double _TrainData, double* _m, double* _v);
 
 	vector<double> GetLastInput() { return m_vLastInput; }
 
