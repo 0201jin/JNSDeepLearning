@@ -266,13 +266,6 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 	return dX;
 }
 
-queue<double> LSTM_Neuron::Train_O_Adam(vector<double> _InputData, double _TrainData, double* _m, double* _v)
-{
-	double Y = Calculate_H(_InputData)[_InputData.size() - 1];
-
-	return queue<double>();
-}
-
 queue<double> LSTM_Neuron::Train_O_Adam(vector<double> _InputData, queue<double> _TrainData, double* _m, double* _v)
 {
 	vector<double> Y = Calculate_O(_InputData);
@@ -286,15 +279,15 @@ queue<double> LSTM_Neuron::Train_O_Adam(vector<double> _InputData, queue<double>
 
 		double dy = 2 * (Y[i] - TrainData);
 
-		dX.push(m_YWeight);
+		/*Adam(&m_YWeight, _InputData[i], _m, _v);
+		Adam(&m_YBias, 1, _m, _v);*/
 
-		Adam(&m_YWeight, _InputData[i] * dy, _m, _v);
-		Adam(&m_YBias, dy, _m, _v);
-
-		/*m_YWeight -= _InputData[i] * dy * LEARN_RATE;
-		m_YBias -= dy * LEARN_RATE;*/
+		m_YWeight -= _InputData[i] * dy * 0.00001;
+		m_YBias -= dy * 0.00001;
 
 		//dx를 만드는 코드
+
+		dX.push(m_YWeight);
 	}
 
 	return dX;
