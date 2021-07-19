@@ -72,7 +72,7 @@ void DeepLSTM::Train_M2M(vector<vector<double>> _InputData, vector<vector<double
 
 		TrainData = Queue_Reverse_Function(TrainData);
 
-		TrainData = m_OutputNeuron.Train_O_Adam(_InputData[i], TrainData, &om, &ov);
+		TrainData = m_OutputNeuron.Train_O_Adam(m_OutputNeuron.GetLastInput(), TrainData, &om, &ov);
 		
 		for (int j = m_vNeuron.size() - 1; j >= 0; --j)
 		{
