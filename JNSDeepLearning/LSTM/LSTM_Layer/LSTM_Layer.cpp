@@ -148,6 +148,8 @@ vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
 vector<double> LSTM_Neuron::Calculate_O(vector<double> _InputData)
 {
 	ClearLayer();
+	
+	m_vLastInput = _InputData;
 
 	for (vector<double>::iterator iter = _InputData.begin(); iter != _InputData.end(); ++iter)
 	{
