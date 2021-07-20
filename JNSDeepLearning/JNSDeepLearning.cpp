@@ -115,9 +115,10 @@ void DeepLSTM_M2M_Run()
 			{ {0.2, 0.5, 0.9}, {0.5, 0.6, 0.9}, {0.2, 0.3, 0.5}, {0.1, 0.2, 0.3} });
 	}
 
-	cout << net.Calculate_M2M({ 0.3, 0.2, 0.5 })[0] << endl;
-	cout << net.Calculate_M2M({ 0.3, 0.2, 0.5 })[1] << endl;
-	cout << net.Calculate_M2M({ 0.3, 0.2, 0.5 })[2] << endl;
+	vector<double> Y = net.Calculate_M2M({ 0.3, 0.2, 0.5 });
+
+	for (int i = 0; i < Y.size(); ++i)
+		cout << Y[i] << endl;
 
 	net.PrintWeight();
 }

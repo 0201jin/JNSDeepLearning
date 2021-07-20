@@ -170,7 +170,7 @@ queue<double> LSTM_Neuron::Train_Y_Adam(vector<double> _InputData, double _Train
 	CH prev_dCH;
 
 	double dy = 2 * (Y - _TrainData);
-	double dh = dy ;
+	double dh = dy;
 	double dc = Tanh_Derivative(Mem_CH[Mem_CH.size() - 1].C) * dh * Mem_Gate[Mem_CH.size() - 2].c_ + prev_dCH.C;
 
 	for (int i = _InputData.size() - 1; i >= 0; --i)
@@ -219,7 +219,7 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 
 	queue<double> dX;
 
-	CH prev_dCH;
+	CH prev_dCH = Mem_CH[Mem_CH.size() - 1];
 	
 	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
@@ -279,8 +279,8 @@ queue<double> LSTM_Neuron::Train_O_Adam(vector<double> _InputData, queue<double>
 		/*Adam(&m_YWeight, _InputData[i], _m, _v);
 		Adam(&m_YBias, 1, _m, _v);*/
 
-		m_YWeight -= _InputData[i] * dy * 0.00001;
-		m_YBias -= dy * 0.00001;
+		m_YWeight -= _InputData[i] * dy * 0.0025;
+		m_YBias -= dy * 0.0025;
 
 		//dx를 만드는 코드
 
