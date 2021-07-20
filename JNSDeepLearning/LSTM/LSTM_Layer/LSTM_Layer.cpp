@@ -229,9 +229,6 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 		double dy = 2 * (Y[i] - TrainData);
 		double dh = dy + prev_dCH.H;
 		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
-		
-		Adam(&m_YWeight, dy * Mem_CH[i + 1].H, _m, _v);
-		Adam(&m_YBias, dy, _m, _v);
 
 		Gate gate;
 		Gate XWeight = m_XWeight;
