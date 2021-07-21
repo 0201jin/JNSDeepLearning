@@ -85,4 +85,6 @@ void DeepLSTM::PrintWeight()
 	{
 		m_vNeuron[i].PrintWeight(i);
 	}
+
+	m_OutputNeuron.PrintWeight();
 }

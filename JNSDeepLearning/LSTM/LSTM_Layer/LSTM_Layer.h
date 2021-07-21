@@ -86,6 +86,8 @@ public:
 		cout << i << "X " << m_XWeight << endl;
 		cout << i << "H " << m_HWeight << endl;
 		cout << i << "B " << m_HBias << endl;
+		cout << i << "YW" << m_YWeight << endl;
+		cout << i << "YB" << m_YBias << endl;
 	}
 
 private:
