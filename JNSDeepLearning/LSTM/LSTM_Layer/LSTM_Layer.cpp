@@ -279,12 +279,13 @@ queue<double> LSTM_Neuron::Train_O_Adam(vector<double> _InputData, queue<double>
 		/*Adam(&m_YWeight, _InputData[i], _m, _v);
 		Adam(&m_YBias, 1, _m, _v);*/
 
+		double YW = m_YWeight;
 		m_YWeight -= _InputData[i] * dy * 0.0025;
 		m_YBias -= dy * 0.0025;
 
 		//dx를 만드는 코드
 
-		dX.push(m_YWeight);
+		dX.push(YW*dy);
 	}
 
 	return dX;
