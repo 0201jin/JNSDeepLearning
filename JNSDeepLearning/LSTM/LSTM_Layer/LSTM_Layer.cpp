@@ -268,25 +268,38 @@ queue<double> LSTM_Neuron::Train_O_Adam(vector<double> _InputData, queue<double>
 	vector<double> Y = Calculate_O(_InputData);
 
 	queue<double> dX;
+	
+	double SigY = 0;
+	double SigTD = 0;
+	double SigX = 0;
 
 	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
+		double YW = m_YWeight;
+		double YB = m_YBias;
+		
 		double TrainData = _TrainData.front();
 		_TrainData.pop();
 
+		SigY += Y[i];
+		SigTD += TrainData;
+		SigX += _InputData[i];
+		
 		double dy = 2 * (Y[i] - TrainData);
 
 		/*Adam(&m_YWeight, _InputData[i], _m, _v);
 		Adam(&m_YBias, 1, _m, _v);*/
 
-		double YW = m_YWeight;
-		m_YWeight -= _InputData[i] * dy * 0.0025;
-		m_YBias -= dy * 0.0025;
+		YW -= _InputData[i] * dy * 0.0025;
+		YB -= dy * 0.0025;
 
 		//dx를 만드는 코드
 
-		dX.push(m_YWeight * dy);
+		dX.push(YW * dy);
 	}
+	
+	m_YWeight -= SigX * (2 * (SigY - SigTD)) * 0.0025;
+	m_YBias -= (2 * (SigY - SigTD)) * 0.0025;
 
 	return dX;
 }
