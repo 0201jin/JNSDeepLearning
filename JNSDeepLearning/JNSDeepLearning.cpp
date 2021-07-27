@@ -71,7 +71,7 @@ void LSTM_Run()
 			{ {0.2, 0.5, 0.9}, {0.5, 0.6, 0.9}, {0.2, 0.3, 0.5}, {0.1, 0.2, 0.3} });
 	}
 
-	net.Calculate_M2M({0.3, 0.2, 0.5});
+	net.Calculate_M2M({ 0.3, 0.2, 0.5 });
 	net.printY();
 }
 
@@ -100,7 +100,7 @@ void DeepLSTM_Run()
 			{ 0.6, 0.4, 0.5 });
 	}
 
-	cout << net.Calculate_M2O({0.1, 0.2, 0.3}) << endl;
+	cout << net.Calculate_M2O({ 0.1, 0.2, 0.3 }) << endl;
 	net.PrintWeight();
 }
 
@@ -168,6 +168,6 @@ int main()
 	//DeepLSTM_Run();
 	//LSTM_M2O_Run();
 	//LSTM_Run();
-	
+
 	return 0;
 }

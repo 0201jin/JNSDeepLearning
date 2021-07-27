@@ -52,7 +52,7 @@ vector<double> DeepLSTM::Calculate_M2M(vector<double> _InputData)
 		Input = m_vNeuron[i].Calculate_H(Input);
 	}
 
-	Input = m_OutputNeuron.Calculate_O(Input);
+	//Input = m_OutputNeuron.Calculate_O(Input);
 
 	return Input;
 }
@@ -70,7 +70,7 @@ void DeepLSTM::Train_M2M(vector<vector<double>> _InputData, vector<vector<double
 			TrainData.push(_TrainData[i][j]);
 		}
 
-		TrainData = m_OutputNeuron.Train_O_Adam(m_OutputNeuron.GetLastInput(), TrainData, &om, &ov);
+		//TrainData = m_OutputNeuron.Train_O_Adam(m_OutputNeuron.GetLastInput(), TrainData, &om, &ov);
 		
 		for (int j = m_vNeuron.size() - 1; j >= 0; --j)
 		{
