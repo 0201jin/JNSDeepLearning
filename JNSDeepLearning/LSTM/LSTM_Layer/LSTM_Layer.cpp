@@ -149,16 +149,16 @@ vector<double> LSTM_Neuron::Calculate_O(vector<double> _InputData)
 {
 	ClearLayer();
 	
-	m_vLastInput = _InputData;
+	/*m_vLastInput = _InputData;
 
 	for (vector<double>::iterator iter = _InputData.begin(); iter != _InputData.end(); ++iter)
 	{
 		double Y = (*iter) * m_YWeight + m_YBias;
 
 		m_vY.push_back(Y);
-	}
+	}*/
 
-	return m_vY;
+	return SoftMax(_InputData);
 }
 
 queue<double> LSTM_Neuron::Train_Y_Adam(vector<double> _InputData, double _TrainData, double _Learning_Rate, double* _m, double* _v)
@@ -266,7 +266,7 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 
 queue<double> LSTM_Neuron::Train_O_Adam(vector<double> _InputData, queue<double> _TrainData, double* _m, double* _v)
 {
-	vector<double> Y = Calculate_O(_InputData);
+	/*vector<double> Y = Calculate_O(_InputData);
 
 	queue<double> dX;
 	
@@ -288,9 +288,6 @@ queue<double> LSTM_Neuron::Train_O_Adam(vector<double> _InputData, queue<double>
 		
 		double dy = 2 * (Y[i] - TrainData);
 
-		/*Adam(&m_YWeight, _InputData[i], _m, _v);
-		Adam(&m_YBias, 1, _m, _v);*/
-
 		YW -= _InputData[i] * dy * 0.0025;
 		YB -= dy * 0.0025;
 
@@ -300,7 +297,9 @@ queue<double> LSTM_Neuron::Train_O_Adam(vector<double> _InputData, queue<double>
 	}
 	
 	m_YWeight -= SigX * (2 * (SigY - SigTD)) * 0.0025;
-	m_YBias -= (2 * (SigY - SigTD)) * 0.0025;
+	m_YBias -= (2 * (SigY - SigTD)) * 0.0025;*/
+	
+	vector<double> Y = Calculate_O(_InputData);
 
-	return dX;
+	return SoftMax_Derivative(Y, _TrainData);
 }
