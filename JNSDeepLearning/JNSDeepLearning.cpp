@@ -164,10 +164,10 @@ void RNN_M2M_Run()
 
 int main()
 {
-	DeepLSTM_M2M_Run();
+	//DeepLSTM_M2M_Run();
 	//DeepLSTM_Run();
 	//LSTM_M2O_Run();
-	//LSTM_Run();
+	LSTM_Run();
 
 	return 0;
 }

@@ -1,6 +1,6 @@
 #include "LSTM_Layer.h"
 
-#define LEARN_RATE 0.0025
+#define LEARN_RATE 0.025
 
 LSTM_Layer::LSTM_Layer()
 {
@@ -98,6 +98,7 @@ vector<double> LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> 
 
 	aa = Queue_Reverse_Function(aa);
 	//값을 거꾸로 넣어야함.
+
 	Train_H_Adam(_InputData, aa, 0.00025, &m, &v);
 
 	return vector<double>();
@@ -137,9 +138,11 @@ vector<double> LSTM_Neuron::Calculate_H(vector<double> _InputData)
 		ch.C = Mem_CH[i].C * gate.f + gate.i * gate.g;
 		ch.H = gate.c_ * Tanh(ch.C);
 
+		double Y = ch.H * m_YWeight + m_YBias;
+
 		Mem_CH.push_back(ch);
 		Mem_Gate.push_back(gate);
-		m_vY.push_back(ch.H);
+		m_vY.push_back(Y);
 	}
 
 	return m_vY;
@@ -151,12 +154,7 @@ vector<double> LSTM_Neuron::Calculate_O(vector<double> _InputData)
 	
 	m_vLastInput = _InputData;
 
-	for (vector<double>::iterator iter = _InputData.begin(); iter != _InputData.end(); ++iter)
-	{
-		double Y = (*iter) * m_YWeight + m_YBias;
-
-		m_vY.push_back(Y);
-	}
+	m_vY = Softmax(_InputData);
 
 	return m_vY;
 }
@@ -219,7 +217,7 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 
 	queue<double> dX;
 
-	CH prev_dCH = Mem_CH[Mem_CH.size() - 1];
+	CH prev_dCH;
 	
 	for (int i = _InputData.size() - 1; i >= 0; --i)
 	{
@@ -227,8 +225,11 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 		_TrainData.pop();
 
 		double dy = 2 * (Y[i] - TrainData);
-		double dh = dy + prev_dCH.H;
+		double dh = dy * m_YWeight + prev_dCH.H;
 		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
+
+		m_YWeight -= dy * Mem_CH[i + 1].H * LEARN_RATE;
+		m_YBias -= dy * LEARN_RATE;
 
 		Gate gate;
 		Gate XWeight = m_XWeight;
@@ -256,9 +257,8 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
-		
-		double ddx = _InputData[i] - ((Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_)) * dy * 0.0025;
-		dX.push((Mem_Gate[i].f + Mem_Gate[i].i + Mem_Gate[i].g + Mem_Gate[i].c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_));
+
+		dX.push((gate.f + gate.i + gate.g + gate.c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_));
 	}
 
 	return dX;
@@ -267,37 +267,20 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 queue<double> LSTM_Neuron::Train_O_Adam(vector<double> _InputData, queue<double> _TrainData, double* _m, double* _v)
 {
 	vector<double> Y = Calculate_O(_InputData);
+	vector<double> T;
 
-	queue<double> dX;
-	
-	double SigY = 0;
-	double SigTD = 0;
-	double SigX = 0;
-
-	for (int i = _InputData.size() - 1; i >= 0; --i)
+	while (_TrainData.size())
 	{
-		double YW = m_YWeight;
-		double YB = m_YBias;
-		
-		double TrainData = _TrainData.front();
+		T.push_back(_TrainData.front());
 		_TrainData.pop();
+	}
 
-		SigY += Y[i];
-		SigTD += TrainData;
-		SigX += _InputData[i];
-		
-		double dy = 2 * (Y[i] - TrainData);
-
-		YW -= _InputData[i] * dy * 0.0025;
-		YB -= dy * 0.0025;
-
-		//dx를 만드는 코드
-
-		dX.push(YW * dy);
+	vector<double> O = Softmax_Derivative(Y, T);
+	queue<double> qO;
+	for(int i = O.size() - 1; i >= 0; --i)
+	{
+		qO.push(O[i]);
 	}
 	
-	m_YWeight -= SigX * (2 * (SigY - SigTD)) * 0.0025;
-	m_YBias -= (2 * (SigY - SigTD)) * 0.0025;
-
-	return dX;
+	return qO;
 }
