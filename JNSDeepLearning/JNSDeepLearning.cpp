@@ -106,9 +106,9 @@ void DeepLSTM_Run()
 
 void DeepLSTM_M2M_Run()
 {
-	DeepLSTM net(1);
+	DeepLSTM net(3);
 
-	for (int i = 0; i < 100000; ++i)
+	for (int i = 0; i < 200000; ++i)
 	{
 		net.Train_M2M(
 			{ {0.2, 0.3, 0.4}, {0.5, 0.1, 0.3}, {0.2, 0.1, 0.2}, {0.1, 0.1, 0.1} },

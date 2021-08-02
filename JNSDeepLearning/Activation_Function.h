@@ -97,13 +97,16 @@ namespace Optimize_Function
 {
 	static void Adam(double* _g, double _dg, double* _m, double* _v)
 	{
-		(*_m) = 0.9 * (*_m) + (1 - 0.9) * _dg;
-		(*_v) = 0.999 * (*_v) + (1 - 0.999) * pow(_dg, 2);
+		static const double b1 = 0.9;
+		static const double b2 = 0.999;
+
+		(*_m) = b1 * (*_m) + (1 - b1) * _dg;
+		(*_v) = b2 * (*_v) + (1 - b2) * pow(_dg, 2);
 		
-		float m_ = (*_m) / (1 - 0.9);
-		float v_ = (*_v) / (1 - 0.999);
+		double m_ = (*_m) / (1 - b1);
+		double v_ = (*_v) / (1 - b2);
 		
-		(*_g) -= 0.025 / sqrt(v_+0.00000001) * m_;
+		(*_g) = (*_g) - 0.0025 / sqrt(v_ + 0.00000001) * m_;
 	}
 };
 

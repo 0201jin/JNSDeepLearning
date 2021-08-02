@@ -228,8 +228,8 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 		double dh = dy * m_YWeight + prev_dCH.H;
 		double dc = Tanh_Derivative(Mem_CH[i + 1].C) * dh * Mem_Gate[i].c_ + prev_dCH.C;
 
-		m_YWeight -= dy * Mem_CH[i + 1].H * LEARN_RATE;
-		m_YBias -= dy * LEARN_RATE;
+		Adam(&m_YWeight, dy * Mem_CH[i + 1].H * LEARN_RATE, _m, _v);
+		Adam(&m_YBias, dy * LEARN_RATE, _m, _v);
 
 		Gate gate;
 		Gate XWeight = m_XWeight;
@@ -240,20 +240,20 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 		gate.g = Mem_Gate[i].i * dc * Tanh_Derivative(Mem_Gate[i].g);
 		gate.c_ = Tanh(Mem_CH[i + 1].C) * dh * Sigmoid_Derivative(Mem_Gate[i].c_);
 
-		Adam(&m_XWeight.f, gate.f * _InputData[i], _m, _v);
-		Adam(&m_XWeight.i, gate.i * _InputData[i], _m, _v);
-		Adam(&m_XWeight.g, gate.g * _InputData[i], _m, _v);
-		Adam(&m_XWeight.c_, gate.c_ * _InputData[i], _m, _v);
+		Adam(&m_XWeight.f, gate.f * _InputData[i] * LEARN_RATE, _m, _v);
+		Adam(&m_XWeight.i, gate.i * _InputData[i] * LEARN_RATE, _m, _v);
+		Adam(&m_XWeight.g, gate.g * _InputData[i] * LEARN_RATE, _m, _v);
+		Adam(&m_XWeight.c_, gate.c_ * _InputData[i] * LEARN_RATE, _m, _v);
 
-		Adam(&m_HWeight.f, gate.f * Mem_CH[i].H, _m, _v);
-		Adam(&m_HWeight.i, gate.i * Mem_CH[i].H, _m, _v);
-		Adam(&m_HWeight.g, gate.g * Mem_CH[i].H, _m, _v);
-		Adam(&m_HWeight.c_, gate.c_ * Mem_CH[i].H, _m, _v);
+		Adam(&m_HWeight.f, gate.f * Mem_CH[i].H * LEARN_RATE, _m, _v);
+		Adam(&m_HWeight.i, gate.i * Mem_CH[i].H * LEARN_RATE, _m, _v);
+		Adam(&m_HWeight.g, gate.g * Mem_CH[i].H * LEARN_RATE, _m, _v);
+		Adam(&m_HWeight.c_, gate.c_ * Mem_CH[i].H * LEARN_RATE, _m, _v);
 
-		Adam(&m_HBias.f, gate.f, _m, _v);
-		Adam(&m_HBias.i, gate.i, _m, _v);
-		Adam(&m_HBias.g, gate.g, _m, _v);
-		Adam(&m_HBias.c_, gate.c_, _m, _v);
+		Adam(&m_HBias.f, gate.f * LEARN_RATE, _m, _v);
+		Adam(&m_HBias.i, gate.i * LEARN_RATE, _m, _v);
+		Adam(&m_HBias.g, gate.g * LEARN_RATE, _m, _v);
+		Adam(&m_HBias.c_, gate.c_ * LEARN_RATE, _m, _v);
 
 		prev_dCH.C = Mem_Gate[i].f * dc;
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
