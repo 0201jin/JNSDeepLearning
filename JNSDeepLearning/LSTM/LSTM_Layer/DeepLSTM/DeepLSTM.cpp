@@ -74,7 +74,7 @@ void DeepLSTM::Train_M2M(vector<vector<double>> _InputData, vector<vector<double
 		
 		for (int j = m_vNeuron.size() - 1; j >= 0; --j)
 		{
-			TrainData = m_vNeuron[j].Train_H_Adam(m_vNeuron[j].GetLastInput(), TrainData, 0.025, &m_m[0], &m_v[0]);
+			TrainData = m_vNeuron[j].Train_H_Adam(m_vNeuron[j].GetLastInput(), TrainData, 0.025, &m_m[j], &m_v[j]);
 		}
 	}
 }
