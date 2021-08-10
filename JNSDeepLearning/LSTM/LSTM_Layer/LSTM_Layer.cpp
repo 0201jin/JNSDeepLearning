@@ -91,14 +91,14 @@ vector<double> LSTM_Neuron::Calculate_M2M(vector<double> _InputData)
 vector<double> LSTM_Neuron::Train_M2M(vector<double> _InputData, vector<double> _TrainData)
 {
 	static double m, v = 0;
-
+	
 	queue<double> aa;
 	for (int i = 0; i < _TrainData.size(); ++i)
 		aa.push(_TrainData[i]);
 
 	aa = Queue_Reverse_Function(aa);
 	//값을 거꾸로 넣어야함.
-
+	
 	Train_H_Adam(_InputData, aa, 0.00025, &m, &v);
 
 	return vector<double>();
