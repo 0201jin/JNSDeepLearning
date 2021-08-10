@@ -15,8 +15,8 @@ public:
 	void PrintWeight();
 
 private:
-	vector<LSTM_Neuron*> m_vNeuron;
-	LSTM_Neuron* m_OutputNeuron;
+	vector<LSTM_Neuron> m_vNeuron;
+	LSTM_Neuron m_OutputNeuron;
 	vector<double> m_m;
 	vector<double> m_v;
 	double om, ov;
