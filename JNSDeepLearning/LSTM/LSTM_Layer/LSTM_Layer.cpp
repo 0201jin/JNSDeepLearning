@@ -258,7 +258,10 @@ queue<double> LSTM_Neuron::Train_H_Adam(vector<double> _InputData, queue<double>
 		prev_dCH.C = Mem_Gate[i].f * dc;
 		prev_dCH.H = (gate.f + gate.i + gate.g + gate.c_) * (HWeight.f + HWeight.i + HWeight.g + HWeight.c_);
 
-		dX.push((gate.f + gate.i + gate.g + gate.c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_));
+		double m_dX = _InputData[i];
+		Adam(&m_dX, (gate.f + gate.i + gate.g + gate.c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_) * LEARN_RATE, _m, _v);
+		dX.push(m_dX);
+		//dX.push((gate.f + gate.i + gate.g + gate.c_) * (XWeight.f + XWeight.i + XWeight.g + XWeight.c_));
 	}
 
 	return dX;
