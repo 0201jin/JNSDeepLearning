@@ -106,7 +106,7 @@ void DeepLSTM_Run()
 
 void DeepLSTM_M2M_Run()
 {
-	DeepLSTM net(5);
+	DeepLSTM net(1);
 
 	for (int i = 0; i < 100000; ++i)
 	{
