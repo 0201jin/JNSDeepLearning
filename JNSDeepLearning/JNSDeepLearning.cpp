@@ -11,7 +11,7 @@ using namespace std;
 
 #define DATA_NUM 4
 #define WEIGHT_NUM 3
-
+//코드를 수정합니다.
 void Single_Neuron_Run()
 {
 	Single_Neuron Plus_Neuron(2);
