@@ -73,15 +73,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\0201j\Desktop\작업\JNSDeepLearning\JNSDeepLearning;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\0201j\Desktop\작업\JNSDeepLearning\JNSDeepLearning;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\0201j\Desktop\작업\JNSDeepLearning\JNSDeepLearning;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\0201j\Desktop\작업\JNSDeepLearning\JNSDeepLearning;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -146,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Activation_Function.h" />
+    <ClInclude Include="LSTM\LSTM\LSTM.h" />
     <ClInclude Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.h" />
     <ClInclude Include="RNN\RNN.h" />
     <ClInclude Include="Single_Layer_Perceptron.h" />
@@ -155,6 +160,7 @@
     <CudaCompile Include="Single_Layer_Perceptron.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LSTM\LSTM\LSTM.cpp" />
     <ClCompile Include="RNN\RNN.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

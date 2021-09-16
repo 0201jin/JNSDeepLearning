@@ -21,6 +21,12 @@
     <Filter Include="소스 파일\RNN">
       <UniqueIdentifier>{e34d20a0-213c-450b-80a3-e8a9e9996b06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\LSTM">
+      <UniqueIdentifier>{524bc4bd-a6e1-4b36-a00d-e3f0842b9b7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LSTM\LSTM">
+      <UniqueIdentifier>{63d588d1-d098-49f9-b040-f60ebc9ca2c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="Single_Layer_Perceptron.cpp">
@@ -37,19 +43,25 @@
     <ClInclude Include="Single_Layer_Perceptron.h">
       <Filter>소스 파일\Perceptron\Single_Layer_Perceptron</Filter>
     </ClInclude>
-    <ClInclude Include="Activation_Function.h">
-      <Filter>소스 파일\Perceptron</Filter>
-    </ClInclude>
     <ClInclude Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.h">
       <Filter>소스 파일\Perceptron\Multi_Layer_Perceptron</Filter>
     </ClInclude>
     <ClInclude Include="RNN\RNN.h">
       <Filter>소스 파일\RNN</Filter>
     </ClInclude>
+    <ClInclude Include="Activation_Function.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="LSTM\LSTM\LSTM.h">
+      <Filter>소스 파일\LSTM\LSTM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RNN\RNN.cpp">
       <Filter>소스 파일\RNN</Filter>
+    </ClCompile>
+    <ClCompile Include="LSTM\LSTM\LSTM.cpp">
+      <Filter>소스 파일\LSTM\LSTM</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
