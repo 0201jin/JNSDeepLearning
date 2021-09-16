@@ -3,9 +3,7 @@
 
 #include "Single_Layer_Perceptron.h"
 #include "Multi_Layer_Perceptron/Multi_Layer_Perceptron.h"
-#include "LSTM/LSTM_Layer/LSTM_Layer.h"
 #include "RNN/RNN.h"
-#include "LSTM/LSTM_Layer/DeepLSTM/DeepLSTM.h"
 
 using namespace std;
 
@@ -60,69 +58,6 @@ void Multi_Nueron_Run()
 	printf("2 xor 1 = %f %f\n", net.Calculate({ 2, 1 })[0], net.Calculate({ 2, 1 })[1]);*/
 }
 
-void LSTM_Run()
-{
-	LSTM_Network net;
-
-	for (int i = 0; i < 200000; ++i)
-	{
-		net.Train_M2M(
-			{ {0.2, 0.3, 0.4}, {0.5, 0.1, 0.3}, {0.2, 0.1, 0.2}, {0.1, 0.1, 0.1} },
-			{ {0.2, 0.5, 0.9}, {0.5, 0.6, 0.9}, {0.2, 0.3, 0.5}, {0.1, 0.2, 0.3} });
-	}
-
-	net.Calculate_M2M({ 0.3, 0.2, 0.5 });
-	net.printY();
-}
-
-void LSTM_M2O_Run()
-{
-	LSTM_Network net;
-
-	for (int i = 0; i < 100000; ++i)
-	{
-		net.Train_M2O({ {0.1, 0.2, 0.3}, {0.2, 0.3, 0.4}, {0.6, 0.7, 0.8} }, { 0.4, 0.5, 0.9 });
-	}
-
-	cout << net.Calculate_M2O({ 0.1, 0.2, 0.3 }) << endl;
-}
-
-void DeepLSTM_Run()
-{
-	DeepLSTM net(2);
-
-	for (int i = 0; i < 100000; ++i)
-	{
-		net.Train_M2O({
-			{0.3, 0.4, 0.5},
-			{0.1, 0.2, 0.3},
-			{0.2, 0.3, 0.4} },
-			{ 0.6, 0.4, 0.5 });
-	}
-
-	cout << net.Calculate_M2O({ 0.1, 0.2, 0.3 }) << endl;
-	net.PrintWeight();
-}
-
-void DeepLSTM_M2M_Run()
-{
-	DeepLSTM net(1);
-
-	for (int i = 0; i < 100000; ++i)
-	{
-		net.Train_M2M(
-			{ {0.2, 0.3, 0.4}, {0.5, 0.1, 0.3}, {0.2, 0.1, 0.2}, {0.1, 0.1, 0.1}, {0.1, 0.3, 0.2}, {0.3, 0.1, 0.2}, {0.6, 0.7, 0.1} },
-			{ {0.2, 0.5, 0.9}, {0.5, 0.6, 0.9}, {0.2, 0.3, 0.5}, {0.1, 0.2, 0.3}, {0.1, 0.4, 0.6}, {0.3, 0.4, 0.6}, {0.6, 1.3, 1.4} });
-	}
-
-	vector<double> Y = net.Calculate_M2M({ 0.3, 0.2, 0.5 });
-
-	for (int i = 0; i < Y.size(); ++i)
-		cout << Y[i] << endl;
-
-	net.PrintWeight();
-}
-
 void RNN_Run()
 {
 	RNN_Network net;
@@ -132,7 +67,7 @@ void RNN_Run()
 		net.Train_M2O({ {0.1, 0.2, 0.3}, {0.4, 0.5, 0.6}, {0.7, 0.8} }, { 0.4, 0.7, 0.9 });
 	}
 
-	printf("%f\n", net.Calculate_M2O({ 0.2, 0.3, 0.4 }));
+	printf("%f\n", net.Calculate_M2O({ 0.3, 0.4, 0.5 }));
 }
 
 void RNN_O2M_Run()
@@ -144,7 +79,7 @@ void RNN_O2M_Run()
 		net.Train_O2M({ 0.1, 0.2, 0.3 , 0.4, 0.5 }, { {0.2, 0.3, 0.4}, {0.3, 0.4, 0.5}, {0.4, 0.5, 0.6}, {0.5, 0.6, 0.7}, {0.6, 0.7, 0.8} });
 	}
 
-	net.Calculate_O2M(0.1f);
+	net.Calculate_O2M(0.3f);
 	net.printY();
 }
 
@@ -158,16 +93,13 @@ void RNN_M2M_Run()
 			{ {0.4, 0.5, 0.6}, {0.5, 0.6, 0.7}, {0.6, 0.7, 0.8} });
 	}
 
-	net.Calculate_M2M({ 0.2, 0.3, 0.4 });
+	net.Calculate_M2M({ 0.4, 0.5, 0.6 });
 	net.printY();
 }
 
 int main()
 {
-	DeepLSTM_M2M_Run();
-	//DeepLSTM_Run();
-	//LSTM_M2O_Run();
-	//LSTM_Run();
+	RNN_M2M_Run();
 
 	return 0;
 }
