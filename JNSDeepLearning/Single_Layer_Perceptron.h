@@ -7,7 +7,6 @@
 #include <cuda_runtime.h>
 
 #include "Activation_Function.h"
-#include "device_launch_parameters.h"
 
 using namespace Activation_Function;
 using namespace std;

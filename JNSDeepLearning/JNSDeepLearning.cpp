@@ -4,6 +4,16 @@
 #include "Single_Layer_Perceptron.h"
 #include "Multi_Layer_Perceptron/Multi_Layer_Perceptron.h"
 #include "RNN/RNN.h"
+#include "LSTM/LSTM/LSTM.h"
+
+__global__ void Cuda_MatrixMulti(double* P, double* A, double* B, int Size)
+{
+	int i = threadIdx.y;
+	int j = threadIdx.x;
+
+	for (int k = 0; k < Size; ++k)
+		P[i * Size + j] += A[i * Size + k] * B[k * Size + j];
+}
 
 using namespace std;
 
@@ -97,9 +107,27 @@ void RNN_M2M_Run()
 	net.printY();
 }
 
+void LSTM_M2O_Run()
+{
+	LSTM_Network<double> net;
+
+	for (int i = 0; i < 500000; ++i)
+	{
+		net.Train( 
+			{ {0.1, 0.1, 0.2}, {0.1, 0.1}, {0.3, 0.2, 0.1}, 
+			{0.1, 0.1, 0.1, 0.1}, {0.5, 0.2}, {0.4, 0.2, 0.2}, {0.1, 0.1},
+			{0.2, 0.1, 0.6}, {0.3, 0.3, 0.4}, {0.2, 0.2, 0.1, 0.4}, {0.1, 0.2, 0.3}, {0.33} },
+			{ 0.4, 0.2, 0.6, 0.4, 0.7, 0.8, 0.2, 0.9, 1.0, 0.9, 0.6, 0.33});
+	}
+
+	double Answer;
+	net.Calculate({ 0.1, 0.2, 0.3 }, Answer);
+	cout << Answer << endl;
+}
+
 int main()
 {
-	RNN_M2M_Run();
-
+	//RNN_M2M_Run();
+	LSTM_M2O_Run();
 	return 0;
 }

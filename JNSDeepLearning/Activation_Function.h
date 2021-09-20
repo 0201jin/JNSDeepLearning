@@ -3,6 +3,9 @@
 #include <queue>
 #include <deque>
 
+#include "cuda_runtime.h"
+#include "device_launch_parameters.h"
+
 using namespace std;
 
 namespace Activation_Function
@@ -95,18 +98,18 @@ namespace Activation_Function
 
 namespace Optimize_Function
 {
-	static void Adam(double* _g, double _dg, double* _m, double* _v)
+	static void Adam(double& _g, double _dg, double& _m, double& _v, double _Learn_Rate)
 	{
 		static const double b1 = 0.9;
 		static const double b2 = 0.999;
 
-		(*_m) = b1 * (*_m) + (1 - b1) * _dg;
-		(*_v) = b2 * (*_v) + (1 - b2) * pow(_dg, 2);
+		_m = b1 * _m + (1 - b1) * _dg;
+		_v = b2 * _v + (1 - b2) * pow(_dg, 2);
 		
-		double m_ = (*_m) / (1 - b1);
-		double v_ = (*_v) / (1 - b2);
+		double m_ = _m / (1 - b1);
+		double v_ = _v / (1 - b2);
 		
-		(*_g) = (*_g) - 0.0025 / sqrt(v_ + 0.00000001) * m_;
+		_g = _g - _Learn_Rate / sqrt(v_ + 0.00000001) * m_;
 	}
 };
 
