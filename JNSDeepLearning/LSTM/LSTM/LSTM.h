@@ -6,7 +6,7 @@
 #include <map>
 #include <random>
 
-#define LEARN_RATE 0.0025
+#define LEARN_RATE 0.01
 
 using namespace Activation_Function;
 using namespace Optimize_Function;
@@ -45,7 +45,7 @@ public:
 		m_vC.push_back(0);
 	}
 	~LSTM_Neuron() {}
-	
+
 	void Calculate(const vector<T> _InputData, T& _Answer)
 	{
 		m_vGate.clear();
@@ -85,33 +85,19 @@ public:
 
 		m_dYWeight -= m_vH[m_vH.size() - 1] * dY * LEARN_RATE;
 		m_dYBias -= dY * LEARN_RATE;
-
+		//cout << m_dYWeight << endl;
 		for (int Index = _InputData.size() - 1; Index >= 0; --Index)
 		{
 			dh += prev_dh;
 
-			double ddc = Tanh_Derivative(m_vC[Index+1]) * m_vGate[Index].o * dh;
+			double ddc = Tanh_Derivative(m_vC[Index + 1]) * m_vGate[Index].o * dh;
 
 			double ddo = tanh(m_vGate[Index].g) * dh * Sigmoid_Derivative(m_vGate[Index].o);
 			double ddg = m_vGate[Index].i * ddc * Tanh_Derivative(m_vGate[Index].g);
 			double ddi = m_vGate[Index].g * ddc * Sigmoid_Derivative(m_vGate[Index].i);
 			double ddf = m_vC[Index + 1] * ddc * Sigmoid_Derivative(m_vGate[Index].f);
 
-			Adam(m_vHGateWeight.f, ddf * m_vH[Index], m, v, LEARN_RATE);
-			Adam(m_vHGateWeight.i, ddi * m_vH[Index], m, v, LEARN_RATE);
-			Adam(m_vHGateWeight.g, ddg * m_vH[Index], m, v, LEARN_RATE);
-			Adam(m_vHGateWeight.o, ddo * m_vH[Index], m, v, LEARN_RATE);
-
-			Adam(m_vXGateWeight.f, ddf * _InputData[Index], m, v, LEARN_RATE);
-			Adam(m_vXGateWeight.i, ddi * _InputData[Index], m, v, LEARN_RATE);
-			Adam(m_vXGateWeight.g, ddg * _InputData[Index], m, v, LEARN_RATE);
-			Adam(m_vXGateWeight.o, ddo * _InputData[Index], m, v, LEARN_RATE);
-
-			Adam(m_vGateBias.f, ddf * m_vH[Index], m, v, LEARN_RATE);
-			Adam(m_vGateBias.i, ddi * m_vH[Index], m, v, LEARN_RATE);
-			Adam(m_vGateBias.g, ddg * m_vH[Index], m, v, LEARN_RATE);
-			Adam(m_vGateBias.o, ddo * m_vH[Index], m, v, LEARN_RATE);
-			/*m_vGateBias.f -= ddf * LEARN_RATE;
+			m_vGateBias.f -= ddf * LEARN_RATE;
 			m_vGateBias.i -= ddi * LEARN_RATE;
 			m_vGateBias.g -= ddg * LEARN_RATE;
 			m_vGateBias.o -= ddo * LEARN_RATE;
@@ -124,7 +110,7 @@ public:
 			m_vXGateWeight.f -= _InputData[Index] * ddf * LEARN_RATE;
 			m_vXGateWeight.i -= _InputData[Index] * ddi * LEARN_RATE;
 			m_vXGateWeight.g -= _InputData[Index] * ddg * LEARN_RATE;
-			m_vXGateWeight.o -= _InputData[Index] * ddo * LEARN_RATE;*/
+			m_vXGateWeight.o -= _InputData[Index] * ddo * LEARN_RATE;
 		}
 	}
 
@@ -135,9 +121,8 @@ protected:
 	LSTM_Gate m_vHGateWeight;
 	LSTM_Gate m_vGateBias;
 
-	double m_dYWeight;
+	double m_dYWeight = 0;
 	double m_dYBias = 0;
-	double m = 0, v = 0;
 
 	vector<double> m_vH;
 	vector<double> m_vC;
