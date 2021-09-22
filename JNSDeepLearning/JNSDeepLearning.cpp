@@ -115,9 +115,27 @@ void LSTM_M2O_Run()
 	cout << Answer << endl;
 }
 
+void LSTM_M2M_Run()
+{
+	LSTM_Network<double> net;
+
+	for (int i = 0; i < 100000; ++i)
+	{
+		net.Train({ {0.1, 0.2, 0.3}, {0.2, 0.3, 0.4}, {0.3, 0.4, 0.5}, {0.5, 0.6, 0.7}, {0.1, 0.2} },
+			{ {0.4, 0.5, 0.6}, {0.5, 0.6, 0.7}, {0.6, 0.7, 0.8}, {0.8, 0.9, 1.0}, {0.3, 0.4} });
+	}
+
+	vector<double> Answer;
+	net.Calculate({ 0.4, 0.5, 0.6 }, Answer);
+	
+	for (int i = 0; i < Answer.size(); ++i)
+		cout << Answer[i] << endl;
+}
+
 int main()
 {
 	//RNN_M2M_Run();
-	LSTM_M2O_Run();
+	//LSTM_M2O_Run();
+	LSTM_M2M_Run();
 	return 0;
 }

@@ -46,75 +46,22 @@ public:
 	}
 	~LSTM_Neuron() {}
 
-	void Calculate(const vector<T> _InputData, T& _Answer)
+	void Calculate(const vector<T> _InputData, T& _Answer);
+	void Train(const vector<T> _InputData, const T _Answer);
+
+	//vector<T>로 하나 만들기
+	void Calculate(const vector<T> _InputData, vector<T>& _Answer);
+	void Train(const vector<T> _InputData, const vector<T> _Answer);
+
+private:
+	void Clear()
 	{
 		m_vGate.clear();
 		m_vC.clear();
 		m_vH.clear();
 		m_vH.push_back(0);
 		m_vC.push_back(0);
-
-		for (int Index = 0; Index < _InputData.size(); ++Index)
-		{
-			double f = Sigmoid((m_vXGateWeight.f * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.f) + m_vGateBias.f);
-			double i = Sigmoid((m_vXGateWeight.i * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.i) + m_vGateBias.i);
-			double o = Sigmoid((m_vXGateWeight.o * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.o) + m_vGateBias.o);
-			double g = tanh((m_vXGateWeight.g * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.g) + m_vGateBias.g);
-
-			double c = f * m_vC[Index] + i * g;
-			double h = o * tanh(c);
-
-			m_vGate.push_back(LSTM_Gate({ f, i, g, o }));
-			m_vC.push_back(c);
-			m_vH.push_back(h);
-		}
-
-		_Answer = m_vH[_InputData.size()] * m_dYWeight + m_dYBias;
-		//cout << _Answer << endl;
 	}
-
-	void Train(const vector<T> _InputData, const T _Answer)
-	{
-		double Y;
-		Calculate(_InputData, Y);
-
-		double prev_dh = 0;
-
-		double dY = 2 * (Y - _Answer);
-		double dh = dY * m_dYWeight;
-
-		m_dYWeight -= m_vH[m_vH.size() - 1] * dY * LEARN_RATE;
-		m_dYBias -= dY * LEARN_RATE;
-		//cout << m_dYWeight << endl;
-		for (int Index = _InputData.size() - 1; Index >= 0; --Index)
-		{
-			dh += prev_dh;
-
-			double ddc = Tanh_Derivative(m_vC[Index + 1]) * m_vGate[Index].o * dh;
-
-			double ddo = tanh(m_vGate[Index].g) * dh * Sigmoid_Derivative(m_vGate[Index].o);
-			double ddg = m_vGate[Index].i * ddc * Tanh_Derivative(m_vGate[Index].g);
-			double ddi = m_vGate[Index].g * ddc * Sigmoid_Derivative(m_vGate[Index].i);
-			double ddf = m_vC[Index + 1] * ddc * Sigmoid_Derivative(m_vGate[Index].f);
-
-			m_vGateBias.f -= ddf * LEARN_RATE;
-			m_vGateBias.i -= ddi * LEARN_RATE;
-			m_vGateBias.g -= ddg * LEARN_RATE;
-			m_vGateBias.o -= ddo * LEARN_RATE;
-
-			m_vHGateWeight.f -= m_vH[Index] * ddf * LEARN_RATE;
-			m_vHGateWeight.i -= m_vH[Index] * ddi * LEARN_RATE;
-			m_vHGateWeight.g -= m_vH[Index] * ddg * LEARN_RATE;
-			m_vHGateWeight.o -= m_vH[Index] * ddo * LEARN_RATE;
-
-			m_vXGateWeight.f -= _InputData[Index] * ddf * LEARN_RATE;
-			m_vXGateWeight.i -= _InputData[Index] * ddi * LEARN_RATE;
-			m_vXGateWeight.g -= _InputData[Index] * ddg * LEARN_RATE;
-			m_vXGateWeight.o -= _InputData[Index] * ddo * LEARN_RATE;
-		}
-	}
-
-	//vector<T>로 하나 만들기
 
 protected:
 	LSTM_Gate m_vXGateWeight;
@@ -150,6 +97,149 @@ public:
 		}
 	}
 
+	void Calculate(const vector<T> _InputData, vector<T>& _Answer)
+	{
+		m_Neuron.Calculate(_InputData, _Answer);
+	}
+
+	void Train(const vector<vector<T>> _InputData, const vector<vector<T>> _Answer)
+	{
+		for (int i = 0; i < _InputData.size(); ++i)
+		{
+			m_Neuron.Train(_InputData[i], _Answer[i]);
+		}
+	}
+
 protected:
 	LSTM_Neuron<T> m_Neuron;
 };
+
+template<typename T>
+inline void LSTM_Neuron<T>::Calculate(const vector<T> _InputData, T& _Answer)
+{
+	Clear();
+
+	for (int Index = 0; Index < _InputData.size(); ++Index)
+	{
+		double f = Sigmoid((m_vXGateWeight.f * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.f) + m_vGateBias.f);
+		double i = Sigmoid((m_vXGateWeight.i * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.i) + m_vGateBias.i);
+		double o = Sigmoid((m_vXGateWeight.o * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.o) + m_vGateBias.o);
+		double g = tanh((m_vXGateWeight.g * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.g) + m_vGateBias.g);
+
+		double c = f * m_vC[Index] + i * g;
+		double h = o * tanh(c);
+
+		m_vGate.push_back(LSTM_Gate({ f, i, g, o }));
+		m_vC.push_back(c);
+		m_vH.push_back(h);
+	}
+
+	_Answer = m_vH[_InputData.size()] * m_dYWeight + m_dYBias;
+}
+
+template<typename T>
+inline void LSTM_Neuron<T>::Train(const vector<T> _InputData, const T _Answer)
+{
+	double Y;
+	Calculate(_InputData, Y);
+
+	double prev_dh = 0;
+
+	double dY = 2 * (Y - _Answer);
+	double dh = dY * m_dYWeight;
+
+	m_dYWeight -= m_vH[m_vH.size() - 1] * dY * LEARN_RATE;
+	m_dYBias -= dY * LEARN_RATE;
+	//cout << m_dYWeight << endl;
+	for (int Index = _InputData.size() - 1; Index >= 0; --Index)
+	{
+		dh += prev_dh;
+
+		double ddc = Tanh_Derivative(m_vC[Index + 1]) * m_vGate[Index].o * dh;
+
+		double ddo = tanh(m_vGate[Index].g) * dh * Sigmoid_Derivative(m_vGate[Index].o);
+		double ddg = m_vGate[Index].i * ddc * Tanh_Derivative(m_vGate[Index].g);
+		double ddi = m_vGate[Index].g * ddc * Sigmoid_Derivative(m_vGate[Index].i);
+		double ddf = m_vC[Index + 1] * ddc * Sigmoid_Derivative(m_vGate[Index].f);
+
+		m_vGateBias.f -= ddf * LEARN_RATE;
+		m_vGateBias.i -= ddi * LEARN_RATE;
+		m_vGateBias.g -= ddg * LEARN_RATE;
+		m_vGateBias.o -= ddo * LEARN_RATE;
+
+		m_vHGateWeight.f -= m_vH[Index] * ddf * LEARN_RATE;
+		m_vHGateWeight.i -= m_vH[Index] * ddi * LEARN_RATE;
+		m_vHGateWeight.g -= m_vH[Index] * ddg * LEARN_RATE;
+		m_vHGateWeight.o -= m_vH[Index] * ddo * LEARN_RATE;
+
+		m_vXGateWeight.f -= _InputData[Index] * ddf * LEARN_RATE;
+		m_vXGateWeight.i -= _InputData[Index] * ddi * LEARN_RATE;
+		m_vXGateWeight.g -= _InputData[Index] * ddg * LEARN_RATE;
+		m_vXGateWeight.o -= _InputData[Index] * ddo * LEARN_RATE;
+	}
+}
+
+template<typename T>
+inline void LSTM_Neuron<T>::Calculate(const vector<T> _InputData, vector<T>& _Answer)
+{
+	Clear();
+
+	for (int Index = 0; Index < _InputData.size(); ++Index)
+	{
+		double f = Sigmoid((m_vXGateWeight.f * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.f) + m_vGateBias.f);
+		double i = Sigmoid((m_vXGateWeight.i * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.i) + m_vGateBias.i);
+		double o = Sigmoid((m_vXGateWeight.o * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.o) + m_vGateBias.o);
+		double g = tanh((m_vXGateWeight.g * _InputData[Index]) + (m_vH[Index] * m_vHGateWeight.g) + m_vGateBias.g);
+
+		double c = f * m_vC[Index] + i * g;
+		double h = o * tanh(c);
+
+		m_vGate.push_back(LSTM_Gate({ f, i, g, o }));
+		m_vC.push_back(c);
+		m_vH.push_back(h);
+		_Answer.push_back(h * m_dYWeight + m_dYBias);
+	}
+}
+
+template<typename T>
+inline void LSTM_Neuron<T>::Train(const vector<T> _InputData, const vector<T> _Answer)
+{
+	vector<double> Y;
+	Calculate(_InputData, Y);
+
+	double prev_dh = 0;
+
+	//cout << m_dYWeight << endl;
+	for (int Index = _InputData.size() - 1; Index >= 0; --Index)
+	{
+		double dY = 2 * (Y[Index] - _Answer[Index]);
+		double dh = dY * m_dYWeight;
+
+		m_dYWeight -= m_vH[Index] * dY * LEARN_RATE;
+		m_dYBias -= dY * LEARN_RATE;
+
+		dh += prev_dh;
+
+		double ddc = Tanh_Derivative(m_vC[Index + 1]) * m_vGate[Index].o * dh;
+
+		double ddo = tanh(m_vGate[Index].g) * dh * Sigmoid_Derivative(m_vGate[Index].o);
+		double ddg = m_vGate[Index].i * ddc * Tanh_Derivative(m_vGate[Index].g);
+		double ddi = m_vGate[Index].g * ddc * Sigmoid_Derivative(m_vGate[Index].i);
+		double ddf = m_vC[Index + 1] * ddc * Sigmoid_Derivative(m_vGate[Index].f);
+
+		m_vGateBias.f -= ddf * LEARN_RATE;
+		m_vGateBias.i -= ddi * LEARN_RATE;
+		m_vGateBias.g -= ddg * LEARN_RATE;
+		m_vGateBias.o -= ddo * LEARN_RATE;
+
+		m_vHGateWeight.f -= m_vH[Index] * ddf * LEARN_RATE;
+		m_vHGateWeight.i -= m_vH[Index] * ddi * LEARN_RATE;
+		m_vHGateWeight.g -= m_vH[Index] * ddg * LEARN_RATE;
+		m_vHGateWeight.o -= m_vH[Index] * ddo * LEARN_RATE;
+
+		m_vXGateWeight.f -= _InputData[Index] * ddf * LEARN_RATE;
+		m_vXGateWeight.i -= _InputData[Index] * ddi * LEARN_RATE;
+		m_vXGateWeight.g -= _InputData[Index] * ddg * LEARN_RATE;
+		m_vXGateWeight.o -= _InputData[Index] * ddo * LEARN_RATE;
+	}
+}
