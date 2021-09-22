@@ -1,0 +1,355 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "열거형 형식 'cudaError'이(가) 범위가 지정되지 않았습니다. 'enum'(Enum.3) 대신 'enum class'를 사용하세요."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.4/include/cuda_runtime.h"
+                },
+                "region": {
+                  "startLine": 312,
+                  "startColumn": 12,
+                  "endLine": 312,
+                  "endColumn": 44
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?cudaEventCreate@@YA?AW4cudaError@@PEAPEAUCUevent_st@@I@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "산술 오버플로: 4 바이트 값의 '+' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '+' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/0201j/Desktop/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp"
+                },
+                "region": {
+                  "startLine": 77,
+                  "startColumn": 44,
+                  "endLine": 77,
+                  "endColumn": 48
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?Train_M2O@RNN_Layer@@QEAAXV?$vector@NV?$allocator@N@std@@@std@@N@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "산술 오버플로: 4 바이트 값의 '+' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '+' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/0201j/Desktop/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp"
+                },
+                "region": {
+                  "startLine": 124,
+                  "startColumn": 22,
+                  "endLine": 124,
+                  "endColumn": 26
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?Train_O2M@RNN_Layer@@QEAAXNV?$vector@NV?$allocator@N@std@@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "산술 오버플로: 4 바이트 값의 '+' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '+' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/0201j/Desktop/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp"
+                },
+                "region": {
+                  "startLine": 127,
+                  "startColumn": 39,
+                  "endLine": 127,
+                  "endColumn": 43
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?Train_O2M@RNN_Layer@@QEAAXNV?$vector@NV?$allocator@N@std@@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "산술 오버플로: 4 바이트 값의 '+' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '+' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/0201j/Desktop/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp"
+                },
+                "region": {
+                  "startLine": 174,
+                  "startColumn": 22,
+                  "endLine": 174,
+                  "endColumn": 26
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?Train_M2M@RNN_Layer@@QEAAXV?$vector@NV?$allocator@N@std@@@std@@0@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "산술 오버플로: 4 바이트 값의 '+' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '+' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/0201j/Desktop/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp"
+                },
+                "region": {
+                  "startLine": 177,
+                  "startColumn": 39,
+                  "endLine": 177,
+                  "endColumn": 43
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?Train_M2M@RNN_Layer@@QEAAXV?$vector@NV?$allocator@N@std@@@std@@0@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.29.30133.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "commandLine": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX86\\x64\\c1xx.dll\" -ACf{1F7B090C-16DB-4822-966A-A93D26ED4681} -ACpmspft140.dll -Alint -D_PREFAST_ -D_AST_FE_ -Analyze -zm0x0103C1B0 -il C:\\Users\\0201j\\AppData\\Local\\Temp\\_CL_49b01f63ast -typedil -f RNN\\RNN.cpp -Ze -D_MSC_EXTENSIONS -Zp16 -pc \\:/ -D_MSC_VER=1929 -D_MSC_FULL_VER=192930133 -D_MSC_BUILD=0 -D_M_AMD64=100 -ZILP448 -D_M_X64=100 -D_WIN64 -D_WIN32 -GR -D_CPPRTTI -I C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v11.4\\include -I C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v11.4\\include -nologo -W 3 -diagnostics:column -GF -Og -Oi -Ot -Oy -DCODE_ANALYSIS -D_UNICODE -DUNICODE -EHs -D_CPPUNWIND -EHc -MDd -D_DEBUG -D_MT -D_DLL -GS -D_M_FP_PRECISE -permissive- -Zc:wchar_t -Zc:forScope -Fox64\\Debug\\RNN.obj -Fdx64\\Debug\\vc142.pdb -external:W 3 -Gd -analyze:projectdirectory C:\\Users\\0201j\\Desktop\\작업\\JNSDeepLearning\\JNSDeepLearning -analyze:rulesetdirectory ;C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\\\Rule Sets; -analyze:ruleset C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\Rule Sets\\NativeRecommendedRules.ruleset -analyze:quiet -analyze:plugin C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX86\\x86\\EspXEngine.dll -FC -errorreport:prompt -I C:\\Users\\0201j\\Desktop\\작업\\JNSDeepLearning\\JNSDeepLearning -I C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v11.4\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\atlmfc\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um -external:I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\include -external:I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\atlmfc\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\atlmfc\\include -external:I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -external:I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um -I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um",
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.4/include/cuda_runtime.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "6d9e13358225805e6038a6a89c094fb1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Users/0201j/Desktop/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "b920e70e23c661dcd785deab7f0b7be7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/0201j/desktop/작업/jnsdeeplearning/jnsdeeplearning/rnn/rnn.h"
+          },
+          "hashes": {
+            "md5": "532b2f94999ec2f30eef72955b6d9b48"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/crt/host_config.h"
+          },
+          "hashes": {
+            "md5": "4cdb3d18274bfae4ca35b783526f04c4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/builtin_types.h"
+          },
+          "hashes": {
+            "md5": "dee02e71170a871f122c381431ee7dcc"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/device_types.h"
+          },
+          "hashes": {
+            "md5": "71b8482200db8088fc18084ea9722197"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/crt/host_defines.h"
+          },
+          "hashes": {
+            "md5": "131ca9d276304b19df13a11be8b3e39b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/driver_types.h"
+          },
+          "hashes": {
+            "md5": "c73883716057b43d734f43c8fe094d06"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/vector_types.h"
+          },
+          "hashes": {
+            "md5": "8407b7a268d612207fac08b0781c4fa6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/surface_types.h"
+          },
+          "hashes": {
+            "md5": "9184e319feaebf06dfc00e993b910d38"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/texture_types.h"
+          },
+          "hashes": {
+            "md5": "95f45648e0b48736d58dd989efac6fc7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/library_types.h"
+          },
+          "hashes": {
+            "md5": "0f796de8d4d9c743fab50441bd42db30"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/channel_descriptor.h"
+          },
+          "hashes": {
+            "md5": "6221b96c68cfa28a0673e74dfade6903"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/cuda_runtime_api.h"
+          },
+          "hashes": {
+            "md5": "a51ebd886f31491a8b87eda9a8bdd9e6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/cuda_device_runtime_api.h"
+          },
+          "hashes": {
+            "md5": "088cbcf6c98fa92963bf469950bb4f23"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/driver_functions.h"
+          },
+          "hashes": {
+            "md5": "d81ad478ded8baf5ddf252988e223d69"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/vector_functions.h"
+          },
+          "hashes": {
+            "md5": "c088913f19223601cdfbcf98aa954396"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/vector_functions.hpp"
+          },
+          "hashes": {
+            "md5": "09c92a2a1a9e9d68770b01283567c866"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/0201j/desktop/작업/jnsdeeplearning/jnsdeeplearning/activation_function.h"
+          },
+          "hashes": {
+            "md5": "f3b7ed0ff6721aea2018bb49e4fa8768"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/program files/nvidia gpu computing toolkit/cuda/v11.4/include/device_launch_parameters.h"
+          },
+          "hashes": {
+            "md5": "7f21a49fee1695a12c3f4559bc14a655"
+          }
+        }
+      ]
+    }
+  ]
+}

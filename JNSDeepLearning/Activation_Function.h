@@ -3,9 +3,6 @@
 #include <queue>
 #include <deque>
 
-#include "cuda_runtime.h"
-#include "device_launch_parameters.h"
-
 using namespace std;
 
 namespace Activation_Function

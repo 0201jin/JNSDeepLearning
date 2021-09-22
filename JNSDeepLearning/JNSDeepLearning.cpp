@@ -4,16 +4,7 @@
 #include "Single_Layer_Perceptron.h"
 #include "Multi_Layer_Perceptron/Multi_Layer_Perceptron.h"
 #include "RNN/RNN.h"
-#include "LSTM/LSTM/LSTM.h"
-
-__global__ void Cuda_MatrixMulti(double* P, double* A, double* B, int Size)
-{
-	int i = threadIdx.y;
-	int j = threadIdx.x;
-
-	for (int k = 0; k < Size; ++k)
-		P[i * Size + j] += A[i * Size + k] * B[k * Size + j];
-}
+#include "LSTM/LSTM/LSTM_Network.h"
 
 using namespace std;
 
@@ -120,7 +111,7 @@ void LSTM_M2O_Run()
 	}
 
 	double Answer;
-	net.Calculate({ 0.1, 0.2, 0.3 }, Answer);
+	net.Calculate({ 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 }, Answer);
 	cout << Answer << endl;
 }
 

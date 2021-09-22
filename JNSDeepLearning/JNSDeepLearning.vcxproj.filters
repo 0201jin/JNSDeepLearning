@@ -29,14 +29,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="Single_Layer_Perceptron.cpp">
-      <Filter>소스 파일\Perceptron\Single_Layer_Perceptron</Filter>
-    </CudaCompile>
     <CudaCompile Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.cpp">
       <Filter>소스 파일\Perceptron\Multi_Layer_Perceptron</Filter>
     </CudaCompile>
-    <CudaCompile Include="JNSDeepLearning.cpp">
-      <Filter>소스 파일</Filter>
+    <CudaCompile Include="Single_Layer_Perceptron.cpp">
+      <Filter>소스 파일\Perceptron\Single_Layer_Perceptron</Filter>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,7 +49,7 @@
     <ClInclude Include="Activation_Function.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="LSTM\LSTM\LSTM.h">
+    <ClInclude Include="LSTM\LSTM\LSTM_Network.h">
       <Filter>소스 파일\LSTM\LSTM</Filter>
     </ClInclude>
   </ItemGroup>
@@ -60,8 +57,11 @@
     <ClCompile Include="RNN\RNN.cpp">
       <Filter>소스 파일\RNN</Filter>
     </ClCompile>
-    <ClCompile Include="LSTM\LSTM\LSTM.cpp">
+    <ClCompile Include="LSTM\LSTM\LSTM_Network.cpp">
       <Filter>소스 파일\LSTM\LSTM</Filter>
+    </ClCompile>
+    <ClCompile Include="JNSDeepLearning.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
