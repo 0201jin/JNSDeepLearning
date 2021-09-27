@@ -5,6 +5,7 @@
 #include <cmath>
 #include <map>
 #include <random>
+#include <CUDA/CUDA_Matrix.cuh>
 
 #define LEARN_RATE 0.01
 
@@ -13,7 +14,7 @@ using namespace Optimize_Function;
 
 struct LSTM_Gate
 {
-	double Gate[4] = {0, 0, 0, 0}; //f i g o
+	double Gate[4] = { 0, 0, 0, 0 }; //f i g o
 	/*double f = 0;
 	double i = 0;
 	double g = 0;
@@ -138,6 +139,7 @@ inline void LSTM_Neuron<T>::Calculate(const vector<T> _InputData, T& _Answer)
 	_Answer = m_vH[_InputData.size()] * m_dYWeight + m_dYBias;
 }
 
+//M2O
 template<typename T>
 inline void LSTM_Neuron<T>::Train(const vector<T> _InputData, const T _Answer)
 {
@@ -151,32 +153,61 @@ inline void LSTM_Neuron<T>::Train(const vector<T> _InputData, const T _Answer)
 
 	m_dYWeight -= m_vH[m_vH.size() - 1] * dY * LEARN_RATE;
 	m_dYBias -= dY * LEARN_RATE;
-	//cout << m_dYWeight << endl;
+
 	for (int Index = _InputData.size() - 1; Index >= 0; --Index)
 	{
 		dh += prev_dh;
 
 		double ddc = Tanh_Derivative(m_vC[Index + 1]) * m_vGate[Index].Gate[3] * dh;
 
-		double ddo = tanh(m_vGate[Index].Gate[2]) * dh * Sigmoid_Derivative(m_vGate[Index].Gate[3]);
-		double ddg = m_vGate[Index].Gate[1] * ddc * Tanh_Derivative(m_vGate[Index].Gate[2]);
-		double ddi = m_vGate[Index].Gate[2] * ddc * Sigmoid_Derivative(m_vGate[Index].Gate[1]);
-		double ddf = m_vC[Index + 1] * ddc * Sigmoid_Derivative(m_vGate[Index].Gate[0]);
+		LSTM_Gate Gate;
+		Gate.Gate[3] = tanh(m_vGate[Index].Gate[2]) * dh * Sigmoid_Derivative(m_vGate[Index].Gate[3]);	//o
+		Gate.Gate[2] = m_vGate[Index].Gate[1] * ddc * Tanh_Derivative(m_vGate[Index].Gate[2]);			//g
+		Gate.Gate[1] = m_vGate[Index].Gate[2] * ddc * Sigmoid_Derivative(m_vGate[Index].Gate[1]);		//i
+		Gate.Gate[0] = m_vC[Index + 1] * ddc * Sigmoid_Derivative(m_vGate[Index].Gate[0]);				//f
+		
+		/*double LearnRate[1] = {LEARN_RATE};
+		double H[1] = { m_vH[Index] * LEARN_RATE };
+		double Input[1] = { _InputData[Index] * LEARN_RATE };
+		double GateBias[4] = {0, 0, 0, 0};
+		double HGateWeight[4] = {0, 0, 0, 0};
+		double XGateWeight[4] = {0, 0, 0, 0};
 
-		m_vGateBias.Gate[0] -= ddf * LEARN_RATE;
-		m_vGateBias.Gate[1] -= ddi * LEARN_RATE;
-		m_vGateBias.Gate[2] -= ddg * LEARN_RATE;
-		m_vGateBias.Gate[3] -= ddo * LEARN_RATE;
+		CUDA_Matrix CM;
+		CM.Matrix_Multiply(Gate.Gate, LearnRate, GateBias, 4, 1, 1);
+		CM.Matrix_Multiply(Gate.Gate, H, HGateWeight, 4, 1, 1);
+		CM.Matrix_Multiply(Gate.Gate, Input, XGateWeight, 4, 1, 1);
+		cudaDeviceSynchronize();
 
-		m_vHGateWeight.Gate[0] -= m_vH[Index] * ddf * LEARN_RATE;
-		m_vHGateWeight.Gate[1] -= m_vH[Index] * ddi * LEARN_RATE;
-		m_vHGateWeight.Gate[2] -= m_vH[Index] * ddg * LEARN_RATE;
-		m_vHGateWeight.Gate[3] -= m_vH[Index] * ddo * LEARN_RATE;
+		m_vGateBias.Gate[0] -= GateBias[0];
+		m_vGateBias.Gate[1] -= GateBias[1];
+		m_vGateBias.Gate[2] -= GateBias[2];
+		m_vGateBias.Gate[3] -= GateBias[3];
 
-		m_vXGateWeight.Gate[0] -= _InputData[Index] * ddf * LEARN_RATE;
-		m_vXGateWeight.Gate[1] -= _InputData[Index] * ddi * LEARN_RATE;
-		m_vXGateWeight.Gate[2] -= _InputData[Index] * ddg * LEARN_RATE;
-		m_vXGateWeight.Gate[3] -= _InputData[Index] * ddo * LEARN_RATE;
+		m_vHGateWeight.Gate[0] -= HGateWeight[0];
+		m_vHGateWeight.Gate[1] -= HGateWeight[1];
+		m_vHGateWeight.Gate[2] -= HGateWeight[2];
+		m_vHGateWeight.Gate[3] -= HGateWeight[3];
+
+		m_vXGateWeight.Gate[0] -= XGateWeight[0];
+		m_vXGateWeight.Gate[1] -= XGateWeight[1];
+		m_vXGateWeight.Gate[2] -= XGateWeight[2];
+		m_vXGateWeight.Gate[3] -= XGateWeight[3];*/
+
+		m_vGateBias.Gate[0] -= Gate.Gate[0] * LEARN_RATE;
+		m_vGateBias.Gate[1] -= Gate.Gate[1] * LEARN_RATE;
+		m_vGateBias.Gate[2] -= Gate.Gate[2] * LEARN_RATE;
+		m_vGateBias.Gate[3] -= Gate.Gate[3] * LEARN_RATE;
+
+		m_vHGateWeight.Gate[0] -= m_vH[Index] * Gate.Gate[0] * LEARN_RATE;
+		m_vHGateWeight.Gate[1] -= m_vH[Index] * Gate.Gate[1] * LEARN_RATE;
+		m_vHGateWeight.Gate[2] -= m_vH[Index] * Gate.Gate[2] * LEARN_RATE;
+		m_vHGateWeight.Gate[3] -= m_vH[Index] * Gate.Gate[3] * LEARN_RATE;
+
+		m_vXGateWeight.Gate[0] -= _InputData[Index] * Gate.Gate[0] * LEARN_RATE;
+		m_vXGateWeight.Gate[1] -= _InputData[Index] * Gate.Gate[1] * LEARN_RATE;
+		m_vXGateWeight.Gate[2] -= _InputData[Index] * Gate.Gate[2] * LEARN_RATE;
+		m_vXGateWeight.Gate[3] -= _InputData[Index] * Gate.Gate[3] * LEARN_RATE;
 	}
 }
 
@@ -223,24 +254,25 @@ inline void LSTM_Neuron<T>::Train(const vector<T> _InputData, const vector<T> _A
 
 		double ddc = Tanh_Derivative(m_vC[Index + 1]) * m_vGate[Index].Gate[3] * dh;
 
-		double ddo = tanh(m_vGate[Index].Gate[2]) * dh * Sigmoid_Derivative(m_vGate[Index].Gate[3]);
-		double ddg = m_vGate[Index].Gate[1] * ddc * Tanh_Derivative(m_vGate[Index].Gate[2]);
-		double ddi = m_vGate[Index].Gate[2] * ddc * Sigmoid_Derivative(m_vGate[Index].Gate[1]);
-		double ddf = m_vC[Index + 1] * ddc * Sigmoid_Derivative(m_vGate[Index].Gate[0]);
+		LSTM_Gate Gate;
+		Gate.Gate[3] = tanh(m_vGate[Index].Gate[2]) * dh * Sigmoid_Derivative(m_vGate[Index].Gate[3]);//o
+		Gate.Gate[2] = m_vGate[Index].Gate[1] * ddc * Tanh_Derivative(m_vGate[Index].Gate[2]);		  //g
+		Gate.Gate[1] = m_vGate[Index].Gate[2] * ddc * Sigmoid_Derivative(m_vGate[Index].Gate[1]);	  //i
+		Gate.Gate[0] = m_vC[Index + 1] * ddc * Sigmoid_Derivative(m_vGate[Index].Gate[0]);			  //f
 
-		m_vGateBias.Gate[0] -= ddf * LEARN_RATE;
-		m_vGateBias.Gate[1] -= ddi * LEARN_RATE;
-		m_vGateBias.Gate[2] -= ddg * LEARN_RATE;
-		m_vGateBias.Gate[3] -= ddo * LEARN_RATE;
+		m_vGateBias.Gate[0] -= Gate.Gate[0] * LEARN_RATE;
+		m_vGateBias.Gate[1] -= Gate.Gate[1] * LEARN_RATE;
+		m_vGateBias.Gate[2] -= Gate.Gate[2] * LEARN_RATE;
+		m_vGateBias.Gate[3] -= Gate.Gate[3] * LEARN_RATE;
 
-		m_vHGateWeight.Gate[0] -= m_vH[Index] * ddf * LEARN_RATE;
-		m_vHGateWeight.Gate[1] -= m_vH[Index] * ddi * LEARN_RATE;
-		m_vHGateWeight.Gate[2] -= m_vH[Index] * ddg * LEARN_RATE;
-		m_vHGateWeight.Gate[3] -= m_vH[Index] * ddo * LEARN_RATE;
-					   
-		m_vXGateWeight.Gate[0] -= _InputData[Index] * ddf * LEARN_RATE;
-		m_vXGateWeight.Gate[1] -= _InputData[Index] * ddi * LEARN_RATE;
-		m_vXGateWeight.Gate[2] -= _InputData[Index] * ddg * LEARN_RATE;
-		m_vXGateWeight.Gate[3] -= _InputData[Index] * ddo * LEARN_RATE;
+		m_vHGateWeight.Gate[0] -= m_vH[Index] * Gate.Gate[0] * LEARN_RATE;
+		m_vHGateWeight.Gate[1] -= m_vH[Index] * Gate.Gate[1] * LEARN_RATE;
+		m_vHGateWeight.Gate[2] -= m_vH[Index] * Gate.Gate[2] * LEARN_RATE;
+		m_vHGateWeight.Gate[3] -= m_vH[Index] * Gate.Gate[3] * LEARN_RATE;
+
+		m_vXGateWeight.Gate[0] -= _InputData[Index] * Gate.Gate[0] * LEARN_RATE;
+		m_vXGateWeight.Gate[1] -= _InputData[Index] * Gate.Gate[1] * LEARN_RATE;
+		m_vXGateWeight.Gate[2] -= _InputData[Index] * Gate.Gate[2] * LEARN_RATE;
+		m_vXGateWeight.Gate[3] -= _InputData[Index] * Gate.Gate[3] * LEARN_RATE;
 	}
 }

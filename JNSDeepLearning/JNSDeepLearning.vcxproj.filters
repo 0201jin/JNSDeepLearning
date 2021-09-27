@@ -27,6 +27,9 @@
     <Filter Include="소스 파일\LSTM\LSTM">
       <UniqueIdentifier>{63d588d1-d098-49f9-b040-f60ebc9ca2c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\CUDA">
+      <UniqueIdentifier>{90495a1a-cbaa-4d8d-b2de-212a920337d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.cpp">
@@ -34,6 +37,18 @@
     </CudaCompile>
     <CudaCompile Include="Single_Layer_Perceptron.cpp">
       <Filter>소스 파일\Perceptron\Single_Layer_Perceptron</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Activation_Function.h">
+      <Filter>소스 파일</Filter>
+    </CudaCompile>
+    <CudaCompile Include="CUDA\CUDA_Matrix.cu">
+      <Filter>소스 파일\CUDA</Filter>
+    </CudaCompile>
+    <CudaCompile Include="CUDA\CUDA_Matrix.cuh">
+      <Filter>소스 파일\CUDA</Filter>
+    </CudaCompile>
+    <CudaCompile Include="LSTM\LSTM\LSTM_Network.h">
+      <Filter>소스 파일\LSTM\LSTM</Filter>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
@@ -45,12 +60,6 @@
     </ClInclude>
     <ClInclude Include="RNN\RNN.h">
       <Filter>소스 파일\RNN</Filter>
-    </ClInclude>
-    <ClInclude Include="Activation_Function.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="LSTM\LSTM\LSTM_Network.h">
-      <Filter>소스 파일\LSTM\LSTM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

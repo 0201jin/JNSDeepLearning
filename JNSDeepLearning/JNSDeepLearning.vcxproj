@@ -141,8 +141,10 @@
     <ClCompile Include="JNSDeepLearning.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Activation_Function.h" />
-    <ClInclude Include="LSTM\LSTM\LSTM_Network.h" />
+    <CudaCompile Include="Activation_Function.h" />
+    <CudaCompile Include="CUDA\CUDA_Matrix.cu" />
+    <CudaCompile Include="LSTM\LSTM\LSTM_Network.h" />
+    <CudaCompile Include="CUDA\CUDA_Matrix.cuh" />
     <ClInclude Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.h" />
     <ClInclude Include="RNN\RNN.h" />
     <ClInclude Include="Single_Layer_Perceptron.h" />

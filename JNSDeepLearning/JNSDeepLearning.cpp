@@ -1,16 +1,18 @@
 ﻿#include <iostream>
-#include <cuda_runtime.h>
 
 #include "Single_Layer_Perceptron.h"
 #include "Multi_Layer_Perceptron/Multi_Layer_Perceptron.h"
 #include "RNN/RNN.h"
 #include "LSTM/LSTM/LSTM_Network.h"
+#include <time.h>
+#include <chrono>
 
 using namespace std;
 
 #define DATA_NUM 4
 #define WEIGHT_NUM 3
 //코드를 수정합니다.
+
 void Single_Neuron_Run()
 {
 	Single_Neuron Plus_Neuron(2);
@@ -102,7 +104,7 @@ void LSTM_M2O_Run()
 {
 	LSTM_Network<double> net;
 
-	for (int i = 0; i < 100000; ++i)
+	for (int i = 0; i < 1000000; ++i)
 	{
 		net.Train(
 			{ {0.1, 0.2, 0.3}, {0.4, 0.5, 0.6}, {0.7, 0.8},
@@ -119,7 +121,7 @@ void LSTM_M2M_Run()
 {
 	LSTM_Network<double> net;
 
-	for (int i = 0; i < 100000; ++i)
+	for (int i = 0; i < 10000; ++i)
 	{
 		net.Train({ {0.1, 0.2, 0.3}, {0.2, 0.3, 0.4}, {0.3, 0.4, 0.5}, {0.5, 0.6, 0.7}, {0.1, 0.2} },
 			{ {0.4, 0.5, 0.6}, {0.5, 0.6, 0.7}, {0.6, 0.7, 0.8}, {0.8, 0.9, 1.0}, {0.3, 0.4} });
@@ -134,8 +136,16 @@ void LSTM_M2M_Run()
 
 int main()
 {
+	auto start = chrono::system_clock::now();
+
 	//RNN_M2M_Run();
-	//LSTM_M2O_Run();
-	LSTM_M2M_Run();
+	LSTM_M2O_Run();
+	//LSTM_M2M_Run();
+
+	auto end = chrono::system_clock::now();
+
+	chrono::microseconds delta = chrono::duration_cast<chrono::microseconds>(end - start);
+	cout << "실행 속도 : " << delta.count() << endl;
+
 	return 0;
 }

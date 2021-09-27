@@ -1,4 +1,4 @@
-Identity=JNSDeepLearning.cpp
+Identity=Activation_Function.h
 AdditionalCompilerOptions=
 AdditionalCompilerOptions=
 AdditionalDependencies=
@@ -8,7 +8,7 @@ AdditionalOptions=
 AdditionalOptions=
 CodeGeneration=compute_52,sm_52
 CodeGeneration=compute_52,sm_52
-CompileOut=x64\Debug\JNSDeepLearning.cpp.obj
+CompileOut=x64\Debug\Activation_Function.h.obj
 CudaRuntime=Static
 CudaToolkitCustomDir=
 DebugInformationFormat=ProgramDatabase
