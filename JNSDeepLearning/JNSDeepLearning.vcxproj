@@ -145,6 +145,7 @@
     <CudaCompile Include="CUDA\CUDA_Matrix.cu" />
     <CudaCompile Include="LSTM\LSTM\LSTM_Network.h" />
     <CudaCompile Include="CUDA\CUDA_Matrix.cuh" />
+    <ClInclude Include="LSTM\BiLSTM\BiLSTM.h" />
     <ClInclude Include="Multi_Layer_Perceptron\Multi_Layer_Perceptron.h" />
     <ClInclude Include="RNN\RNN.h" />
     <ClInclude Include="Single_Layer_Perceptron.h" />
@@ -154,6 +155,7 @@
     <CudaCompile Include="Single_Layer_Perceptron.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LSTM\BiLSTM\BiLSTM.cpp" />
     <ClCompile Include="LSTM\LSTM\LSTM_Network.cpp" />
     <ClCompile Include="RNN\RNN.cpp" />
   </ItemGroup>

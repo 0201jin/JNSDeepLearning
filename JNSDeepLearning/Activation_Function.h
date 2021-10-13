@@ -129,4 +129,15 @@ namespace Action_Function
 		
 		return Q;
 	}
+
+	template<typename T>
+	static vector<T> Vector_Reverse_Function(vector<T> _vector)
+	{
+		vector<T> V;
+
+		for (int i = _vector.size() - 1; i >= 0; --i)
+			V.push_back(_vector[i]);
+
+		return V;
+	}
 };

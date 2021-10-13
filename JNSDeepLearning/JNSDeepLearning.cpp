@@ -37,7 +37,7 @@ void Single_Neuron_Run()
 	cout << "3 + 1 = " << Plus_Neuron.Calculate({ 3, 1 }) << endl;
 	cout << "4 + 2 = " << Plus_Neuron.Calculate({ 4, 2 }) << endl;
 	cout << "50 + 5 = " << Plus_Neuron.Calculate({ 50, 5 }) << endl;
-	cout << "50 + 5 = " << Plus_Neuron.Calculate({ 150, 5 }) << endl;
+	cout << "150 + 5 = " << Plus_Neuron.Calculate({ 150, 5 }) << endl;
 }
 
 void Multi_Nueron_Run()
