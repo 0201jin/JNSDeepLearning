@@ -86,19 +86,25 @@ public:
 	LSTM_Network() {}
 	~LSTM_Network() {}
 
+	//M2O
 	void Calculate(const vector<T> _InputData, T& _Answer)
 	{
 		m_Neuron.Calculate(_InputData, _Answer);
 	}
 
-	void Train(const vector<vector<T>> _InputData, const vector<T> _Answer)
+	void Train(const vector<T> _InputData, const vector<T> _Answer, int _Sequence)
 	{
-		for (int i = 0; i < _InputData.size(); ++i)
+		for (int i = 0; i < _InputData.size() - (_Sequence-1); ++i)
 		{
-			m_Neuron.Train(_InputData[i], _Answer[i]);
+			int Index = i + _Sequence - 1;
+			vector<T> TrainData(_Sequence);
+			copy(_InputData.begin() + i, _InputData.begin() + Index, TrainData.begin());
+			m_Neuron.Train(TrainData, _Answer[Index]);
+			cout << *(_InputData.begin() + i) << " : " << *(_InputData.begin() + Index) << " = " << _Answer[Index] << endl;
 		}
 	}
 
+	//M2M
 	void Calculate(const vector<T> _InputData, vector<T>& _Answer)
 	{
 		m_Neuron.Calculate(_InputData, _Answer);
@@ -116,6 +122,7 @@ protected:
 	LSTM_Neuron<T> m_Neuron;
 };
 
+//M2O
 template<typename T>
 inline void LSTM_Neuron<T>::Calculate(const vector<T> _InputData, T& _Answer)
 {
@@ -139,7 +146,6 @@ inline void LSTM_Neuron<T>::Calculate(const vector<T> _InputData, T& _Answer)
 	_Answer = m_vH[_InputData.size()] * m_dYWeight + m_dYBias;
 }
 
-//M2O
 template<typename T>
 inline void LSTM_Neuron<T>::Train(const vector<T> _InputData, const T _Answer)
 {
@@ -165,34 +171,6 @@ inline void LSTM_Neuron<T>::Train(const vector<T> _InputData, const T _Answer)
 		Gate.Gate[2] = m_vGate[Index].Gate[1] * ddc * Tanh_Derivative(m_vGate[Index].Gate[2]);			//g
 		Gate.Gate[1] = m_vGate[Index].Gate[2] * ddc * Sigmoid_Derivative(m_vGate[Index].Gate[1]);		//i
 		Gate.Gate[0] = m_vC[Index + 1] * ddc * Sigmoid_Derivative(m_vGate[Index].Gate[0]);				//f
-		
-		/*double LearnRate[1] = {LEARN_RATE};
-		double H[1] = { m_vH[Index] * LEARN_RATE };
-		double Input[1] = { _InputData[Index] * LEARN_RATE };
-		double GateBias[4] = {0, 0, 0, 0};
-		double HGateWeight[4] = {0, 0, 0, 0};
-		double XGateWeight[4] = {0, 0, 0, 0};
-
-		CUDA_Matrix CM;
-		CM.Matrix_Multiply(Gate.Gate, LearnRate, GateBias, 4, 1, 1);
-		CM.Matrix_Multiply(Gate.Gate, H, HGateWeight, 4, 1, 1);
-		CM.Matrix_Multiply(Gate.Gate, Input, XGateWeight, 4, 1, 1);
-		cudaDeviceSynchronize();
-
-		m_vGateBias.Gate[0] -= GateBias[0];
-		m_vGateBias.Gate[1] -= GateBias[1];
-		m_vGateBias.Gate[2] -= GateBias[2];
-		m_vGateBias.Gate[3] -= GateBias[3];
-
-		m_vHGateWeight.Gate[0] -= HGateWeight[0];
-		m_vHGateWeight.Gate[1] -= HGateWeight[1];
-		m_vHGateWeight.Gate[2] -= HGateWeight[2];
-		m_vHGateWeight.Gate[3] -= HGateWeight[3];
-
-		m_vXGateWeight.Gate[0] -= XGateWeight[0];
-		m_vXGateWeight.Gate[1] -= XGateWeight[1];
-		m_vXGateWeight.Gate[2] -= XGateWeight[2];
-		m_vXGateWeight.Gate[3] -= XGateWeight[3];*/
 
 		m_vGateBias.Gate[0] -= Gate.Gate[0] * LEARN_RATE;
 		m_vGateBias.Gate[1] -= Gate.Gate[1] * LEARN_RATE;
@@ -211,6 +189,7 @@ inline void LSTM_Neuron<T>::Train(const vector<T> _InputData, const T _Answer)
 	}
 }
 
+//M2M
 template<typename T>
 inline void LSTM_Neuron<T>::Calculate(const vector<T> _InputData, vector<T>& _Answer)
 {

@@ -104,16 +104,16 @@ void LSTM_M2O_Run()
 {
 	LSTM_Network<double> net;
 
-	for (int i = 0; i < 10000; ++i)
+	for (int i = 0; i < 1; ++i)
 	{
 		net.Train(
-			{ {0.1, 0.2, 0.3}, {0.4, 0.5, 0.6}, {0.7, 0.8},
-			{0.1, 0.2}, {0.4, 0.5}, {0.2, 0.3} },
-			{ 0.4, 0.7, 0.9, 0.3, 0.6, 0.4 });
+			{ 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 },
+			{ 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 },
+			5);
 	}
 
 	double Answer;
-	net.Calculate({ 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 }, Answer);
+	net.Calculate({ 0.1, 0.2, 0.3, 0.4, 0.5 }, Answer);
 	cout << Answer << endl;
 }
 
@@ -139,8 +139,8 @@ int main()
 	auto start = chrono::system_clock::now();
 
 	//RNN_M2M_Run();
-	//LSTM_M2O_Run();
-	LSTM_M2M_Run();
+	LSTM_M2O_Run();
+	//LSTM_M2M_Run();
 
 	auto end = chrono::system_clock::now();
 
