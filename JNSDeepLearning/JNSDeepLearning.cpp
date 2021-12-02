@@ -104,7 +104,7 @@ void LSTM_M2O_Run()
 {
 	LSTM_Network<double> net;
 
-	for (int i = 0; i < 1; ++i)
+	for (int i = 0; i < 10000; ++i)
 	{
 		net.Train(
 			{ 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 },

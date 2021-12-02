@@ -98,9 +98,9 @@ public:
 		{
 			int Index = i + _Sequence - 1;
 			vector<T> TrainData(_Sequence);
-			copy(_InputData.begin() + i, _InputData.begin() + Index, TrainData.begin());
+			copy(_InputData.begin() + i, _InputData.begin() + Index + 1, TrainData.begin());
 			m_Neuron.Train(TrainData, _Answer[Index]);
-			cout << *(_InputData.begin() + i) << " : " << *(_InputData.begin() + Index) << " = " << _Answer[Index] << endl;
+			//cout << TrainData[0] << " " << TrainData[4] << endl;
 		}
 	}
 
