@@ -51,7 +51,7 @@ public:
 	void Calculate(const vector<T> _InputData, T& _Answer);
 	void Train(const vector<T> _InputData, const T _Answer);
 
-	//vector<T>·Î ÇÏ³ª ¸¸µé±â
+	//vector<T>Ë‡ÃŽ Ã‡ÄŽÅ‚Åž Â¸Â¸Ä¾Ã©Ä…Ã¢
 	void Calculate(const vector<T> _InputData, vector<T>& _Answer);
 	void Train(const vector<T> _InputData, const vector<T> _Answer);
 
@@ -110,11 +110,18 @@ public:
 		m_Neuron.Calculate(_InputData, _Answer);
 	}
 
-	void Train(const vector<vector<T>> _InputData, const vector<vector<T>> _Answer)
+	void Train(const vector<T> _InputData, const vector<T> _Answer, int _Sequence)
 	{
-		for (int i = 0; i < _InputData.size(); ++i)
+		for (int i = 0; i < _InputData.size() - (_Sequence-1); ++i)
 		{
-			m_Neuron.Train(_InputData[i], _Answer[i]);
+			int Index = i + _Sequence - 1;
+			vector<T> TrainData(_Sequence);
+			vector<T> AnswerData(_Sequence);
+			
+			copy(_InputData.begin() + i, _InputData.begin() + Index + 1, TrainData.begin());
+			copy(_Answer.begin() + i, _Answer.begin() + Index + 1, TrainData.begin());
+			
+			m_Neuron.Train(TrainData, AnswerData);
 		}
 	}
 
