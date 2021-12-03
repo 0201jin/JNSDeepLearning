@@ -110,7 +110,7 @@ public:
 		m_Neuron.Calculate(_InputData, _Answer);
 	}
 
-	void Train(const vector<T> _InputData, const vector<T> _Answer, int _Sequence)
+	void TrainM2M(const vector<T> _InputData, const vector<T> _Answer, int _Sequence)
 	{
 		for (int i = 0; i < _InputData.size() - (_Sequence-1); ++i)
 		{
@@ -119,7 +119,7 @@ public:
 			vector<T> AnswerData(_Sequence);
 			
 			copy(_InputData.begin() + i, _InputData.begin() + Index + 1, TrainData.begin());
-			copy(_Answer.begin() + i, _Answer.begin() + Index + 1, TrainData.begin());
+			copy(_Answer.begin() + i, _Answer.begin() + Index + 1, AnswerData.begin());
 			
 			m_Neuron.Train(TrainData, AnswerData);
 		}
