@@ -4,6 +4,7 @@
 #include "Multi_Layer_Perceptron/Multi_Layer_Perceptron.h"
 #include "RNN/RNN.h"
 #include "LSTM/LSTM/LSTM_Network.h"
+#include "LSTM/BiLSTM/BiLSTM.h"
 #include <time.h>
 #include <chrono>
 
@@ -136,13 +137,32 @@ void LSTM_M2M_Run()
 		cout << Answer[i] << endl;
 }
 
+void BILSTM_M2M_Run()
+{
+	BiLSTM_Network<double> net;
+
+	for (int i = 0; i < 10000; ++i)
+	{
+		net.Train(
+			{ 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 },
+			{ 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 }, 5);
+	}
+
+	vector<double> Answer;
+	net.Calculate({ 0.4, 0.5, 0.6, 0.7, 0.8 }, Answer);
+
+	for (int i = 0; i < Answer.size(); ++i)
+		cout << Answer[i] << endl;
+}
+
 int main()
 {
 	auto start = chrono::system_clock::now();
 
 	//RNN_M2M_Run();
 	//LSTM_M2O_Run();
-	LSTM_M2M_Run();
+	//LSTM_M2M_Run();
+	BILSTM_M2M_Run();
 
 	auto end = chrono::system_clock::now();
 
