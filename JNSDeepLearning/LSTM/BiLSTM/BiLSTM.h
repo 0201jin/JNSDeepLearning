@@ -22,9 +22,6 @@ public:
 
 	void Calculate(const vector<T> _InputData, vector<T>& _Answer)
 	{
-		vector<T> Forward_Answer;
-		vector<T> Backward_Answer;
-
 		Forward_LSTM.Calculate(_InputData, Forward_Answer);
 		Backward_LSTM.Calculate(Vector_Reverse_Function(_InputData), Backward_Answer);
 
@@ -41,36 +38,47 @@ public:
 			int Index = i + _Sequence - 1;
 			vector<T> TrainData(_Sequence);
 			vector<T> AnswerData(_Sequence);
-			vector<T> CAnswer(_Sequence);
 
 			copy(_InputData.begin() + i, _InputData.begin() + Index + 1, TrainData.begin());
 			copy(_Answer.begin() + i, _Answer.begin() + Index + 1, AnswerData.begin());
 
+			vector<T> CAnswer;
 			Calculate(TrainData, CAnswer);
-			
-			double Save_Forward_Weight = d_FWeight;
-			double Save_Backward_Weight = d_BWeight;
-			
+
 			vector<double> FH;
 			vector<double> BH;
 
-			for(int i = 0; i < _Sequence; ++i)
+			for (int j = _Sequence - 1; j >= 0; --j)
 			{
-				double dy = 2 * (CAnswer[i] - AnswerData[i]);
-				d_FWeight -= dy * Forward_Answer[i] * LAERN_RATE;
-				d_BWeight -= dy * Backward_Answer[i] * LAERN_RATE;
+				double Save_Forward_Weight = d_FWeight;
+				double Save_Backward_Weight = d_BWeight;
+
+				double dy = 2 * (CAnswer[j] - AnswerData[j]);
+				d_FWeight -= dy * Forward_Answer[j] * LEARN_RATE;
+				d_BWeight -= dy * Backward_Answer[j] * LEARN_RATE;
 				d_Bias -= dy * LEARN_RATE;
-				
+
 				FH.push_back(dy * Save_Forward_Weight);
 				BH.push_back(dy * Save_Backward_Weight);
 			}
-			
+
+			cout << d_FWeight << " " << d_BWeight << " " << d_Bias << endl;
+
+			FH = Vector_Reverse_Function(FH);
+			BH = Vector_Reverse_Function(BH);
+
 			Forward_LSTM.Train(TrainData, FH);
 			Backward_LSTM.Train(Vector_Reverse_Function(TrainData), BH);
+
+			Forward_Answer.clear();
+			Backward_Answer.clear();
 		}
 	}
 
 private:
+	vector<T> Forward_Answer;
+	vector<T> Backward_Answer;
+
 	LSTM_Neuron<T> Forward_LSTM;
 	LSTM_Neuron<T> Backward_LSTM;
 
