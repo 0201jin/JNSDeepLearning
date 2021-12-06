@@ -14,7 +14,8 @@ public:
 		mt19937 random(rd());
 		uniform_real_distribution<double> dist(-1, 1);
 
-		d_Weight = dist(random);
+		d_FWeight = dist(random);
+		d_BWeight = dist(random);
 		d_Bias = dist(random);
 	}
 	~BiLSTM_Network() {};
@@ -28,9 +29,9 @@ public:
 		Backward_LSTM.Calculate(Vector_Reverse_Function(_InputData), Backward_Answer);
 
 		for (int i = 0; i < Forward_Answer.size(); ++i)
-			_Answer.push_back(Forward_Answer[i] * Backward_Answer[i]);
+			_Answer.push_back(Forward_Answer[i] * d_FWeight + Backward_Answer[i] * d_BWeight + d_Bias);
 		
-		//Attention Mechanism �۾�
+		//Attention Mechanism ÀÛ¾÷
 	}
 
 	void Train(const vector<T> _InputData, const vector<T> _Answer, int _Sequence)
@@ -40,12 +41,32 @@ public:
 			int Index = i + _Sequence - 1;
 			vector<T> TrainData(_Sequence);
 			vector<T> AnswerData(_Sequence);
+			vector<T> CAnswer(_Sequence);
 
 			copy(_InputData.begin() + i, _InputData.begin() + Index + 1, TrainData.begin());
 			copy(_Answer.begin() + i, _Answer.begin() + Index + 1, AnswerData.begin());
 
-			Forward_LSTM.Train(TrainData, AnswerData);
-			Backward_LSTM.Train(Vector_Reverse_Function(TrainData), AnswerData);
+			Calculate(TrainData, CAnswer);
+			
+			double Save_Forward_Weight = d_FWeight;
+			double Save_Backward_Weight = d_BWeight;
+			
+			vector<double> FH;
+			vector<double> BH;
+
+			for(int i = 0; i < _Sequence; ++i)
+			{
+				double dy = 2 * (CAnswer[i] - AnswerData[i]);
+				d_FWeight -= dy * Forward_Answer[i] * LAERN_RATE;
+				d_BWeight -= dy * Backward_Answer[i] * LAERN_RATE;
+				d_Bias -= dy * LEARN_RATE;
+				
+				FH.push_back(dy * Save_Forward_Weight);
+				BH.push_back(dy * Save_Backward_Weight);
+			}
+			
+			Forward_LSTM.Train(TrainData, FH);
+			Backward_LSTM.Train(Vector_Reverse_Function(TrainData), BH);
 		}
 	}
 
@@ -53,6 +74,7 @@ private:
 	LSTM_Neuron<T> Forward_LSTM;
 	LSTM_Neuron<T> Backward_LSTM;
 
-	double d_Weight;
+	double d_FWeight;
+	double d_BWeight;
 	double d_Bias;
 };
