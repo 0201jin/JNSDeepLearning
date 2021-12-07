@@ -5,3 +5,4 @@
 **3. RNN 구현**   
 **4. LSTM 구현**   
 **5. BILSTM 구현**
+**5-1. NLP-BILSTM 구현 중**
