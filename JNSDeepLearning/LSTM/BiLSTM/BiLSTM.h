@@ -52,7 +52,7 @@ public:
 			{
 				double dy = 2 * (CAnswer[j] - AnswerData[j]);
 				
-				FH.push_back(dy * d_FWeightt);
+				FH.push_back(dy * d_FWeight);
 				BH.push_back(dy * d_BWeight);
 				
 				d_FWeight -= dy * Forward_Answer[j] * LEARN_RATE;
@@ -60,13 +60,8 @@ public:
 				d_Bias -= dy * LEARN_RATE;
 			}
 
-			cout << d_FWeight << " " << d_BWeight << " " << d_Bias << endl;
-
-			FH = Vector_Reverse_Function(FH);
-			BH = Vector_Reverse_Function(BH);
-
-			Forward_LSTM.Train(TrainData, FH);
-			Backward_LSTM.Train(Vector_Reverse_Function(TrainData), BH);
+			Forward_LSTM.Train(TrainData, AnswerData);
+			Backward_LSTM.Train(Vector_Reverse_Function(TrainData), AnswerData);
 
 			Forward_Answer.clear();
 			Backward_Answer.clear();

@@ -149,7 +149,7 @@ void BILSTM_M2M_Run()
 	}
 
 	vector<double> Answer;
-	net.Calculate({ 0.4, 0.5, 0.6, 0.7, 0.8 }, Answer);
+	net.Calculate({ 0.2, 0.3, 0.4 }, Answer);
 
 	for (int i = 0; i < Answer.size(); ++i)
 		cout << Answer[i] << endl;
