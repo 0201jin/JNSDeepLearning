@@ -50,16 +50,14 @@ public:
 
 			for (int j = _Sequence - 1; j >= 0; --j)
 			{
-				double Save_Forward_Weight = d_FWeight;
-				double Save_Backward_Weight = d_BWeight;
-
 				double dy = 2 * (CAnswer[j] - AnswerData[j]);
+				
+				FH.push_back(dy * d_FWeightt);
+				BH.push_back(dy * d_BWeight);
+				
 				d_FWeight -= dy * Forward_Answer[j] * LEARN_RATE;
 				d_BWeight -= dy * Backward_Answer[j] * LEARN_RATE;
 				d_Bias -= dy * LEARN_RATE;
-
-				FH.push_back(dy * Save_Forward_Weight);
-				BH.push_back(dy * Save_Backward_Weight);
 			}
 
 			cout << d_FWeight << " " << d_BWeight << " " << d_Bias << endl;
