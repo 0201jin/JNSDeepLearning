@@ -20,6 +20,7 @@ public:
 	}
 	~BiLSTM_Network() {};
 
+	//M2M
 	void Calculate(const vector<T> _InputData, vector<T>& _Answer)
 	{
 		Forward_LSTM.Calculate(_InputData, Forward_Answer);
@@ -67,6 +68,8 @@ public:
 			Backward_Answer.clear();
 		}
 	}
+
+	//NLP
 
 private:
 	vector<T> Forward_Answer;
