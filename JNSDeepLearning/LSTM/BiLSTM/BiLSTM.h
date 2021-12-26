@@ -1,6 +1,6 @@
 #pragma once
 #include "../LSTM/LSTM_Network.h"
-#include <Activation_Function.h>
+#include "../../Activation_Function.h"
 
 using namespace Action_Function;
 

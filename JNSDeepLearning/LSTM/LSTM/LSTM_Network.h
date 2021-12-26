@@ -1,11 +1,11 @@
 #pragma once
-#include <Activation_Function.h>
+#include "../../Activation_Function.h"
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include <map>
 #include <random>
-#include <CUDA/CUDA_Matrix.cuh>
+#include "../../CUDA/CUDA_Matrix.cuh"
 
 #define LEARN_RATE 0.01
 
