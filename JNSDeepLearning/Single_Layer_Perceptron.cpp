@@ -1,41 +1,5 @@
 #include "Single_Layer_Perceptron.h"
 
-__device__ double Cuda_ReLU(double _x)
-{
-	return _x > 0 ? _x : 0;
-}
-
-__device__ double Cuda_Sigmoid(double _x)
-{
-	return 1 / (1 + exp(-_x));
-}
-
-__global__ void CUDA_Calculate(double* d_Bias, double* d_Weight, double* Train_First, double* o)
-{
-	int x = threadIdx.x;
-
-	__shared__ double wx[2];
-
-	wx[x] = d_Weight[x] * Train_First[x];
-
-	__syncthreads();
-
-	if (x == 0)
-	{
-		o[0] = Cuda_Sigmoid(wx[0] + wx[1] + d_Bias[0]);
-	}
-}
-
-__global__ void CUDA_CalWeight(double* dWeight, double* TrainData, double a, double t, double o)
-{
-	int x = threadIdx.x;
-
-	dWeight[x] += a * (t - o) * TrainData[x];
-
-	/*if (x == 1)
-		printf("%f %f %f %f %f\n", dWeight[x], TrainData[x], a, t, o);*/
-}
-
 Single_Neuron::Single_Neuron()
 {
 }
@@ -93,62 +57,6 @@ void Single_Neuron::Train(int _train_num, double _a, vector<pair<vector<double>,
 			m_dBias += _a * (t - o);
 		}
 	}
-}
-
-void Single_Neuron::CUDA_Train(int _train_num, double _a, vector<pair<vector<double>, double>> _train_data)
-{
-	size_t input_size = _train_data[0].first.size();
-
-	if (input_size != m_input_size)
-		cout << "input_size != Weights_.size()" << endl;
-
-	double* vWeight;
-	cudaMalloc((void**)&vWeight, sizeof(double) * m_input_size);
-
-	double* dBias;
-	cudaMalloc((void**)&dBias, sizeof(double));
-
-	double o = 0;
-	double* po = 0;
-	cudaMalloc((void**)&po, sizeof(double));
-
-	double* pTrainData;
-	cudaMalloc((void**)&pTrainData, sizeof(double) * m_input_size);
-
-	for (int j = 0; j < _train_num; j++)
-	{
-		for (size_t i = 0; i < _train_data.size(); ++i)
-		{
-
-			cudaMemcpy(vWeight, m_vWeight, sizeof(double) * m_input_size, cudaMemcpyHostToDevice);
-
-
-			cudaMemcpy(dBias, &m_dBias, sizeof(double), cudaMemcpyHostToDevice);
-
-			double t = _train_data[i].second;
-
-
-			cudaMemcpy(po, &o, sizeof(double), cudaMemcpyHostToDevice);
-
-
-			cudaMemcpy(pTrainData, _train_data[i].first.data(), sizeof(double) * m_input_size, cudaMemcpyHostToDevice);
-
-			CUDA_Calculate << <1, m_input_size >> > (dBias, vWeight, pTrainData, po);
-
-			cudaMemcpy(&o, po, sizeof(double), cudaMemcpyDeviceToHost);
-
-			CUDA_CalWeight << <1, m_input_size >> > (vWeight, pTrainData, _a, t, o);
-
-			cudaMemcpy(m_vWeight, vWeight, sizeof(double) * m_input_size, cudaMemcpyDeviceToHost);
-
-			m_dBias += _a * (t - o);
-		}
-	}
-
-	cudaFree(pTrainData);
-	cudaFree(po);
-	cudaFree(vWeight);
-	cudaFree(dBias);
 }
 
 void Single_Neuron::Test()

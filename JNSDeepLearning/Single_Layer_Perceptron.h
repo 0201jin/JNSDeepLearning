@@ -4,7 +4,7 @@
 #include <cmath>
 #include <map>
 #include <random>
-#include "CUDA/CUDA_Matrix.cuh"
+#include "CUDA/CUDA_Matrix.h"
 #include "Activation_Function.h"
 
 using namespace Activation_Function;
@@ -18,7 +18,6 @@ public:
 	Single_Neuron(size_t _input_size);
 	double Calculate(const vector<double>& _x);
 	void Train(int _train_num, double _a, vector<pair<vector<double>, double>> _train_data);
-	void CUDA_Train(int _train_num, double _a, vector<pair<vector<double>, double>> _train_data);
 	void Test();
 
 private:

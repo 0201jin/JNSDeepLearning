@@ -1,4 +1,4 @@
-#include "CUDA_Matrix.cuh"
+#include "CUDA_Matrix.h"
 
 __global__ void kernel(void) { }
 
