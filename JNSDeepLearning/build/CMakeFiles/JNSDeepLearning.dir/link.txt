@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o  -o JNSDeepLearning 
