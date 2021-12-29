@@ -16,7 +16,7 @@ deque
 cmath
 -
 
-/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.h
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.cuh
 cuda_runtime.h
 -
 device_launch_parameters.h
@@ -48,11 +48,19 @@ time.h
 chrono
 -
 
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/BiLSTM/BiLSTM.cpp
+BiLSTM.h
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/BiLSTM/BiLSTM.h
+
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/BiLSTM/BiLSTM.h
 ../LSTM/LSTM_Network.h
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.h
 ../../Activation_Function.h
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Activation_Function.h
+
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.cpp
+LSTM_Network.h
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.h
 
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.h
 ../../Activation_Function.h
@@ -67,8 +75,8 @@ map
 -
 random
 -
-../../CUDA/CUDA_Matrix.h
-/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.h
+../../CUDA/CUDA_Matrix.cuh
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.cuh
 
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Multi_Layer_Perceptron/Multi_Layer_Perceptron.h
 iostream
@@ -117,8 +125,8 @@ map
 -
 random
 -
-CUDA/CUDA_Matrix.h
-/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.h
+CUDA/CUDA_Matrix.cuh
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.cuh
 Activation_Function.h
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Activation_Function.h
 

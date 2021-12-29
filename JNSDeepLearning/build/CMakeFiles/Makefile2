@@ -74,12 +74,12 @@ clean: CMakeFiles/JNSDeepLearning.dir/clean
 CMakeFiles/JNSDeepLearning.dir/all:
 	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/depend
 	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=1,2 "Built target JNSDeepLearning"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target JNSDeepLearning"
 .PHONY : CMakeFiles/JNSDeepLearning.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/JNSDeepLearning.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles 8
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/JNSDeepLearning.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles 0
 .PHONY : CMakeFiles/JNSDeepLearning.dir/rule
