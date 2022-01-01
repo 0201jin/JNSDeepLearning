@@ -4,7 +4,7 @@
 #include <cmath>
 #include <map>
 #include <random>
-#include "CUDA/CUDA_Matrix.h"
+#include "CUDA/CUDA_Matrix.cuh"
 #include "Activation_Function.h"
 
 using namespace Activation_Function;

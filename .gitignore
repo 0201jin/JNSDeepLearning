@@ -6,6 +6,7 @@
 *.fatbin
 *.log
 *.tlog
+*.csv
 
 # Prerequisites
 *.d

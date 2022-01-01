@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.c
+CUDA_Matrix.h
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.h
+
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.h
+cuda_runtime.h
+-
+device_launch_parameters.h
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/device_launch_parameters.h
+iostream
+-
+thrust/iterator/counting_iterator.h
+-
+thrust/copy.h
+-
+thrust/device_vector.h
+-
+

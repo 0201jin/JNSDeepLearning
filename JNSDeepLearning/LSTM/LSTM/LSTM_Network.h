@@ -5,7 +5,7 @@
 #include <cmath>
 #include <map>
 #include <random>
-#include "../../CUDA/CUDA_Matrix.h"
+#include "../../CUDA/CUDA_Matrix.cuh"
 
 #define LEARN_RATE 0.01
 
