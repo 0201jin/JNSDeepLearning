@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 #include "../LSTM/LSTM_Network.h"
 #include "../../Activation_Function.h"
 
@@ -25,10 +26,16 @@ public:
 
 	void Train(const String _DataSetPath, int _Sequence)
 	{
+		ifstream file(_DataSetPath);
 		int DataSize = 0;
-		for(int i = 0; i < DataSize - (_Sequence - 1); ++i)
+		int iDataSetColum = 0;
+
+		if(file.fail())
 		{
-			
+			for(int i = 0; i < DataSize - (_Sequence - 1); ++i)
+			{
+				
+			}
 		}
 	}
 
