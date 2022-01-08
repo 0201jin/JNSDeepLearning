@@ -20,6 +20,18 @@ public:
 	}
 	~BiLSTM_Network() {};
 
+	//M2M Custom DataSet Train
+	void Calculate();
+
+	void Train(const String _DataSetPath, int _Sequence)
+	{
+		int DataSize = 0;
+		for(int i = 0; i < DataSize - (_Sequence - 1); ++i)
+		{
+			
+		}
+	}
+
 	//M2M
 	void Calculate(const vector<T> _InputData, vector<T>& _Answer)
 	{
