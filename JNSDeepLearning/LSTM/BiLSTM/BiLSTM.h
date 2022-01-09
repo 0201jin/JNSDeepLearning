@@ -1,9 +1,13 @@
 #pragma once
 #include <fstream>
+#include <queue>
 #include "../LSTM/LSTM_Network.h"
 #include "../../Activation_Function.h"
+#include "../../Technical_Function.h"
 
+using namespace std;
 using namespace Action_Function;
+using namespace Technical_Function;
 
 template <typename T>
 class BiLSTM_Network
@@ -30,11 +34,21 @@ public:
 		int iDataSetColum = 0;
 
 		//queue를 이용해서 데이터 셋 저장
-		
+		queue<vector<double>> DataSet; 
+
 		string str_buf;
 		
 		while(getline(_DataSetFile, str_buf, '\n'))
 		{
+			vector<string> DataStringVector = SplitData(str_buf, ',');
+			DataSet.push(VS2VD(DataStringVector));
+
+			//cout << DataStringVector[10] << endl;
+
+			if(DataSet.size() < _Sequence)
+				continue;
+
+			DataSet.pop();
 		}
 	}
 

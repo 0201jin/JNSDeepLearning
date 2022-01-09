@@ -12,12 +12,14 @@ CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o: LSTM/LSTM/LSTM_Network.h
 CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o: Multi_Layer_Perceptron/Multi_Layer_Perceptron.h
 CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o: RNN/RNN.h
 CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o: Single_Layer_Perceptron.h
+CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o: Technical_Function.h
 
 CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o: Activation_Function.h
 CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o: CUDA/CUDA_Matrix.cuh
 CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o: LSTM/BiLSTM/BiLSTM.cpp
 CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o: LSTM/BiLSTM/BiLSTM.h
 CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o: LSTM/LSTM/LSTM_Network.h
+CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o: Technical_Function.h
 
 CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.o: Activation_Function.h
 CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.o: CUDA/CUDA_Matrix.cuh

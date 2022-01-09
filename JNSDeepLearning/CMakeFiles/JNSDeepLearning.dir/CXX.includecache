@@ -35,6 +35,8 @@ iostream
 -
 fstream
 -
+Technical_Function.h
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Technical_Function.h
 Single_Layer_Perceptron.h
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Single_Layer_Perceptron.h
 Multi_Layer_Perceptron/Multi_Layer_Perceptron.h
@@ -57,10 +59,14 @@ BiLSTM.h
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/BiLSTM/BiLSTM.h
 fstream
 -
+queue
+-
 ../LSTM/LSTM_Network.h
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.h
 ../../Activation_Function.h
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Activation_Function.h
+../../Technical_Function.h
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Technical_Function.h
 
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.h
 ../../Activation_Function.h
@@ -129,4 +135,14 @@ CUDA/CUDA_Matrix.cuh
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.cuh
 Activation_Function.h
 /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Activation_Function.h
+
+/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Technical_Function.h
+iostream
+-
+string
+-
+vector
+-
+sstream
+-
 

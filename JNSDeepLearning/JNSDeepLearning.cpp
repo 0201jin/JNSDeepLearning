@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <fstream>
 
+#include "Technical_Function.h"
 #include "Single_Layer_Perceptron.h"
 #include "Multi_Layer_Perceptron/Multi_Layer_Perceptron.h"
 #include "RNN/RNN.h"
