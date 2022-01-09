@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <fstream>
 
 #include "Single_Layer_Perceptron.h"
 #include "Multi_Layer_Perceptron/Multi_Layer_Perceptron.h"
@@ -155,6 +156,26 @@ void BILSTM_M2M_Run()
 		cout << Answer[i] << endl;
 }
 
+void BILSTM_M2M_UseDataSet_Run(const string _DataSetPath)
+{
+	ifstream DataSet(_DataSetPath);
+
+	if(DataSet.fail())
+	{
+		cout << "DataSet Can't Load!"<< endl;
+		return;
+	}
+
+	BiLSTM_Network<double> net;
+
+	for(int i = 0; i < 1; ++i)
+	{
+		net.Train(DataSet, 1);
+	}
+
+	DataSet.close();
+}
+
 int main()
 {
 	auto start = chrono::system_clock::now();
@@ -162,7 +183,8 @@ int main()
 	//RNN_M2M_Run();
 	//LSTM_M2O_Run();
 	//LSTM_M2M_Run();
-	BILSTM_M2M_Run();
+	//BILSTM_M2M_Run();
+	BILSTM_M2M_UseDataSet_Run("all.csv");
 
 	auto end = chrono::system_clock::now();
 

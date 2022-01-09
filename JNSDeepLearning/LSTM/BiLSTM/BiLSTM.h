@@ -24,18 +24,17 @@ public:
 	//M2M Custom DataSet Train
 	void Calculate();
 
-	void Train(const String _DataSetPath, int _Sequence)
+	void Train(ifstream& _DataSetFile, int _Sequence)
 	{
-		ifstream file(_DataSetPath);
-		int DataSize = 0;
+		int DataSize = 2;
 		int iDataSetColum = 0;
 
-		if(file.fail())
+		//queue를 이용해서 데이터 셋 저장
+		
+		string str_buf;
+		
+		while(getline(_DataSetFile, str_buf, '\n'))
 		{
-			for(int i = 0; i < DataSize - (_Sequence - 1); ++i)
-			{
-				
-			}
 		}
 	}
 
