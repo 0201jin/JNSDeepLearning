@@ -1,11 +1,11 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.o"
-  "CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o"
-  "CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o"
-  "CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.o"
-  "CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.o"
-  "CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.o"
-  "CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.o"
+  "CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.o"
+  "CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.o"
+  "CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.o"
+  "CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.o"
+  "CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.o"
+  "CMakeFiles/JNSDeepLearning.dir/RNN/RNN.o"
+  "CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.o"
   "JNSDeepLearning"
   "JNSDeepLearning.pdb"
 )

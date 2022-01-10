@@ -27,10 +27,11 @@ namespace Technical_Function
 	{
 		vector<double> Result;
 
-		for(vector<string>::iterator iter = _VS.begin(); iter != _VS.end(); ++iter)
+		string::size_type sz;
+		for(vector<string>::iterator iter = _VS.begin() + 1; iter != _VS.end(); ++iter)
 		{
 			cout << (*iter) << endl;
-			cout << stod((*iter)) << endl;
+			double db = stod((*iter), &sz);
 			//Result.push_back(stod(*iter));
 		}
 

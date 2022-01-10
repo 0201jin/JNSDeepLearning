@@ -57,117 +57,117 @@ include CMakeFiles/JNSDeepLearning.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/JNSDeepLearning.dir/flags.make
 
-CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o: CMakeFiles/JNSDeepLearning.dir/flags.make
-CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o: ../JNSDeepLearning.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/JNSDeepLearning.cpp
+CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.o: CMakeFiles/JNSDeepLearning.dir/flags.make
+CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.o: ../JNSDeepLearning.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/JNSDeepLearning.cpp
 
-CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/JNSDeepLearning.cpp > CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.i
+CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/JNSDeepLearning.cpp > CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.i
 
-CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/JNSDeepLearning.cpp -o CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.s
+CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/JNSDeepLearning.cpp -o CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.s
 
-CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.o: CMakeFiles/JNSDeepLearning.dir/flags.make
-CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.o: ../Single_Layer_Perceptron.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Single_Layer_Perceptron.cpp
+CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.o: CMakeFiles/JNSDeepLearning.dir/flags.make
+CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.o: ../Single_Layer_Perceptron.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Single_Layer_Perceptron.cpp
 
-CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Single_Layer_Perceptron.cpp > CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.i
+CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Single_Layer_Perceptron.cpp > CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.i
 
-CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Single_Layer_Perceptron.cpp -o CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.s
+CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Single_Layer_Perceptron.cpp -o CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.s
 
-CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o: CMakeFiles/JNSDeepLearning.dir/flags.make
-CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o: ../LSTM/BiLSTM/BiLSTM.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/BiLSTM/BiLSTM.cpp
+CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.o: CMakeFiles/JNSDeepLearning.dir/flags.make
+CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.o: ../LSTM/BiLSTM/BiLSTM.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/BiLSTM/BiLSTM.cpp
 
-CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/BiLSTM/BiLSTM.cpp > CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.i
+CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/BiLSTM/BiLSTM.cpp > CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.i
 
-CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/BiLSTM/BiLSTM.cpp -o CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.s
+CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/BiLSTM/BiLSTM.cpp -o CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.s
 
-CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.o: CMakeFiles/JNSDeepLearning.dir/flags.make
-CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.o: ../LSTM/LSTM/LSTM_Network.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.cpp
+CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.o: CMakeFiles/JNSDeepLearning.dir/flags.make
+CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.o: ../LSTM/LSTM/LSTM_Network.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.cpp
 
-CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.cpp > CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.i
+CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.cpp > CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.i
 
-CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.cpp -o CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.s
+CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/LSTM/LSTM/LSTM_Network.cpp -o CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.s
 
-CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.o: CMakeFiles/JNSDeepLearning.dir/flags.make
-CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.o: ../Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp
+CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.o: CMakeFiles/JNSDeepLearning.dir/flags.make
+CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.o: ../Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp
 
-CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp > CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.i
+CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp > CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.i
 
-CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp -o CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.s
+CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp -o CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.s
 
-CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.o: CMakeFiles/JNSDeepLearning.dir/flags.make
-CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.o: ../RNN/RNN.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp
+CMakeFiles/JNSDeepLearning.dir/RNN/RNN.o: CMakeFiles/JNSDeepLearning.dir/flags.make
+CMakeFiles/JNSDeepLearning.dir/RNN/RNN.o: ../RNN/RNN.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/JNSDeepLearning.dir/RNN/RNN.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/JNSDeepLearning.dir/RNN/RNN.o -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp
 
-CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp > CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.i
+CMakeFiles/JNSDeepLearning.dir/RNN/RNN.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/JNSDeepLearning.dir/RNN/RNN.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp > CMakeFiles/JNSDeepLearning.dir/RNN/RNN.i
 
-CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp -o CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.s
+CMakeFiles/JNSDeepLearning.dir/RNN/RNN.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/JNSDeepLearning.dir/RNN/RNN.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/RNN/RNN.cpp -o CMakeFiles/JNSDeepLearning.dir/RNN/RNN.s
 
-CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.o: CMakeFiles/JNSDeepLearning.dir/flags.make
-CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.o: ../CUDA/CUDA_Matrix.cu
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CUDA object CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.o"
-	/usr/bin/nvcc  $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -x cu -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.cu -o CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.o
+CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.o: CMakeFiles/JNSDeepLearning.dir/flags.make
+CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.o: ../CUDA/CUDA_Matrix.cu
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CUDA object CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.o"
+	/usr/bin/nvcc  $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -x cu -c /home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/CUDA/CUDA_Matrix.cu -o CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.o
 
-CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CUDA source to CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.i"
+CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CUDA source to CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.i"
 	$(CMAKE_COMMAND) -E cmake_unimplemented_variable CMAKE_CUDA_CREATE_PREPROCESSED_SOURCE
 
-CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CUDA source to assembly CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.s"
+CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CUDA source to assembly CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.s"
 	$(CMAKE_COMMAND) -E cmake_unimplemented_variable CMAKE_CUDA_CREATE_ASSEMBLY_SOURCE
 
 # Object files for target JNSDeepLearning
 JNSDeepLearning_OBJECTS = \
-"CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o" \
-"CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.o" \
-"CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o" \
-"CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.o" \
-"CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.o" \
-"CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.o" \
-"CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.o"
+"CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.o" \
+"CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.o" \
+"CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.o" \
+"CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.o" \
+"CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.o" \
+"CMakeFiles/JNSDeepLearning.dir/RNN/RNN.o" \
+"CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.o"
 
 # External object files for target JNSDeepLearning
 JNSDeepLearning_EXTERNAL_OBJECTS =
 
-JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o
-JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.o
-JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o
-JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.o
-JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.o
-JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.o
-JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.o
+JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.o
+JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.o
+JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.o
+JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.o
+JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.o
+JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/RNN/RNN.o
+JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.o
 JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/build.make
 JNSDeepLearning: CMakeFiles/JNSDeepLearning.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jns/바탕화면/작업/JNSDeepLearning/JNSDeepLearning/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable JNSDeepLearning"

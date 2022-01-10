@@ -123,194 +123,110 @@ JNSDeepLearning/fast:
 	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/build
 .PHONY : JNSDeepLearning/fast
 
-CUDA/CUDA_Matrix.o: CUDA/CUDA_Matrix.cu.o
-
+# target to build an object file
+CUDA/CUDA_Matrix.o:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.o
 .PHONY : CUDA/CUDA_Matrix.o
 
-# target to build an object file
-CUDA/CUDA_Matrix.cu.o:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.o
-.PHONY : CUDA/CUDA_Matrix.cu.o
-
-CUDA/CUDA_Matrix.i: CUDA/CUDA_Matrix.cu.i
-
+# target to preprocess a source file
+CUDA/CUDA_Matrix.i:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.i
 .PHONY : CUDA/CUDA_Matrix.i
 
-# target to preprocess a source file
-CUDA/CUDA_Matrix.cu.i:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.i
-.PHONY : CUDA/CUDA_Matrix.cu.i
-
-CUDA/CUDA_Matrix.s: CUDA/CUDA_Matrix.cu.s
-
+# target to generate assembly for a file
+CUDA/CUDA_Matrix.s:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.s
 .PHONY : CUDA/CUDA_Matrix.s
 
-# target to generate assembly for a file
-CUDA/CUDA_Matrix.cu.s:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/CUDA/CUDA_Matrix.cu.s
-.PHONY : CUDA/CUDA_Matrix.cu.s
-
-JNSDeepLearning.o: JNSDeepLearning.cpp.o
-
+# target to build an object file
+JNSDeepLearning.o:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.o
 .PHONY : JNSDeepLearning.o
 
-# target to build an object file
-JNSDeepLearning.cpp.o:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.o
-.PHONY : JNSDeepLearning.cpp.o
-
-JNSDeepLearning.i: JNSDeepLearning.cpp.i
-
+# target to preprocess a source file
+JNSDeepLearning.i:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.i
 .PHONY : JNSDeepLearning.i
 
-# target to preprocess a source file
-JNSDeepLearning.cpp.i:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.i
-.PHONY : JNSDeepLearning.cpp.i
-
-JNSDeepLearning.s: JNSDeepLearning.cpp.s
-
+# target to generate assembly for a file
+JNSDeepLearning.s:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.s
 .PHONY : JNSDeepLearning.s
 
-# target to generate assembly for a file
-JNSDeepLearning.cpp.s:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/JNSDeepLearning.cpp.s
-.PHONY : JNSDeepLearning.cpp.s
-
-LSTM/BiLSTM/BiLSTM.o: LSTM/BiLSTM/BiLSTM.cpp.o
-
+# target to build an object file
+LSTM/BiLSTM/BiLSTM.o:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.o
 .PHONY : LSTM/BiLSTM/BiLSTM.o
 
-# target to build an object file
-LSTM/BiLSTM/BiLSTM.cpp.o:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.o
-.PHONY : LSTM/BiLSTM/BiLSTM.cpp.o
-
-LSTM/BiLSTM/BiLSTM.i: LSTM/BiLSTM/BiLSTM.cpp.i
-
+# target to preprocess a source file
+LSTM/BiLSTM/BiLSTM.i:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.i
 .PHONY : LSTM/BiLSTM/BiLSTM.i
 
-# target to preprocess a source file
-LSTM/BiLSTM/BiLSTM.cpp.i:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.i
-.PHONY : LSTM/BiLSTM/BiLSTM.cpp.i
-
-LSTM/BiLSTM/BiLSTM.s: LSTM/BiLSTM/BiLSTM.cpp.s
-
+# target to generate assembly for a file
+LSTM/BiLSTM/BiLSTM.s:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.s
 .PHONY : LSTM/BiLSTM/BiLSTM.s
 
-# target to generate assembly for a file
-LSTM/BiLSTM/BiLSTM.cpp.s:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/BiLSTM/BiLSTM.cpp.s
-.PHONY : LSTM/BiLSTM/BiLSTM.cpp.s
-
-LSTM/LSTM/LSTM_Network.o: LSTM/LSTM/LSTM_Network.cpp.o
-
+# target to build an object file
+LSTM/LSTM/LSTM_Network.o:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.o
 .PHONY : LSTM/LSTM/LSTM_Network.o
 
-# target to build an object file
-LSTM/LSTM/LSTM_Network.cpp.o:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.o
-.PHONY : LSTM/LSTM/LSTM_Network.cpp.o
-
-LSTM/LSTM/LSTM_Network.i: LSTM/LSTM/LSTM_Network.cpp.i
-
+# target to preprocess a source file
+LSTM/LSTM/LSTM_Network.i:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.i
 .PHONY : LSTM/LSTM/LSTM_Network.i
 
-# target to preprocess a source file
-LSTM/LSTM/LSTM_Network.cpp.i:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.i
-.PHONY : LSTM/LSTM/LSTM_Network.cpp.i
-
-LSTM/LSTM/LSTM_Network.s: LSTM/LSTM/LSTM_Network.cpp.s
-
+# target to generate assembly for a file
+LSTM/LSTM/LSTM_Network.s:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.s
 .PHONY : LSTM/LSTM/LSTM_Network.s
 
-# target to generate assembly for a file
-LSTM/LSTM/LSTM_Network.cpp.s:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/LSTM/LSTM/LSTM_Network.cpp.s
-.PHONY : LSTM/LSTM/LSTM_Network.cpp.s
-
-Multi_Layer_Perceptron/Multi_Layer_Perceptron.o: Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.o
-
+# target to build an object file
+Multi_Layer_Perceptron/Multi_Layer_Perceptron.o:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.o
 .PHONY : Multi_Layer_Perceptron/Multi_Layer_Perceptron.o
 
-# target to build an object file
-Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.o:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.o
-.PHONY : Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.o
-
-Multi_Layer_Perceptron/Multi_Layer_Perceptron.i: Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.i
-
+# target to preprocess a source file
+Multi_Layer_Perceptron/Multi_Layer_Perceptron.i:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.i
 .PHONY : Multi_Layer_Perceptron/Multi_Layer_Perceptron.i
 
-# target to preprocess a source file
-Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.i:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.i
-.PHONY : Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.i
-
-Multi_Layer_Perceptron/Multi_Layer_Perceptron.s: Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.s
-
+# target to generate assembly for a file
+Multi_Layer_Perceptron/Multi_Layer_Perceptron.s:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.s
 .PHONY : Multi_Layer_Perceptron/Multi_Layer_Perceptron.s
 
-# target to generate assembly for a file
-Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.s:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.s
-.PHONY : Multi_Layer_Perceptron/Multi_Layer_Perceptron.cpp.s
-
-RNN/RNN.o: RNN/RNN.cpp.o
-
+# target to build an object file
+RNN/RNN.o:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/RNN/RNN.o
 .PHONY : RNN/RNN.o
 
-# target to build an object file
-RNN/RNN.cpp.o:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.o
-.PHONY : RNN/RNN.cpp.o
-
-RNN/RNN.i: RNN/RNN.cpp.i
-
+# target to preprocess a source file
+RNN/RNN.i:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/RNN/RNN.i
 .PHONY : RNN/RNN.i
 
-# target to preprocess a source file
-RNN/RNN.cpp.i:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.i
-.PHONY : RNN/RNN.cpp.i
-
-RNN/RNN.s: RNN/RNN.cpp.s
-
+# target to generate assembly for a file
+RNN/RNN.s:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/RNN/RNN.s
 .PHONY : RNN/RNN.s
 
-# target to generate assembly for a file
-RNN/RNN.cpp.s:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/RNN/RNN.cpp.s
-.PHONY : RNN/RNN.cpp.s
-
-Single_Layer_Perceptron.o: Single_Layer_Perceptron.cpp.o
-
+# target to build an object file
+Single_Layer_Perceptron.o:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.o
 .PHONY : Single_Layer_Perceptron.o
 
-# target to build an object file
-Single_Layer_Perceptron.cpp.o:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.o
-.PHONY : Single_Layer_Perceptron.cpp.o
-
-Single_Layer_Perceptron.i: Single_Layer_Perceptron.cpp.i
-
+# target to preprocess a source file
+Single_Layer_Perceptron.i:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.i
 .PHONY : Single_Layer_Perceptron.i
 
-# target to preprocess a source file
-Single_Layer_Perceptron.cpp.i:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.i
-.PHONY : Single_Layer_Perceptron.cpp.i
-
-Single_Layer_Perceptron.s: Single_Layer_Perceptron.cpp.s
-
-.PHONY : Single_Layer_Perceptron.s
-
 # target to generate assembly for a file
-Single_Layer_Perceptron.cpp.s:
-	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.cpp.s
-.PHONY : Single_Layer_Perceptron.cpp.s
+Single_Layer_Perceptron.s:
+	$(MAKE) -f CMakeFiles/JNSDeepLearning.dir/build.make CMakeFiles/JNSDeepLearning.dir/Single_Layer_Perceptron.s
+.PHONY : Single_Layer_Perceptron.s
 
 # Help Target
 help:
