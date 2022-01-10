@@ -30,7 +30,6 @@ namespace Technical_Function
 
 		for(vector<string>::iterator iter = _VS.begin()+1; iter != _VS.end(); ++iter)
 		{
-		    cout << atoi((*iter).c_str()) << endl;
 			//cout << stod((*iter)) << endl;
 			//cout << stod("301.13000000") << endl;
 			//Result.push_back(stod(*iter));
