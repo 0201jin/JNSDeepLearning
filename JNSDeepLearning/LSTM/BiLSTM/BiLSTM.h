@@ -26,7 +26,10 @@ public:
 	~BiLSTM_Network() {};
 
 	//M2M Custom DataSet Train
-	void Calculate();
+	void Calculate()
+	{
+
+	}
 
 	void Train(ifstream& _DataSetFile, int _Sequence)
 	{
@@ -37,13 +40,10 @@ public:
 		queue<vector<double>> DataSet; 
 
 		string str_buf;
-		
 		while(getline(_DataSetFile, str_buf, '\n'))
 		{
-			vector<string> DataStringVector = SplitData(str_buf, ',');
+			vector<string> DataStringVector = SplitData(str_buf, ",");
 			DataSet.push(VS2VD(DataStringVector));
-
-			//cout << DataStringVector[10] << endl;
 
 			if(DataSet.size() < _Sequence)
 				continue;

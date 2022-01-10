@@ -141,6 +141,7 @@
     <ClCompile Include="JNSDeepLearning.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Technical_Function.h" />
     <CudaCompile Include="Activation_Function.h" />
     <CudaCompile Include="CUDA\CUDA_Matrix.cu" />
     <CudaCompile Include="LSTM\LSTM\LSTM_Network.h" />

@@ -67,6 +67,9 @@
     <ClInclude Include="LSTM\BiLSTM\BiLSTM.h">
       <Filter>소스 파일\LSTM\BILSTM</Filter>
     </ClInclude>
+    <ClInclude Include="Technical_Function.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RNN\RNN.cpp">

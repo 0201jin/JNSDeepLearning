@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,30 +8,31 @@ using namespace std;
 
 namespace Technical_Function
 {
-	static vector<string> SplitData(string _Data, char _delimiter)
+	static vector<string> SplitData(string s, string divid)
 	{
-		vector<string> Result;
-		stringstream ss(_Data);
-		string tmp;
-
-		while(getline(ss, tmp, _delimiter))
+		vector<string> v;
+		int start = 0;
+		int d = s.find(divid);
+		while (d != -1) 
 		{
-			cout << tmp << endl;
-			Result.push_back(tmp);
+			v.push_back(s.substr(start, d - start));
+			start = d + 1;
+			d = s.find(divid, start);
 		}
+		v.push_back(s.substr(start, d - start));
 
-		return Result;
+		return v;
 	}
 
 	static vector<double> VS2VD(vector<string> _VS)
 	{
 		vector<double> Result;
 
-		string::size_type sz;
-		for(vector<string>::iterator iter = _VS.begin() + 1; iter != _VS.end(); ++iter)
+		for(vector<string>::iterator iter = _VS.begin()+1; iter != _VS.end(); ++iter)
 		{
-			cout << (*iter) << endl;
-			double db = stod((*iter), &sz);
+		    cout << atoi((*iter).c_str()) << endl;
+			//cout << stod((*iter)) << endl;
+			//cout << stod("301.13000000") << endl;
 			//Result.push_back(stod(*iter));
 		}
 
