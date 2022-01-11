@@ -44,9 +44,13 @@ namespace Technical_Function
 		for(vector<string>::iterator iter = _VS.begin(); iter != _VS.end(); ++iter)
 		{
 			cout << endl;
-			NumberString((*iter));
 			cout << (*iter) << endl;
-			cout << stod((*iter)) << endl;
+			NumberString((*iter));
+
+			if((*iter).size() != 0)
+			{
+				cout << stod((*iter)) << endl;
+			}
 			//cout << stod((*iter)) << endl;
 			//cout << stod((*iter)) << endl;
 			//cout << stod("301.13000000") << endl;
